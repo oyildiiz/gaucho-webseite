@@ -61,5 +61,6 @@ const html = `<div style="font-family:Arial,sans-serif;font-size:14px;color:#222
 ${b.msg ? `<p><b>Wünsche:</b><br>${esc(b.msg).replace(/\n/g, '<br>')}</p>` : ''}
 <p style="color:#666;font-size:12px">Mit „Antworten“ schreiben Sie direkt an den Kunden. Bestellung über gaucho-webseite (Fleisch-Shop).</p></div>`;
 const mail = { message: { subject: `${name} (${email}) – Fleisch-Bestellung ${nr} – Abholung ${wann}`, body: { contentType: 'HTML', content: html }, toRecipients: [{ emailAddress: { address: 'info@gaucho.at' } }], replyTo: [{ emailAddress: { address: email, name } }] }, saveToSentItems: false };
-const nachricht = `🥩 Neue Fleisch-Bestellung ${nr}\nAbholung: ${wann}\n\n${zeilen.map(z => `${z.produkt}: ${z.menge}`).join('\n')}\nca. ${euro(summe)}\n\n${name}\nTel: ${tel}\n${email}${b.msg ? '\n\nWünsche: ' + String(b.msg).slice(0, 300) : ''}`;
+// Telegram (HTML): Kundeneingaben maskieren
+const nachricht = `🥩 <b>Neue Fleisch-Bestellung ${nr}</b>\n<b>Abholung: ${esc(wann)}</b>\n\n${zeilen.map(z => `${esc(z.produkt)}: ${esc(z.menge)}`).join('\n')}\nca. ${euro(summe)}\n\n${esc(name)}\nTel: ${esc(tel)}\n${esc(email)}${b.msg ? '\n\nWünsche: ' + esc(String(b.msg).slice(0, 300)) : ''}`;
 return [{ json: { gueltig: true, spam: false, nr, mail, nachricht, zeile: { nr, abholung: `${datum} ${zeit}`, kunde: name, email, tel, positionen: zeilen.map(z => `${z.produkt}: ${z.menge} (${z.betrag})`).join(' | '), summe_eur: summe, zahlart, status: 'neu', wunsch: String(b.msg || '').slice(0, 600) } } }];
