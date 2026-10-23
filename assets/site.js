@@ -32,6 +32,13 @@ function fuelleZeiten(select, datum, abSchluss, nurZukunft) {
   var liste = slots(datum, abSchluss).filter(function (z) { return !(nurZukunft && heute && minuten(z) < jetzt.getHours() * 60 + jetzt.getMinutes() + VORLAUF); });
   select.innerHTML = liste.length ? liste.map(function (z) { return '<option>' + z + '</option>'; }).join('') : '<option value="">An diesem Tag geschlossen</option>';
 }
+// Auswahlliste der Öffnungstage (Montag fehlt); heute nur, wenn noch eine Uhrzeit frei ist
+function fuelleTage(select, tageVoraus, maxAnzahl) {
+  var tage = [], d = new Date(), j = new Date(); d.setHours(12, 0, 0, 0);
+  function heuteNochFrei(x) { return slots(x, 30).some(function (z) { return minuten(z) >= j.getHours() * 60 + j.getMinutes() + VORLAUF; }); }
+  for (var i = 0; tage.length < maxAnzahl && i < tageVoraus; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 30).length) tage.push(x); }
+  select.innerHTML = tage.map(function (x) { return '<option value="' + isoDatum(x) + '">' + (isoDatum(x) === isoDatum(j) ? 'Heute' : TAGE[x.getDay()]) + ', ' + x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long' }) + '</option>'; }).join('');
+}
 function sende(form, daten, ok, knopf) {
   var status = form.querySelector('.form-status');
   knopf.disabled = true; status.className = 'form-status'; status.textContent = 'Wird gesendet …';
@@ -47,13 +54,13 @@ function sende(form, daten, ok, knopf) {
   var form = document.getElementById('reservierung');
   if (!form) return;
   var datum = form.querySelector('#r-datum'), zeit = form.querySelector('#r-zeit');
-  var heute = new Date(); datum.min = isoDatum(heute);
-  var bis = new Date(); bis.setDate(bis.getDate() + 120); datum.max = isoDatum(bis);
-  datum.addEventListener('change', function () { if (datum.value) fuelleZeiten(zeit, new Date(datum.value + 'T12:00'), 30, true); });
+  // Reservierbar bis drei Monate im Voraus, Montag (Ruhetag) erscheint gar nicht
+  fuelleTage(datum, 92, 92);
+  function zeiten() { fuelleZeiten(zeit, new Date(datum.value + 'T12:00'), 30, true); }
+  datum.addEventListener('change', zeiten); zeiten();
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
-    if (datum.value && !zeit.value) { datum.setCustomValidity('An diesem Tag haben wir geschlossen (Montag Ruhetag).'); }
-    if (!form.checkValidity()) { form.reportValidity(); datum.setCustomValidity(''); return; }
+    if (!form.checkValidity()) { form.reportValidity(); return; }
     var d = {}; new FormData(form).forEach(function (v, k) { d[k] = String(v).trim(); });
     sende(form, d, function () {
       form.innerHTML = '<div class="danke"><h3>Vielen Dank, ' + d.name.replace(/[<>&]/g, '') + '!</h3><p>Ihre Reservierungsanfrage für ' + d.personen + ' Person(en) am ' + new Date(d.datum + 'T12:00').toLocaleDateString('de-AT', { weekday: 'long', day: 'numeric', month: 'long' }) + ' um ' + d.zeit + ' Uhr ist bei uns eingegangen.</p><p>Wir bestätigen Ihre Reservierung per E-Mail. Ist kein Tisch mehr frei, melden wir uns telefonisch.</p></div>';
@@ -128,11 +135,8 @@ function sende(form, daten, ok, knopf) {
 
   // Abholtermine: ab heute, 12 Öffnungstage im Voraus
   var form = document.getElementById('bestellung'), tag = form.querySelector('#b-datum'), zeit = form.querySelector('#b-zeit');
-  var tage = [], d = new Date(); d.setHours(12, 0, 0, 0);
   // Abholung auch heute möglich, frühestens 15 Minuten nach der Bestellung
-  function heuteNochFrei(x) { var j = new Date(); return slots(x, 30).some(function (z) { return minuten(z) >= j.getHours() * 60 + j.getMinutes() + VORLAUF; }); }
-  for (var i = 0; tage.length < 12 && i < 30; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 30).length) tage.push(x); }
-  tag.innerHTML = tage.map(function (x) { return '<option value="' + isoDatum(x) + '">' + (isoDatum(x) === isoDatum(new Date()) ? 'Heute' : TAGE[x.getDay()]) + ', ' + x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long' }) + '</option>'; }).join('');
+  fuelleTage(tag, 30, 12);
   function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 30, true); }
   tag.addEventListener('change', zeiten); zeiten();
 
