@@ -125,12 +125,14 @@ function sende(form, daten, ok, knopf) {
   }
   korbZeichnen();
 
-  // Abholtermine: ab dem nächsten Öffnungstag, 14 Tage im Voraus
+  // Abholtermine: ab heute, 12 Öffnungstage im Voraus
   var form = document.getElementById('bestellung'), tag = form.querySelector('#b-datum'), zeit = form.querySelector('#b-zeit');
   var tage = [], d = new Date(); d.setHours(12, 0, 0, 0);
-  for (var i = 1; tage.length < 12 && i < 30; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (slots(x, 30).length) tage.push(x); }
-  tag.innerHTML = tage.map(function (x) { return '<option value="' + isoDatum(x) + '">' + TAGE[x.getDay()] + ', ' + x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long' }) + '</option>'; }).join('');
-  function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 30, false); }
+  // Abholung auch heute möglich, frühestens eine Stunde nach der Bestellung
+  function heuteNochFrei(x) { var j = new Date(); return slots(x, 30).some(function (z) { return minuten(z) > j.getHours() * 60 + j.getMinutes() + 60; }); }
+  for (var i = 0; tage.length < 12 && i < 30; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 30).length) tage.push(x); }
+  tag.innerHTML = tage.map(function (x) { return '<option value="' + isoDatum(x) + '">' + (isoDatum(x) === isoDatum(new Date()) ? 'Heute' : TAGE[x.getDay()]) + ', ' + x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long' }) + '</option>'; }).join('');
+  function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 30, true); }
   tag.addEventListener('change', zeiten); zeiten();
 
   form.addEventListener('submit', function (ev) {

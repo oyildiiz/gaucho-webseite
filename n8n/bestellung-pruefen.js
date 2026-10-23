@@ -5,7 +5,7 @@ const PREISE = {
   'bife-ancho': { name: 'Bife Ancho (Entrecôte)', stueck: 36.90, portion: 41.90 },
   bife: { name: 'Bife (Rumpsteak)', stueck: 28.90, portion: 33.90 },
   churrasco: { name: 'Churrasco (Hüftsteak)', stueck: 22.90, portion: 28.90 },
-  lammkrone: { name: 'Lammkrone (Neuseeland)', stueck: null }
+  lammkrone: { name: 'Lammkrone (Neuseeland)', stueck: 39.90 }
 };
 const GROESSEN = [200, 250, 300, 400, 500], KG = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
 const OEFFNUNG = { 0: [[660, 840], [1020, 1350]], 1: [], 2: [[1020, 1350]], 3: [[1020, 1350]], 4: [[1020, 1350]], 5: [[1020, 1350]], 6: [[660, 840], [1020, 1350]] };
@@ -20,10 +20,14 @@ if (!name) return fehler('Name fehlt');
 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fehler('E-Mail ungültig');
 const ab = b.abholung || {}, datum = String(ab.datum || ''), zeit = String(ab.zeit || '');
 if (!/^\d{4}-\d{2}-\d{2}$/.test(datum) || !/^\d{2}:\d{2}$/.test(zeit)) return fehler('Abholtermin fehlt');
-const tag = new Date(datum + 'T12:00:00Z'), heute = new Date(new Date().toISOString().slice(0, 10) + 'T12:00:00Z');
+// Wiener Ortszeit: Abholung ab heute, am selben Tag frühestens 60 Minuten nach der Bestellung
+const wien = {}; new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Vienna', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).forEach(t => { wien[t.type] = t.value; });
+const heuteWien = `${wien.year}-${wien.month}-${wien.day}`, jetztMin = +wien.hour * 60 + +wien.minute;
+const tag = new Date(datum + 'T12:00:00Z'), heute = new Date(heuteWien + 'T12:00:00Z');
 const tageVoraus = Math.round((tag - heute) / 86400000);
-if (tageVoraus < 1 || tageVoraus > 31) return fehler('Abholtag nicht möglich');
+if (tageVoraus < 0 || tageVoraus > 31) return fehler('Abholtag nicht möglich');
 const min = +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5);
+if (tageVoraus === 0 && min < jetztMin + 60) return fehler('Abholung heute frühestens in einer Stunde möglich');
 if (!(OEFFNUNG[tag.getUTCDay()] || []).some(([v, bis]) => min >= v && min <= bis - 30)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
 const pos = Array.isArray(b.positionen) ? b.positionen.slice(0, 30) : [];
 if (!pos.length) return fehler('Warenkorb leer');
@@ -36,12 +40,9 @@ for (const p of pos) {
     const g = +p.groesse_g, n = Math.round(+p.anzahl);
     if (!GROESSEN.includes(g) || !(n >= 1 && n <= 30)) return fehler('Menge ungültig');
     kg = n * g / 1000; kiloPreis = pr.portion; text = `${n} × ${g} g Steak, portioniert`;
-  } else if (p.vid === 'stueck' && p.pid !== 'lammkrone') {
+  } else if (p.vid === 'stueck' && pr.stueck) {
     const k = +p.kg; if (!KG.includes(k)) return fehler('Menge ungültig');
-    kg = k; kiloPreis = pr.stueck; text = `ca. ${String(k).replace('.', ',')} kg am Stück`;
-  } else if (p.pid === 'lammkrone') {
-    const n = Math.round(+p.anzahl); if (!(n >= 1 && n <= 6)) return fehler('Menge ungültig');
-    text = `${n} Stück`; aufAnfrage = true;
+    kg = k; kiloPreis = pr.stueck; text = `ca. ${String(k).replace('.', ',')} kg ${p.pid === 'lammkrone' ? '(ganze Krone)' : 'am Stück'}`;
   } else return fehler('Zuschnitt ungültig');
   const betrag = kiloPreis ? Math.round(kg * kiloPreis * 100) / 100 : null;
   if (betrag) summe += betrag;

@@ -10,8 +10,20 @@
       "verfuegbar": true,
       "text": "Erstklassiges Rinderfilet mit außergewöhnlicher Zartheit und feiner Faserstruktur. Saftiger Biss, dezente Marmorierung und ein mild-aromatisches Rindfleischaroma aus natürlicher Weidehaltung. Ein Genuss, der förmlich auf der Zunge zergeht.",
       "varianten": [
-        { "id": "stueck", "name": "Am Stück", "info": "Ganzes Rinderfilet, unportioniert", "preis_kg": 43.90, "art": "kg" },
-        { "id": "portion", "name": "Portioniert", "info": "Sehnenfrei geputzt, küchenfertig zugeschnitten", "preis_kg": 48.90, "art": "steak" }
+        {
+          "id": "stueck",
+          "name": "Am Stück",
+          "info": "Ganzes Rinderfilet, unportioniert",
+          "preis_kg": 43.9,
+          "art": "kg"
+        },
+        {
+          "id": "portion",
+          "name": "Portioniert",
+          "info": "Sehnenfrei geputzt, küchenfertig zugeschnitten",
+          "preis_kg": 48.9,
+          "art": "steak"
+        }
       ]
     },
     {
@@ -23,8 +35,20 @@
       "verfuegbar": true,
       "text": "Geschmacksintensiver Premium-Cut aus dem vorderen Rücken. Feine Marmorierung und der typische Fettkern, der beim Grillen schmilzt und das Fleisch außergewöhnlich saftig macht. Ein Klassiker der argentinischen Grillkultur.",
       "varianten": [
-        { "id": "stueck", "name": "Am Stück", "info": "Ganzes Entrecôte am Stück", "preis_kg": 36.90, "art": "kg" },
-        { "id": "portion", "name": "Portioniert", "info": "Küchenfertig zugeschnitten", "preis_kg": 41.90, "art": "steak" }
+        {
+          "id": "stueck",
+          "name": "Am Stück",
+          "info": "Ganzes Entrecôte am Stück",
+          "preis_kg": 36.9,
+          "art": "kg"
+        },
+        {
+          "id": "portion",
+          "name": "Portioniert",
+          "info": "Küchenfertig zugeschnitten",
+          "preis_kg": 41.9,
+          "art": "steak"
+        }
       ]
     },
     {
@@ -36,8 +60,20 @@
       "verfuegbar": true,
       "text": "Hochwertiger Klassiker aus dem Rinderrücken mit dem typischen Fettrand, der dem Steak sein unverwechselbares Aroma gibt. Saftige Konsistenz, feine Struktur und ein kräftiger, vollmundiger Geschmack.",
       "varianten": [
-        { "id": "stueck", "name": "Am Stück", "info": "Ganzes Rumpsteak am Stück", "preis_kg": 28.90, "art": "kg" },
-        { "id": "portion", "name": "Portioniert", "info": "Küchenfertig zugeschnitten", "preis_kg": 33.90, "art": "steak" }
+        {
+          "id": "stueck",
+          "name": "Am Stück",
+          "info": "Ganzes Rumpsteak am Stück",
+          "preis_kg": 28.9,
+          "art": "kg"
+        },
+        {
+          "id": "portion",
+          "name": "Portioniert",
+          "info": "Küchenfertig zugeschnitten",
+          "preis_kg": 33.9,
+          "art": "steak"
+        }
       ]
     },
     {
@@ -49,8 +85,20 @@
       "verfuegbar": true,
       "text": "Traditioneller Steak-Cut aus der Rinderhüfte. Feinfaserig, angenehm zart und mit kräftigem, natürlichem Fleischaroma – ideal für Grill und Pfanne. Der authentische Geschmack Argentiniens.",
       "varianten": [
-        { "id": "stueck", "name": "Am Stück", "info": "Ganze Rinderhüfte am Stück", "preis_kg": 22.90, "art": "kg" },
-        { "id": "portion", "name": "Portioniert", "info": "Küchenfertig zugeschnitten", "preis_kg": 28.90, "art": "steak" }
+        {
+          "id": "stueck",
+          "name": "Am Stück",
+          "info": "Ganze Rinderhüfte am Stück",
+          "preis_kg": 22.9,
+          "art": "kg"
+        },
+        {
+          "id": "portion",
+          "name": "Portioniert",
+          "info": "Küchenfertig zugeschnitten",
+          "preis_kg": 28.9,
+          "art": "steak"
+        }
       ]
     },
     {
@@ -62,10 +110,31 @@
       "verfuegbar": true,
       "text": "Exklusive Lammkrone von Tieren, die auf natürlichen Weiden aufwachsen und sich überwiegend von frischem Gras ernähren. Außergewöhnlich zart, fein marmoriert, mit mildem, elegantem Aroma – einer der edelsten Zuschnitte überhaupt.",
       "varianten": [
-        { "id": "stueck", "name": "Ganze Krone", "info": "Preis auf Anfrage – wir bestätigen ihn vor der Abholung", "preis_kg": null, "art": "stueck" }
+        {
+          "id": "stueck",
+          "name": "Ganze Krone",
+          "info": "Frisch für Sie vorbereitet, Menge nach Wunsch",
+          "preis_kg": 39.9,
+          "art": "kg"
+        }
       ]
     }
   ],
-  "steak_groessen_g": [200, 250, 300, 400, 500],
-  "kg_mengen": [0.5, 1, 1.5, 2, 2.5, 3, 4, 5]
+  "steak_groessen_g": [
+    200,
+    250,
+    300,
+    400,
+    500
+  ],
+  "kg_mengen": [
+    0.5,
+    1,
+    1.5,
+    2,
+    2.5,
+    3,
+    4,
+    5
+  ]
 }
