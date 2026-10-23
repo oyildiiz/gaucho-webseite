@@ -1,4 +1,4 @@
-// n8n Code-Knoten „Reservierung prüfen“: prüft die Anfrage, baut die Mail an info@gaucho.at und die WhatsApp-Nachricht
+// n8n Code-Knoten „Reservierung prüfen“: prüft die Anfrage, baut die Mail an info@gaucho.at und die Telegram-Nachricht an Papa
 const b = $input.first().json.body || {};
 const esc = s => String(s == null ? '' : s).slice(0, 600).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const fehler = m => [{ json: { gueltig: false, spam: false, fehler: m } }];
@@ -19,5 +19,5 @@ const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freita
 const wann = `${TAGE[tag.getUTCDay()]}, ${datum.slice(8, 10)}.${datum.slice(5, 7)}.${datum.slice(0, 4)} um ${zeit} Uhr`;
 const html = `<div style="font-family:Arial,sans-serif;font-size:14px;color:#222"><div style="background:#f4efe6;border-left:4px solid #b08d57;padding:12px 16px;margin:0 0 16px;font-size:16px"><b>${esc(name)}</b><br><a href="mailto:${esc(email)}">${esc(email)}</a> · <a href="tel:${esc(tel.replace(/[^\d+]/g, ''))}">${esc(tel)}</a></div><h2 style="margin:0 0 8px">Neue Reservierungsanfrage</h2><p style="font-size:16px;margin:0 0 16px"><b>${esc(wann)} · ${personen} Person(en)</b></p>${b.msg ? `<p><b>Bemerkung:</b><br>${esc(b.msg).replace(/\n/g, '<br>')}</p>` : ''}<p style="color:#666;font-size:12px">Bitte bestätigen: Mit „Antworten“ schreiben Sie direkt an den Gast. Ist kein Tisch frei, bitte anrufen.</p></div>`;
 const mail = { message: { subject: `${name} (${email}) – Reservierung ${wann} – ${personen} Pers.`, body: { contentType: 'HTML', content: html }, toRecipients: [{ emailAddress: { address: 'info@gaucho.at' } }], replyTo: [{ emailAddress: { address: email, name } }] }, saveToSentItems: false };
-const whatsapp = `*Neue Reservierung*\n${wann}\n*${personen} Person(en)*\n\n${name}\nTel: ${tel}\n${email}${b.msg ? '\n\nBemerkung: ' + String(b.msg).slice(0, 300) : ''}`;
-return [{ json: { gueltig: true, spam: false, mail, whatsapp } }];
+const nachricht = `🔔 Neue Reservierung\n${wann}\n${personen} Person(en)\n\n${name}\nTel: ${tel}\n${email}${b.msg ? '\n\nBemerkung: ' + String(b.msg).slice(0, 300) : ''}`;
+return [{ json: { gueltig: true, spam: false, mail, nachricht } }];
