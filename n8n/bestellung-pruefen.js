@@ -7,7 +7,7 @@ const PREISE = {
   churrasco: { name: 'Churrasco (Hüftsteak)', stueck: 22.90, portion: 28.90 },
   lammkrone: { name: 'Lammkrone (Neuseeland)', stueck: 39.90 }
 };
-const GROESSEN = [200, 250, 300, 400, 500], KG = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
+const GROESSEN = { 'bife-ancho': [300, 400, 500] }, STANDARD_GROESSEN = [200, 300, 400, 500], KG = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
 const OEFFNUNG = { 0: [[660, 840], [1020, 1350]], 1: [], 2: [[1020, 1350]], 3: [[1020, 1350]], 4: [[1020, 1350]], 5: [[1020, 1350]], 6: [[660, 840], [1020, 1350]] };
 const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 const esc = s => String(s == null ? '' : s).slice(0, 600).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -28,7 +28,7 @@ const tageVoraus = Math.round((tag - heute) / 86400000);
 if (tageVoraus < 0 || tageVoraus > 31) return fehler('Abholtag nicht möglich');
 const min = +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5);
 if (tageVoraus === 0 && min < jetztMin + 60) return fehler('Abholung heute frühestens in einer Stunde möglich');
-if (!(OEFFNUNG[tag.getUTCDay()] || []).some(([v, bis]) => min >= v && min <= bis - 30)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
+if (!(OEFFNUNG[tag.getUTCDay()] || []).some(([v, bis]) => min >= v && min <= bis)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
 const pos = Array.isArray(b.positionen) ? b.positionen.slice(0, 30) : [];
 if (!pos.length) return fehler('Warenkorb leer');
 let summe = 0, aufAnfrage = false;
@@ -38,7 +38,7 @@ for (const p of pos) {
   let text, kg = 0, kiloPreis;
   if (p.vid === 'portion' && pr.portion) {
     const g = +p.groesse_g, n = Math.round(+p.anzahl);
-    if (!GROESSEN.includes(g) || !(n >= 1 && n <= 30)) return fehler('Menge ungültig');
+    if (!(GROESSEN[p.pid] || STANDARD_GROESSEN).includes(g) || !(n >= 1 && n <= 30)) return fehler('Menge ungültig');
     kg = n * g / 1000; kiloPreis = pr.portion; text = `${n} × ${g} g Steak, portioniert`;
   } else if (p.vid === 'stueck' && pr.stueck) {
     const k = +p.kg; if (!KG.includes(k)) return fehler('Menge ungültig');

@@ -88,7 +88,7 @@ function sende(form, daten, ok, knopf) {
     function aktuelleVariante() { var r = karte.querySelector('input[type=radio]:checked'); return variante(p.id, r ? r.value : p.varianten[0].id); }
     function zeichneMenge() {
       var v = aktuelleVariante(), id = p.id;
-      if (v.art === 'steak') menge.innerHTML = '<div><label for="g-' + id + '">Steakgröße</label><select id="g-' + id + '" data-g>' + optionen(DATEN.steak_groessen_g, function (g) { return 'ca. ' + g + ' g'; }, 300) + '</select></div><div><label for="a-' + id + '">Anzahl</label><select id="a-' + id + '" data-a>' + optionen([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], function (a) { return a + (a === 1 ? ' Steak' : ' Steaks'); }, 2) + '</select></div>';
+      if (v.art === 'steak') menge.innerHTML = '<div><label for="g-' + id + '">Steakgröße</label><select id="g-' + id + '" data-g>' + optionen(v.groessen_g || DATEN.steak_groessen_g, function (g) { return 'ca. ' + g + ' g'; }, 300) + '</select></div><div><label for="a-' + id + '">Anzahl</label><select id="a-' + id + '" data-a>' + optionen([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], function (a) { return a + (a === 1 ? ' Steak' : ' Steaks'); }, 2) + '</select></div>';
       else if (v.art === 'kg') menge.innerHTML = '<div><label for="k-' + id + '">Menge</label><select id="k-' + id + '" data-k>' + optionen(DATEN.kg_mengen, function (k) { return 'ca. ' + k.toLocaleString('de-AT') + ' kg'; }, 1) + '</select></div>';
       else menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5, 6], function (a) { return a + ' Stück'; }, 1) + '</select></div>';
       menge.querySelectorAll('select').forEach(function (s) { s.addEventListener('change', rechne); });
@@ -129,10 +129,10 @@ function sende(form, daten, ok, knopf) {
   var form = document.getElementById('bestellung'), tag = form.querySelector('#b-datum'), zeit = form.querySelector('#b-zeit');
   var tage = [], d = new Date(); d.setHours(12, 0, 0, 0);
   // Abholung auch heute möglich, frühestens eine Stunde nach der Bestellung
-  function heuteNochFrei(x) { var j = new Date(); return slots(x, 30).some(function (z) { return minuten(z) > j.getHours() * 60 + j.getMinutes() + 60; }); }
-  for (var i = 0; tage.length < 12 && i < 30; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 30).length) tage.push(x); }
+  function heuteNochFrei(x) { var j = new Date(); return slots(x, 0).some(function (z) { return minuten(z) > j.getHours() * 60 + j.getMinutes() + 60; }); }
+  for (var i = 0; tage.length < 12 && i < 30; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 0).length) tage.push(x); }
   tag.innerHTML = tage.map(function (x) { return '<option value="' + isoDatum(x) + '">' + (isoDatum(x) === isoDatum(new Date()) ? 'Heute' : TAGE[x.getDay()]) + ', ' + x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long' }) + '</option>'; }).join('');
-  function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 30, true); }
+  function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 0, true); }
   tag.addEventListener('change', zeiten); zeiten();
 
   form.addEventListener('submit', function (ev) {

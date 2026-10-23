@@ -22,7 +22,13 @@
           "name": "Portioniert",
           "info": "Sehnenfrei geputzt, küchenfertig zugeschnitten",
           "preis_kg": 48.9,
-          "art": "steak"
+          "art": "steak",
+          "groessen_g": [
+            200,
+            300,
+            400,
+            500
+          ]
         }
       ]
     },
@@ -47,7 +53,12 @@
           "name": "Portioniert",
           "info": "Küchenfertig zugeschnitten",
           "preis_kg": 41.9,
-          "art": "steak"
+          "art": "steak",
+          "groessen_g": [
+            300,
+            400,
+            500
+          ]
         }
       ]
     },
@@ -72,7 +83,13 @@
           "name": "Portioniert",
           "info": "Küchenfertig zugeschnitten",
           "preis_kg": 33.9,
-          "art": "steak"
+          "art": "steak",
+          "groessen_g": [
+            200,
+            300,
+            400,
+            500
+          ]
         }
       ]
     },
@@ -97,7 +114,13 @@
           "name": "Portioniert",
           "info": "Küchenfertig zugeschnitten",
           "preis_kg": 28.9,
-          "art": "steak"
+          "art": "steak",
+          "groessen_g": [
+            200,
+            300,
+            400,
+            500
+          ]
         }
       ]
     },
@@ -122,7 +145,6 @@
   ],
   "steak_groessen_g": [
     200,
-    250,
     300,
     400,
     500
