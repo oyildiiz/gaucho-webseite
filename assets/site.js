@@ -18,17 +18,18 @@ document.documentElement.classList.add('js');
 // Öffnungszeiten -> mögliche Uhrzeiten (0 = Sonntag)
 var OEFFNUNG = { 0: [['11:00', '14:00'], ['17:00', '22:30']], 1: [], 2: [['17:00', '22:30']], 3: [['17:00', '22:30']], 4: [['17:00', '22:30']], 5: [['17:00', '22:30']], 6: [['11:00', '14:00'], ['17:00', '22:30']] };
 var TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+var VORLAUF = 15; // Minuten: so kurzfristig kann man heute noch reservieren oder abholen
 function minuten(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
 function zeitText(m) { return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
 function isoDatum(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
 function slots(datum, abSchluss) {
   var liste = [];
-  (OEFFNUNG[datum.getDay()] || []).forEach(function (f) { for (var m = minuten(f[0]); m <= minuten(f[1]) - abSchluss; m += 30) liste.push(zeitText(m)); });
+  (OEFFNUNG[datum.getDay()] || []).forEach(function (f) { for (var m = minuten(f[0]); m <= minuten(f[1]) - abSchluss; m += 15) liste.push(zeitText(m)); });
   return liste;
 }
 function fuelleZeiten(select, datum, abSchluss, nurZukunft) {
   var jetzt = new Date(), heute = isoDatum(jetzt) === isoDatum(datum);
-  var liste = slots(datum, abSchluss).filter(function (z) { return !(nurZukunft && heute && minuten(z) <= jetzt.getHours() * 60 + jetzt.getMinutes() + 60); });
+  var liste = slots(datum, abSchluss).filter(function (z) { return !(nurZukunft && heute && minuten(z) < jetzt.getHours() * 60 + jetzt.getMinutes() + VORLAUF); });
   select.innerHTML = liste.length ? liste.map(function (z) { return '<option>' + z + '</option>'; }).join('') : '<option value="">An diesem Tag geschlossen</option>';
 }
 function sende(form, daten, ok, knopf) {
@@ -128,8 +129,8 @@ function sende(form, daten, ok, knopf) {
   // Abholtermine: ab heute, 12 Öffnungstage im Voraus
   var form = document.getElementById('bestellung'), tag = form.querySelector('#b-datum'), zeit = form.querySelector('#b-zeit');
   var tage = [], d = new Date(); d.setHours(12, 0, 0, 0);
-  // Abholung auch heute möglich, frühestens eine Stunde nach der Bestellung
-  function heuteNochFrei(x) { var j = new Date(); return slots(x, 30).some(function (z) { return minuten(z) > j.getHours() * 60 + j.getMinutes() + 60; }); }
+  // Abholung auch heute möglich, frühestens 15 Minuten nach der Bestellung
+  function heuteNochFrei(x) { var j = new Date(); return slots(x, 30).some(function (z) { return minuten(z) >= j.getHours() * 60 + j.getMinutes() + VORLAUF; }); }
   for (var i = 0; tage.length < 12 && i < 30; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 30).length) tage.push(x); }
   tag.innerHTML = tage.map(function (x) { return '<option value="' + isoDatum(x) + '">' + (isoDatum(x) === isoDatum(new Date()) ? 'Heute' : TAGE[x.getDay()]) + ', ' + x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long' }) + '</option>'; }).join('');
   function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 30, true); }

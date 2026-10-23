@@ -254,7 +254,7 @@ def seite_fleisch(daten):
                         "Bestellen Sie die Cuts aus unserer Küche für Ihren eigenen Grill. Wir schneiden frisch für Sie zu – Sie holen zur gewünschten Zeit bei uns ab und bezahlen bequem vor Ort.") + f"""
 <section class="abschnitt shop-ablauf"><div class="wrap drei">
  <div><span class="nr">1</span><h3>Auswählen</h3><p>Cut, Zuschnitt und Menge wählen.</p></div>
- <div><span class="nr">2</span><h3>Abholzeit wählen</h3><p>Zu unseren Öffnungszeiten – auch noch heute, frühestens eine Stunde nach Bestellung.</p></div>
+ <div><span class="nr">2</span><h3>Abholzeit wählen</h3><p>Zu unseren Öffnungszeiten – auch sofort: schon 15 Minuten nach der Bestellung abholbereit.</p></div>
  <div><span class="nr">3</span><h3>Abholen & bezahlen</h3><p>Bar oder mit Karte bei Abholung im Gaucho.</p></div>
 </div></section>
 <section class="abschnitt produkte"><div class="wrap">{karten}
