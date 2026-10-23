@@ -1,0 +1,62 @@
+// n8n Code-Knoten „Bestellung prüfen“: prüft die Bestellung und rechnet die Summe selbst (Browserwerte zählen nicht)
+const b = $input.first().json.body || {};
+const PREISE = {
+  lomo: { name: 'Lomo (Rinderfilet)', stueck: 43.90, portion: 48.90 },
+  'bife-ancho': { name: 'Bife Ancho (Entrecôte)', stueck: 36.90, portion: 41.90 },
+  bife: { name: 'Bife (Rumpsteak)', stueck: 28.90, portion: 33.90 },
+  churrasco: { name: 'Churrasco (Hüftsteak)', stueck: 22.90, portion: 28.90 },
+  lammkrone: { name: 'Lammkrone (Neuseeland)', stueck: null }
+};
+const GROESSEN = [200, 250, 300, 400, 500], KG = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
+const OEFFNUNG = { 0: [[660, 840], [1020, 1350]], 1: [], 2: [[1020, 1350]], 3: [[1020, 1350]], 4: [[1020, 1350]], 5: [[1020, 1350]], 6: [[660, 840], [1020, 1350]] };
+const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+const esc = s => String(s == null ? '' : s).slice(0, 600).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const euro = x => '€ ' + x.toFixed(2).replace('.', ',');
+const fehler = m => [{ json: { gueltig: false, spam: false, fehler: m } }];
+
+if (b.website && String(b.website).trim()) return [{ json: { gueltig: false, spam: true } }];
+const name = String(b.name || '').trim().slice(0, 80), email = String(b.email || '').trim().slice(0, 120), tel = String(b.tel || '').trim().slice(0, 40);
+if (!name) return fehler('Name fehlt');
+if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fehler('E-Mail ungültig');
+const ab = b.abholung || {}, datum = String(ab.datum || ''), zeit = String(ab.zeit || '');
+if (!/^\d{4}-\d{2}-\d{2}$/.test(datum) || !/^\d{2}:\d{2}$/.test(zeit)) return fehler('Abholtermin fehlt');
+const tag = new Date(datum + 'T12:00:00Z'), heute = new Date(new Date().toISOString().slice(0, 10) + 'T12:00:00Z');
+const tageVoraus = Math.round((tag - heute) / 86400000);
+if (tageVoraus < 1 || tageVoraus > 31) return fehler('Abholtag nicht möglich');
+const min = +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5);
+if (!(OEFFNUNG[tag.getUTCDay()] || []).some(([v, bis]) => min >= v && min <= bis - 30)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
+const pos = Array.isArray(b.positionen) ? b.positionen.slice(0, 30) : [];
+if (!pos.length) return fehler('Warenkorb leer');
+let summe = 0, aufAnfrage = false;
+const zeilen = [];
+for (const p of pos) {
+  const pr = PREISE[p.pid]; if (!pr) return fehler('Unbekanntes Produkt');
+  let text, kg = 0, kiloPreis;
+  if (p.vid === 'portion' && pr.portion) {
+    const g = +p.groesse_g, n = Math.round(+p.anzahl);
+    if (!GROESSEN.includes(g) || !(n >= 1 && n <= 30)) return fehler('Menge ungültig');
+    kg = n * g / 1000; kiloPreis = pr.portion; text = `${n} × ${g} g Steak, portioniert`;
+  } else if (p.vid === 'stueck' && p.pid !== 'lammkrone') {
+    const k = +p.kg; if (!KG.includes(k)) return fehler('Menge ungültig');
+    kg = k; kiloPreis = pr.stueck; text = `ca. ${String(k).replace('.', ',')} kg am Stück`;
+  } else if (p.pid === 'lammkrone') {
+    const n = Math.round(+p.anzahl); if (!(n >= 1 && n <= 6)) return fehler('Menge ungültig');
+    text = `${n} Stück`; aufAnfrage = true;
+  } else return fehler('Zuschnitt ungültig');
+  const betrag = kiloPreis ? Math.round(kg * kiloPreis * 100) / 100 : null;
+  if (betrag) summe += betrag;
+  zeilen.push({ produkt: pr.name, menge: text, kilopreis: kiloPreis ? euro(kiloPreis) + '/kg' : 'auf Anfrage', betrag: betrag ? 'ca. ' + euro(betrag) : 'auf Anfrage' });
+}
+summe = Math.round(summe * 100) / 100;
+const jetzt = new Date();
+const nr = 'G-' + datum.slice(2, 4) + datum.slice(5, 7) + datum.slice(8, 10) + '-' + String(jetzt.getTime()).slice(-4);
+const wann = `${TAGE[tag.getUTCDay()]}, ${datum.slice(8, 10)}.${datum.slice(5, 7)}.${datum.slice(0, 4)} um ${zeit} Uhr`;
+const zahlart = b.zahlung === 'online' ? 'Online (noch nicht aktiv)' : 'Bei Abholung (bar/Karte)';
+const tabelle = zeilen.map(z => `<tr><td style="padding:8px 16px 8px 0;border-bottom:1px solid #eee"><b>${esc(z.produkt)}</b><br><span style="color:#666">${esc(z.menge)}</span></td><td style="padding:8px 16px 8px 0;border-bottom:1px solid #eee;color:#666">${esc(z.kilopreis)}</td><td style="padding:8px 0;border-bottom:1px solid #eee;text-align:right">${esc(z.betrag)}</td></tr>`).join('');
+const html = `<div style="font-family:Arial,sans-serif;font-size:14px;color:#222"><h2 style="margin:0 0 4px">Neue Fleisch-Bestellung ${nr}</h2><p style="margin:0 0 18px;font-size:16px"><b>Abholung: ${esc(wann)}</b></p>
+<table style="border-collapse:collapse;width:100%;max-width:640px">${tabelle}<tr><td colspan="2" style="padding:12px 0"><b>Richtpreis gesamt</b> (nach Gewicht)</td><td style="padding:12px 0;text-align:right"><b>ca. ${euro(summe)}${aufAnfrage ? ' + Anfrage' : ''}</b></td></tr></table>
+<p><b>Kunde:</b> ${esc(name)}<br><b>E-Mail:</b> ${esc(email)}<br><b>Telefon:</b> ${esc(tel) || '–'}<br><b>Bezahlung:</b> ${esc(zahlart)}</p>
+${b.msg ? `<p><b>Wünsche:</b><br>${esc(b.msg).replace(/\n/g, '<br>')}</p>` : ''}
+<p style="color:#666;font-size:12px">Mit „Antworten“ schreiben Sie direkt an den Kunden. Bestellung über gaucho-webseite (Fleisch-Shop).</p></div>`;
+const mail = { message: { subject: `Fleisch-Bestellung ${nr} – Abholung ${wann} – ${name}`, body: { contentType: 'HTML', content: html }, toRecipients: [{ emailAddress: { address: 'info@gaucho.at' } }], replyTo: [{ emailAddress: { address: email, name } }] }, saveToSentItems: false };
+return [{ json: { gueltig: true, spam: false, nr, mail, zeile: { nr, abholung: `${datum} ${zeit}`, kunde: name, email, tel, positionen: zeilen.map(z => `${z.produkt}: ${z.menge} (${z.betrag})`).join(' | '), summe_eur: summe, zahlart, status: 'neu', wunsch: String(b.msg || '').slice(0, 600) } } }];
