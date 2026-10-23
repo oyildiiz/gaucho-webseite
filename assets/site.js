@@ -24,9 +24,11 @@ var VORLAUF = 15; // Minuten: so kurzfristig kann man heute noch reservieren ode
 function minuten(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
 function zeitText(m) { return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
 function isoDatum(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+// Silvester (31.12.) ist immer offen – fällt er auf einen Montag, gelten die Dienstagszeiten
+function wochentag(datum) { var t = datum.getDay(); return t === 1 && datum.getMonth() === 11 && datum.getDate() === 31 ? 2 : t; }
 function slots(datum, abSchluss, plan) {
   var liste = [];
-  ((plan || OEFFNUNG)[datum.getDay()] || []).forEach(function (f) { for (var m = minuten(f[0]); m <= minuten(f[1]) - abSchluss; m += 15) liste.push(zeitText(m)); });
+  ((plan || OEFFNUNG)[wochentag(datum)] || []).forEach(function (f) { for (var m = minuten(f[0]); m <= minuten(f[1]) - abSchluss; m += 15) liste.push(zeitText(m)); });
   return liste;
 }
 function fuelleZeiten(select, datum, abSchluss, nurZukunft, plan) {
@@ -56,9 +58,19 @@ function sende(form, daten, ok, knopf) {
   var form = document.getElementById('reservierung');
   if (!form) return;
   var datum = form.querySelector('#r-datum'), zeit = form.querySelector('#r-zeit');
-  // Reservierbar bis drei Monate im Voraus, Montag (Ruhetag) erscheint gar nicht
-  fuelleTage(datum, 92, 92);
-  function zeiten() { fuelleZeiten(zeit, new Date(datum.value + 'T12:00'), 30, true); }
+  // Datum frei eintippen oder im Kalender wählen, bis ein Jahr im Voraus; Montag (Ruhetag) wird sofort abgewiesen
+  var bis = new Date(); bis.setFullYear(bis.getFullYear() + 1); datum.max = isoDatum(bis);
+  var erster = document.createElement('select'); fuelleTage(erster, 14, 1);
+  datum.min = datum.value = erster.value;
+  function zeiten() {
+    if (!datum.value) { zeit.innerHTML = '<option value="">Bitte Datum wählen</option>'; return; }
+    var tag = new Date(datum.value + 'T12:00');
+    fuelleZeiten(zeit, tag, 30, true);
+    var meldung = zeit.value ? '' : tag.getDay() === 1 ? 'Montag ist Ruhetag – bitte einen anderen Tag wählen.' : 'An diesem Tag ist keine Reservierung mehr möglich.';
+    if (meldung) zeit.innerHTML = '<option value="">' + meldung + '</option>';
+    datum.setCustomValidity(meldung);
+    if (meldung) datum.reportValidity();
+  }
   datum.addEventListener('change', zeiten); zeiten();
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();

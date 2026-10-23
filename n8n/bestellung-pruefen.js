@@ -30,7 +30,9 @@ const tageVoraus = Math.round((tag - heute) / 86400000);
 if (tageVoraus < 0 || tageVoraus > 31) return fehler('Abholtag nicht möglich');
 const min = +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5);
 if (tageVoraus === 0 && min < jetztMin + 10) return fehler('Abholung heute frühestens in 15 Minuten möglich');
-if (!(OEFFNUNG[tag.getUTCDay()] || []).some(([v, bis]) => min >= v && min <= bis - 30)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
+// Silvester (31.12.) ist immer offen – fällt er auf einen Montag, gelten die Dienstagszeiten
+const wtag = tag.getUTCDay() === 1 && datum.slice(5) === '12-31' ? 2 : tag.getUTCDay();
+if (!(OEFFNUNG[wtag] || []).some(([v, bis]) => min >= v && min <= bis - 30)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
 const pos = Array.isArray(b.positionen) ? b.positionen.slice(0, 30) : [];
 if (!pos.length) return fehler('Warenkorb leer');
 let summe = 0, aufAnfrage = false;
