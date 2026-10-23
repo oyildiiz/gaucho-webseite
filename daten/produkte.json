@@ -13,9 +13,13 @@
         {
           "id": "stueck",
           "name": "Am Stück",
-          "info": "Ganzes Rinderfilet, unportioniert",
+          "info": "Ganzes Rinderfilet, ca. 1,6–1,8 kg – genaues Gewicht je nach Lager",
           "preis_kg": 43.9,
-          "art": "kg"
+          "art": "ganz",
+          "gewicht_kg": [
+            1.6,
+            1.8
+          ]
         },
         {
           "id": "portion",
@@ -49,9 +53,13 @@
         {
           "id": "stueck",
           "name": "Am Stück",
-          "info": "Ganzes Entrecôte am Stück",
+          "info": "Ganzes Entrecôte, ca. 2,5–3,5 kg – genaues Gewicht je nach Lager",
           "preis_kg": 36.9,
-          "art": "kg"
+          "art": "ganz",
+          "gewicht_kg": [
+            2.5,
+            3.5
+          ]
         },
         {
           "id": "portion",
@@ -84,9 +92,13 @@
         {
           "id": "stueck",
           "name": "Am Stück",
-          "info": "Ganzes Rumpsteak am Stück",
+          "info": "Ganzes Rumpsteak, ca. 3,5–4,5 kg – genaues Gewicht je nach Lager",
           "preis_kg": 28.9,
-          "art": "kg"
+          "art": "ganz",
+          "gewicht_kg": [
+            3.5,
+            4.5
+          ]
         },
         {
           "id": "portion",
@@ -120,9 +132,13 @@
         {
           "id": "stueck",
           "name": "Am Stück",
-          "info": "Ganze Rinderhüfte am Stück",
+          "info": "Ganze Rinderhüfte, ca. 2,5–3,5 kg – genaues Gewicht je nach Lager",
           "preis_kg": 22.9,
-          "art": "kg"
+          "art": "ganz",
+          "gewicht_kg": [
+            2.5,
+            3.5
+          ]
         },
         {
           "id": "portion",
@@ -147,7 +163,7 @@
     {
       "id": "lammkrone",
       "name": "Lammkrone",
-      "untertitel": "Green Feed",
+      "untertitel": "Green Feed · tiefgefroren",
       "herkunft": "Neuseeland",
       "bild": "",
       "verfuegbar": true,
@@ -156,9 +172,13 @@
         {
           "id": "stueck",
           "name": "Ganze Krone",
-          "info": "Frisch für Sie vorbereitet, Menge nach Wunsch",
+          "info": "Tiefgefroren, ca. 1–1,3 kg pro Krone",
           "preis_kg": 39.9,
-          "art": "kg"
+          "art": "ganz",
+          "gewicht_kg": [
+            1.0,
+            1.3
+          ]
         }
       ]
     }
@@ -173,15 +193,5 @@
     800,
     900,
     1000
-  ],
-  "kg_mengen": [
-    0.5,
-    1,
-    1.5,
-    2,
-    2.5,
-    3,
-    4,
-    5
   ]
 }

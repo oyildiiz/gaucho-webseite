@@ -101,12 +101,16 @@ function sende(form, daten, ok, knopf) {
   var DATEN = JSON.parse(datenEl.textContent), P = {};
   DATEN.produkte.forEach(function (p) { P[p.id] = p; });
   function euro(x) { return '€ ' + x.toLocaleString('de-AT', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-  function kgVon(pos) { return pos.art === 'steak' ? pos.anzahl * pos.groesse_g / 1000 : pos.art === 'kg' ? pos.kg : 0; }
+  function kgVon(pos) { return pos.art === 'steak' ? pos.anzahl * pos.groesse_g / 1000 : pos.art === 'ganz' ? pos.anzahl * mitte(variante(pos.pid, pos.vid)) : 0; }
+  // Ganze Stücke: Richtpreis mit dem mittleren Gewicht, Spanne wird dazu angezeigt
+  function mitte(v) { return (v.gewicht_kg[0] + v.gewicht_kg[1]) / 2; }
+  function kgText(x) { return x.toLocaleString('de-AT'); }
+  function spanne(v) { return 'ca. ' + kgText(v.gewicht_kg[0]) + '–' + kgText(v.gewicht_kg[1]) + ' kg'; }
   function preisVon(pos) { var v = variante(pos.pid, pos.vid); return v && v.preis_kg ? kgVon(pos) * v.preis_kg : null; }
   function variante(pid, vid) { var p = P[pid]; if (!p) return null; for (var i = 0; i < p.varianten.length; i++) if (p.varianten[i].id === vid) return p.varianten[i]; return null; }
   function beschreibung(pos) {
     if (pos.art === 'steak') return pos.anzahl + ' × ' + pos.groesse_g + ' g Steak (ca. ' + kgVon(pos).toLocaleString('de-AT') + ' kg)';
-    if (pos.art === 'kg') return 'ca. ' + pos.kg.toLocaleString('de-AT') + ' kg am Stück';
+    if (pos.art === 'ganz') return pos.anzahl + (pos.anzahl === 1 ? ' ganzes Stück' : ' ganze Stücke') + ', je ' + spanne(variante(pos.pid, pos.vid));
     return pos.anzahl + ' Stück';
   }
   function optionen(werte, text, vorgabe) { return werte.map(function (w) { return '<option value="' + w + '"' + (w === vorgabe ? ' selected' : '') + '>' + text(w) + '</option>'; }).join(''); }
@@ -117,7 +121,7 @@ function sende(form, daten, ok, knopf) {
     function zeichneMenge() {
       var v = aktuelleVariante(), id = p.id;
       if (v.art === 'steak') menge.innerHTML = '<div><label for="g-' + id + '">Steakgröße</label><select id="g-' + id + '" data-g>' + optionen(v.groessen_g || DATEN.steak_groessen_g, function (g) { return 'ca. ' + (g >= 1000 ? (g / 1000).toString().replace('.', ',') + ' kg' : g + ' g'); }, 300) + '</select></div><div><label for="a-' + id + '">Anzahl</label><select id="a-' + id + '" data-a>' + optionen([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], function (a) { return a + (a === 1 ? ' Steak' : ' Steaks'); }, 2) + '</select></div>';
-      else if (v.art === 'kg') menge.innerHTML = '<div><label for="k-' + id + '">Menge</label><select id="k-' + id + '" data-k>' + optionen(DATEN.kg_mengen, function (k) { return 'ca. ' + k.toLocaleString('de-AT') + ' kg'; }, 1) + '</select></div>';
+      else if (v.art === 'ganz') menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5], function (a) { return a + (a === 1 ? ' ganzes Stück' : ' ganze Stücke') + ' (je ' + spanne(v) + ')'; }, 1) + '</select></div>';
       else menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5, 6], function (a) { return a + ' Stück'; }, 1) + '</select></div>';
       menge.querySelectorAll('select').forEach(function (s) { s.addEventListener('change', rechne); });
       rechne();
@@ -125,11 +129,14 @@ function sende(form, daten, ok, knopf) {
     function position() {
       var v = aktuelleVariante(), pos = { pid: p.id, vid: v.id, art: v.art };
       if (v.art === 'steak') { pos.groesse_g = +menge.querySelector('[data-g]').value; pos.anzahl = +menge.querySelector('[data-a]').value; }
-      else if (v.art === 'kg') pos.kg = +menge.querySelector('[data-k]').value;
       else pos.anzahl = +menge.querySelector('[data-s]').value;
       return pos;
     }
-    function rechne() { var pr = preisVon(position()); rp.innerHTML = pr === null ? 'Preis auf Anfrage<small>wir bestätigen ihn vor der Abholung</small>' : 'ca. ' + euro(pr) + '<small>Richtpreis inkl. MwSt.</small>'; }
+    function rechne() {
+      var pos = position(), v = aktuelleVariante(), pr = preisVon(pos);
+      var zusatz = v.art === 'ganz' ? 'je nach Gewicht ' + euro(pos.anzahl * v.gewicht_kg[0] * v.preis_kg) + ' – ' + euro(pos.anzahl * v.gewicht_kg[1] * v.preis_kg) + ' · inkl. MwSt.' : 'Richtpreis inkl. MwSt.';
+      rp.innerHTML = pr === null ? 'Preis auf Anfrage<small>wir bestätigen ihn vor der Abholung</small>' : 'ca. ' + euro(pr) + '<small>' + zusatz + '</small>';
+    }
     karte.querySelectorAll('input[type=radio]').forEach(function (r) { r.addEventListener('change', zeichneMenge); });
     zeichneMenge();
     karte.querySelector('[data-in-korb]').addEventListener('click', function () {
@@ -140,7 +147,8 @@ function sende(form, daten, ok, knopf) {
 
   var liste = document.querySelector('[data-korb-liste]'), summeBox = document.querySelector('[data-korb-summe]'), summe = document.querySelector('[data-summe]');
   function korbZeichnen() {
-    var k = lies().filter(function (pos) { return P[pos.pid] && variante(pos.pid, pos.vid); });
+    var k = lies().filter(function (pos) { var v = P[pos.pid] && variante(pos.pid, pos.vid); return v && v.art === pos.art; });
+    if (k.length !== lies().length) schreib(k);
     if (!k.length) { liste.innerHTML = '<p class="leer">Ihr Warenkorb ist noch leer.</p>'; summeBox.hidden = true; return; }
     var gesamt = 0, offen = false;
     liste.innerHTML = k.map(function (pos, i) {

@@ -7,7 +7,9 @@ const PREISE = {
   churrasco: { name: 'Churrasco (Hüftsteak)', stueck: 22.90, portion: 28.90 },
   lammkrone: { name: 'Lammkrone (Neuseeland)', stueck: 39.90 }
 };
-const GROESSEN = { 'bife-ancho': [300, 400, 500, 600, 700, 800, 900, 1000] }, STANDARD_GROESSEN = [200, 300, 400, 500, 600, 700, 800, 900, 1000], KG = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
+// Ganze Stücke: Gewichtsspanne je Stück in kg (Richtpreis mit dem Mittelwert)
+const GANZ = { lomo: [1.6, 1.8], 'bife-ancho': [2.5, 3.5], bife: [3.5, 4.5], churrasco: [2.5, 3.5], lammkrone: [1.0, 1.3] };
+const GROESSEN = { 'bife-ancho': [300, 400, 500, 600, 700, 800, 900, 1000] }, STANDARD_GROESSEN = [200, 300, 400, 500, 600, 700, 800, 900, 1000];
 // Abholzeiten: Di–Fr 15:00–22:00, Sa/So 11:00–13:30 und 17:00–22:00 (jeweils Ende minus 30 Minuten)
 const OEFFNUNG = { 0: [[660, 840], [1020, 1350]], 1: [], 2: [[900, 1350]], 3: [[900, 1350]], 4: [[900, 1350]], 5: [[900, 1350]], 6: [[660, 840], [1020, 1350]] };
 const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
@@ -44,9 +46,10 @@ for (const p of pos) {
     const g = +p.groesse_g, n = Math.round(+p.anzahl);
     if (!(GROESSEN[p.pid] || STANDARD_GROESSEN).includes(g) || !(n >= 1 && n <= 30)) return fehler('Menge ungültig');
     kg = n * g / 1000; kiloPreis = pr.portion; text = `${n} × ${g} g Steak, portioniert`;
-  } else if (p.vid === 'stueck' && pr.stueck) {
-    const k = +p.kg; if (!KG.includes(k)) return fehler('Menge ungültig');
-    kg = k; kiloPreis = pr.stueck; text = `ca. ${String(k).replace('.', ',')} kg ${p.pid === 'lammkrone' ? '(ganze Krone)' : 'am Stück'}`;
+  } else if (p.vid === 'stueck' && GANZ[p.pid]) {
+    const n = Math.round(+p.anzahl), [von, bis] = GANZ[p.pid];
+    if (!(n >= 1 && n <= 5)) return fehler('Menge ungültig');
+    kg = n * (von + bis) / 2; kiloPreis = pr.stueck; text = `${n} × ${p.pid === 'lammkrone' ? 'ganze Krone, tiefgefroren' : 'ganzes Stück'}, je ca. ${String(von).replace('.', ',')}–${String(bis).replace('.', ',')} kg (je nach Lager)`;
   } else return fehler('Zuschnitt ungültig');
   const betrag = kiloPreis ? Math.round(kg * kiloPreis * 100) / 100 : null;
   if (betrag) summe += betrag;
