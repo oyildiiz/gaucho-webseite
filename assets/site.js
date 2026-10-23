@@ -17,26 +17,28 @@ document.documentElement.classList.add('js');
 
 // Öffnungszeiten -> mögliche Uhrzeiten (0 = Sonntag)
 var OEFFNUNG = { 0: [['11:00', '14:00'], ['17:00', '22:30']], 1: [], 2: [['17:00', '22:30']], 3: [['17:00', '22:30']], 4: [['17:00', '22:30']], 5: [['17:00', '22:30']], 6: [['11:00', '14:00'], ['17:00', '22:30']] };
+// Fleisch-Abholung: Di–Fr schon ab 15:00, Wochenende wie das Restaurant
+var ABHOLUNG = { 0: OEFFNUNG[0], 1: [], 2: [['15:00', '22:30']], 3: [['15:00', '22:30']], 4: [['15:00', '22:30']], 5: [['15:00', '22:30']], 6: OEFFNUNG[6] };
 var TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 var VORLAUF = 15; // Minuten: so kurzfristig kann man heute noch reservieren oder abholen
 function minuten(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }
 function zeitText(m) { return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }
 function isoDatum(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-function slots(datum, abSchluss) {
+function slots(datum, abSchluss, plan) {
   var liste = [];
-  (OEFFNUNG[datum.getDay()] || []).forEach(function (f) { for (var m = minuten(f[0]); m <= minuten(f[1]) - abSchluss; m += 15) liste.push(zeitText(m)); });
+  ((plan || OEFFNUNG)[datum.getDay()] || []).forEach(function (f) { for (var m = minuten(f[0]); m <= minuten(f[1]) - abSchluss; m += 15) liste.push(zeitText(m)); });
   return liste;
 }
-function fuelleZeiten(select, datum, abSchluss, nurZukunft) {
+function fuelleZeiten(select, datum, abSchluss, nurZukunft, plan) {
   var jetzt = new Date(), heute = isoDatum(jetzt) === isoDatum(datum);
-  var liste = slots(datum, abSchluss).filter(function (z) { return !(nurZukunft && heute && minuten(z) < jetzt.getHours() * 60 + jetzt.getMinutes() + VORLAUF); });
+  var liste = slots(datum, abSchluss, plan).filter(function (z) { return !(nurZukunft && heute && minuten(z) < jetzt.getHours() * 60 + jetzt.getMinutes() + VORLAUF); });
   select.innerHTML = liste.length ? liste.map(function (z) { return '<option>' + z + '</option>'; }).join('') : '<option value="">An diesem Tag geschlossen</option>';
 }
 // Auswahlliste der Öffnungstage (Montag fehlt); heute nur, wenn noch eine Uhrzeit frei ist
-function fuelleTage(select, tageVoraus, maxAnzahl) {
+function fuelleTage(select, tageVoraus, maxAnzahl, plan) {
   var tage = [], d = new Date(), j = new Date(); d.setHours(12, 0, 0, 0);
-  function heuteNochFrei(x) { return slots(x, 30).some(function (z) { return minuten(z) >= j.getHours() * 60 + j.getMinutes() + VORLAUF; }); }
-  for (var i = 0; tage.length < maxAnzahl && i < tageVoraus; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 30).length) tage.push(x); }
+  function heuteNochFrei(x) { return slots(x, 30, plan).some(function (z) { return minuten(z) >= j.getHours() * 60 + j.getMinutes() + VORLAUF; }); }
+  for (var i = 0; tage.length < maxAnzahl && i < tageVoraus; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 30, plan).length) tage.push(x); }
   select.innerHTML = tage.map(function (x) { return '<option value="' + isoDatum(x) + '">' + (isoDatum(x) === isoDatum(j) ? 'Heute' : TAGE[x.getDay()]) + ', ' + x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long' }) + '</option>'; }).join('');
 }
 function sende(form, daten, ok, knopf) {
@@ -136,8 +138,8 @@ function sende(form, daten, ok, knopf) {
   // Abholtermine: ab heute, 12 Öffnungstage im Voraus
   var form = document.getElementById('bestellung'), tag = form.querySelector('#b-datum'), zeit = form.querySelector('#b-zeit');
   // Abholung auch heute möglich, frühestens 15 Minuten nach der Bestellung
-  fuelleTage(tag, 30, 12);
-  function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 30, true); }
+  fuelleTage(tag, 30, 12, ABHOLUNG);
+  function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 30, true, ABHOLUNG); }
   tag.addEventListener('change', zeiten); zeiten();
 
   form.addEventListener('submit', function (ev) {

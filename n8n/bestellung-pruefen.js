@@ -8,7 +8,8 @@ const PREISE = {
   lammkrone: { name: 'Lammkrone (Neuseeland)', stueck: 39.90 }
 };
 const GROESSEN = { 'bife-ancho': [300, 400, 500, 600, 700, 800, 900, 1000] }, STANDARD_GROESSEN = [200, 300, 400, 500, 600, 700, 800, 900, 1000], KG = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
-const OEFFNUNG = { 0: [[660, 840], [1020, 1350]], 1: [], 2: [[1020, 1350]], 3: [[1020, 1350]], 4: [[1020, 1350]], 5: [[1020, 1350]], 6: [[660, 840], [1020, 1350]] };
+// Abholzeiten: Di–Fr 15:00–22:00, Sa/So 11:00–13:30 und 17:00–22:00 (jeweils Ende minus 30 Minuten)
+const OEFFNUNG = { 0: [[660, 840], [1020, 1350]], 1: [], 2: [[900, 1350]], 3: [[900, 1350]], 4: [[900, 1350]], 5: [[900, 1350]], 6: [[660, 840], [1020, 1350]] };
 const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 const esc = s => String(s == null ? '' : s).slice(0, 600).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const euro = x => '€ ' + x.toFixed(2).replace('.', ',');
