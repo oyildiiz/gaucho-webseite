@@ -104,13 +104,14 @@ function sende(form, daten, ok, knopf) {
   function kgVon(pos) { return pos.art === 'steak' ? pos.anzahl * pos.groesse_g / 1000 : pos.art === 'ganz' ? pos.anzahl * mitte(variante(pos.pid, pos.vid)) : 0; }
   // Ganze Stücke: Richtpreis mit dem mittleren Gewicht, Spanne wird dazu angezeigt
   function mitte(v) { return (v.gewicht_kg[0] + v.gewicht_kg[1]) / 2; }
+  function stueckWort(pid, n) { return n + (pid === 'lammkrone' ? (n === 1 ? ' ganze Krone' : ' ganze Kronen') : (n === 1 ? ' ganzes Stück' : ' ganze Stücke')); }
   function kgText(x) { return x.toLocaleString('de-AT'); }
   function spanne(v) { return 'ca. ' + kgText(v.gewicht_kg[0]) + '–' + kgText(v.gewicht_kg[1]) + ' kg'; }
   function preisVon(pos) { var v = variante(pos.pid, pos.vid); return v && v.preis_kg ? kgVon(pos) * v.preis_kg : null; }
   function variante(pid, vid) { var p = P[pid]; if (!p) return null; for (var i = 0; i < p.varianten.length; i++) if (p.varianten[i].id === vid) return p.varianten[i]; return null; }
   function beschreibung(pos) {
     if (pos.art === 'steak') return pos.anzahl + ' × ' + pos.groesse_g + ' g Steak (ca. ' + kgVon(pos).toLocaleString('de-AT') + ' kg)';
-    if (pos.art === 'ganz') return pos.anzahl + (pos.anzahl === 1 ? ' ganzes Stück' : ' ganze Stücke') + ', je ' + spanne(variante(pos.pid, pos.vid));
+    if (pos.art === 'ganz') return stueckWort(pos.pid, pos.anzahl) + ', je ' + spanne(variante(pos.pid, pos.vid));
     return pos.anzahl + ' Stück';
   }
   function optionen(werte, text, vorgabe) { return werte.map(function (w) { return '<option value="' + w + '"' + (w === vorgabe ? ' selected' : '') + '>' + text(w) + '</option>'; }).join(''); }
@@ -121,7 +122,7 @@ function sende(form, daten, ok, knopf) {
     function zeichneMenge() {
       var v = aktuelleVariante(), id = p.id;
       if (v.art === 'steak') menge.innerHTML = '<div><label for="g-' + id + '">Steakgröße</label><select id="g-' + id + '" data-g>' + optionen(v.groessen_g || DATEN.steak_groessen_g, function (g) { return 'ca. ' + (g >= 1000 ? (g / 1000).toString().replace('.', ',') + ' kg' : g + ' g'); }, 300) + '</select></div><div><label for="a-' + id + '">Anzahl</label><select id="a-' + id + '" data-a>' + optionen([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], function (a) { return a + (a === 1 ? ' Steak' : ' Steaks'); }, 2) + '</select></div>';
-      else if (v.art === 'ganz') menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5], function (a) { return a + (a === 1 ? ' ganzes Stück' : ' ganze Stücke') + ' (je ' + spanne(v) + ')'; }, 1) + '</select></div>';
+      else if (v.art === 'ganz') menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5], function (a) { return stueckWort(p.id, a) + ' (je ' + spanne(v) + ')'; }, 1) + '</select></div>';
       else menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5, 6], function (a) { return a + ' Stück'; }, 1) + '</select></div>';
       menge.querySelectorAll('select').forEach(function (s) { s.addEventListener('change', rechne); });
       rechne();
