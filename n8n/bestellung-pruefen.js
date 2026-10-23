@@ -27,7 +27,7 @@ const wien = {}; new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Vienna', y
 const heuteWien = `${wien.year}-${wien.month}-${wien.day}`, jetztMin = +wien.hour * 60 + +wien.minute;
 const tag = new Date(datum + 'T12:00:00Z'), heute = new Date(heuteWien + 'T12:00:00Z');
 const tageVoraus = Math.round((tag - heute) / 86400000);
-if (tageVoraus < 0 || tageVoraus > 31) return fehler('Abholtag nicht möglich');
+if (tageVoraus < 0) return fehler('Abholtag liegt in der Vergangenheit');
 const min = +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5);
 if (tageVoraus === 0 && min < jetztMin + 10) return fehler('Abholung heute frühestens in 15 Minuten möglich');
 // Silvester (31.12.) ist immer offen – fällt er auf einen Montag, gelten die Dienstagszeiten

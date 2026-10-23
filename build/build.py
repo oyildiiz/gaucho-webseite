@@ -271,7 +271,7 @@ def seite_fleisch(daten):
  <form class="bestellung" id="bestellung" data-ziel="{BESTELL_WEBHOOK}" novalidate>
   <h2>Abholung & Kontakt</h2>
   <div class="felder">
-   <div class="feld"><label for="b-datum">Abholtag *</label><select id="b-datum" name="datum" required></select></div>
+   <div class="feld"><label for="b-datum">Abholtag *</label><input id="b-datum" name="datum" type="date" required></div>
    <div class="feld"><label for="b-zeit">Uhrzeit *</label><select id="b-zeit" name="zeit" required></select></div>
    <div class="feld"><label for="b-name">Name *</label><input id="b-name" name="name" autocomplete="name" required></div>
    <div class="feld"><label for="b-email">E-Mail *</label><input id="b-email" name="email" type="email" autocomplete="email" required></div>

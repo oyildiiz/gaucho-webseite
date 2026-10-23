@@ -43,6 +43,25 @@ function fuelleTage(select, tageVoraus, maxAnzahl, plan) {
   for (var i = 0; tage.length < maxAnzahl && i < tageVoraus; i++) { var x = new Date(d); x.setDate(d.getDate() + i); if (i === 0 ? heuteNochFrei(x) : slots(x, 30, plan).length) tage.push(x); }
   select.innerHTML = tage.map(function (x) { return '<option value="' + isoDatum(x) + '">' + (isoDatum(x) === isoDatum(j) ? 'Heute' : TAGE[x.getDay()]) + ', ' + x.toLocaleDateString('de-AT', { day: 'numeric', month: 'long' }) + '</option>'; }).join('');
 }
+// Datumsfeld: frei eintippen oder im Kalender wählen, ohne Grenze nach hinten; Montag (Ruhetag) wird sofort abgewiesen
+function datumsFeld(datum, zeit, plan, wort) {
+  var erster = document.createElement('select'); fuelleTage(erster, 14, 1, plan);
+  datum.min = datum.value = erster.value;
+  function zeiten() {
+    var meldung = '';
+    if (!datum.value) meldung = 'Bitte ein Datum wählen.';
+    else if (datum.value < datum.min) meldung = 'Dieses Datum liegt in der Vergangenheit – bitte ein späteres wählen.';
+    else {
+      var tag = new Date(datum.value + 'T12:00');
+      fuelleZeiten(zeit, tag, 30, true, plan);
+      if (!zeit.value) meldung = tag.getDay() === 1 ? 'Montag ist Ruhetag – bitte einen anderen Tag wählen.' : 'An diesem Tag ist keine ' + wort + ' mehr möglich.';
+    }
+    if (meldung) zeit.innerHTML = '<option value="">' + meldung + '</option>';
+    datum.setCustomValidity(meldung);
+    if (meldung && datum.value) datum.reportValidity();
+  }
+  datum.addEventListener('change', zeiten); zeiten();
+}
 function sende(form, daten, ok, knopf) {
   var status = form.querySelector('.form-status');
   knopf.disabled = true; status.className = 'form-status'; status.textContent = 'Wird gesendet …';
@@ -58,20 +77,7 @@ function sende(form, daten, ok, knopf) {
   var form = document.getElementById('reservierung');
   if (!form) return;
   var datum = form.querySelector('#r-datum'), zeit = form.querySelector('#r-zeit');
-  // Datum frei eintippen oder im Kalender wählen, bis ein Jahr im Voraus; Montag (Ruhetag) wird sofort abgewiesen
-  var bis = new Date(); bis.setFullYear(bis.getFullYear() + 1); datum.max = isoDatum(bis);
-  var erster = document.createElement('select'); fuelleTage(erster, 14, 1);
-  datum.min = datum.value = erster.value;
-  function zeiten() {
-    if (!datum.value) { zeit.innerHTML = '<option value="">Bitte Datum wählen</option>'; return; }
-    var tag = new Date(datum.value + 'T12:00');
-    fuelleZeiten(zeit, tag, 30, true);
-    var meldung = zeit.value ? '' : tag.getDay() === 1 ? 'Montag ist Ruhetag – bitte einen anderen Tag wählen.' : 'An diesem Tag ist keine Reservierung mehr möglich.';
-    if (meldung) zeit.innerHTML = '<option value="">' + meldung + '</option>';
-    datum.setCustomValidity(meldung);
-    if (meldung) datum.reportValidity();
-  }
-  datum.addEventListener('change', zeiten); zeiten();
+  datumsFeld(datum, zeit, OEFFNUNG, 'Reservierung');
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
@@ -147,12 +153,10 @@ function sende(form, daten, ok, knopf) {
   }
   korbZeichnen();
 
-  // Abholtermine: ab heute, 12 Öffnungstage im Voraus
+  // Abholtermin: ab heute, ohne Grenze nach hinten
   var form = document.getElementById('bestellung'), tag = form.querySelector('#b-datum'), zeit = form.querySelector('#b-zeit');
   // Abholung auch heute möglich, frühestens 15 Minuten nach der Bestellung
-  fuelleTage(tag, 30, 12, ABHOLUNG);
-  function zeiten() { fuelleZeiten(zeit, new Date(tag.value + 'T12:00'), 30, true, ABHOLUNG); }
-  tag.addEventListener('change', zeiten); zeiten();
+  datumsFeld(tag, zeit, ABHOLUNG, 'Abholung');
 
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
