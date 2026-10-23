@@ -86,7 +86,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <a class="skip" href="#inhalt">Zum Inhalt</a>
 <header class="kopf" id="kopf">
  <div class="wrap kopf-in">
-  <a class="marke" href="index.html" aria-label="{e(FIRMA['name'])} – Startseite"><img src="assets/logo-hell.png?v={version('logo-hell.png')}" alt="{e(FIRMA['name'])}" width="200" height="102"></a>
+  <a class="marke" href="index.html" aria-label="{e(FIRMA['name'])} – Startseite"><img src="assets/logo-hell.svg?v={version('logo-hell.svg')}" alt="{e(FIRMA['name'])}" width="200" height="100"></a>
   <nav class="nav" id="nav" aria-label="Hauptnavigation"><ul>{nav}</ul></nav>
   <div class="kopf-aktionen">
    <a class="korb-knopf" href="fleisch.html#korb" aria-label="Warenkorb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="korb-zahl" data-korb-zahl hidden>0</span></a>
@@ -101,7 +101,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <footer class="fuss">
  <div class="wrap fuss-raster">
   <div class="fuss-marke">
-   <img src="assets/logo-hell.png?v={version('logo-hell.png')}" alt="{e(FIRMA['name'])}" width="220" height="112" loading="lazy">
+   <img src="assets/logo-hell.svg?v={version('logo-hell.svg')}" alt="{e(FIRMA['name'])}" width="220" height="110" loading="lazy">
    <p>Original argentinische Küche und Premium-Fleisch zum Mitnehmen – in Fußach am Bodensee.</p>
   </div>
   <div><h2 class="fuss-titel">Besuchen</h2><p>{e(FIRMA['strasse'])}<br>{e(FIRMA['ort'])}<br>{e(FIRMA['region'])}</p><p><a href="{FIRMA['maps']}" target="_blank" rel="noopener">Route planen</a></p></div>
@@ -192,7 +192,7 @@ def seite_start(produkte):
 
 <section class="abschnitt band">
  <div class="wrap band-in einblenden">
-  <img class="band-stier" src="assets/stier-hell.png?v={version('stier-hell.png')}" alt="" width="180" height="228" loading="lazy">
+  <img class="band-stier" src="assets/stier-hell.svg?v={version('stier-hell.svg')}" alt="" width="180" height="202" loading="lazy">
   <div><h2>Ihr Tisch im <em>Gaucho</em></h2><p>Reservieren Sie online oder rufen Sie uns an – wir bestätigen Ihre Reservierung per E-Mail.</p></div>
   <div class="aktionen"><a class="btn" href="kontakt.html#reservieren">Online reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
  </div>
@@ -230,7 +230,7 @@ def seite_fleisch(daten):
     karten = ""
     for p in produkte:
         figur = (f'<figure class="produkt-bild">{bild(p["bild"], f"{p["name"]} ({p["untertitel"]}) vom GAUCHO", "(min-width: 900px) 34vw, 100vw")}</figure>'
-                 if p["bild"] else f'<figure class="produkt-bild ohne"><img src="assets/stier-hell.png?v={version("stier-hell.png")}" alt="" width="180" height="228"><span>{e(p["name"])}</span></figure>')
+                 if p["bild"] else f'<figure class="produkt-bild ohne"><img src="assets/stier-hell.svg?v={version("stier-hell.svg")}" alt="" width="180" height="202"><span>{e(p["name"])}</span></figure>')
         varianten = ""
         for i, v in enumerate(p["varianten"]):
             preis = f"{euro(v['preis_kg'])} <small>/ kg</small>" if v["preis_kg"] else "Preis auf Anfrage"
