@@ -7,7 +7,7 @@ const PREISE = {
   churrasco: { name: 'Churrasco (Hüftsteak)', stueck: 22.90, portion: 28.90 },
   lammkrone: { name: 'Lammkrone (Neuseeland)', stueck: 39.90 }
 };
-const GROESSEN = { 'bife-ancho': [300, 400, 500] }, STANDARD_GROESSEN = [200, 300, 400, 500], KG = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
+const GROESSEN = { 'bife-ancho': [300, 400, 500, 600, 700, 800, 900, 1000] }, STANDARD_GROESSEN = [200, 300, 400, 500, 600, 700, 800, 900, 1000], KG = [0.5, 1, 1.5, 2, 2.5, 3, 4, 5];
 const OEFFNUNG = { 0: [[660, 840], [1020, 1350]], 1: [], 2: [[1020, 1350]], 3: [[1020, 1350]], 4: [[1020, 1350]], 5: [[1020, 1350]], 6: [[660, 840], [1020, 1350]] };
 const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 const esc = s => String(s == null ? '' : s).slice(0, 600).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -17,6 +17,7 @@ const fehler = m => [{ json: { gueltig: false, spam: false, fehler: m } }];
 if (b.website && String(b.website).trim()) return [{ json: { gueltig: false, spam: true } }];
 const name = String(b.name || '').trim().slice(0, 80), email = String(b.email || '').trim().slice(0, 120), tel = String(b.tel || '').trim().slice(0, 40);
 if (!name) return fehler('Name fehlt');
+if (tel.replace(/\D/g, '').length < 6) return fehler('Telefon fehlt');
 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fehler('E-Mail ungültig');
 const ab = b.abholung || {}, datum = String(ab.datum || ''), zeit = String(ab.zeit || '');
 if (!/^\d{4}-\d{2}-\d{2}$/.test(datum) || !/^\d{2}:\d{2}$/.test(zeit)) return fehler('Abholtermin fehlt');
@@ -28,7 +29,7 @@ const tageVoraus = Math.round((tag - heute) / 86400000);
 if (tageVoraus < 0 || tageVoraus > 31) return fehler('Abholtag nicht möglich');
 const min = +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5);
 if (tageVoraus === 0 && min < jetztMin + 60) return fehler('Abholung heute frühestens in einer Stunde möglich');
-if (!(OEFFNUNG[tag.getUTCDay()] || []).some(([v, bis]) => min >= v && min <= bis)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
+if (!(OEFFNUNG[tag.getUTCDay()] || []).some(([v, bis]) => min >= v && min <= bis - 30)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
 const pos = Array.isArray(b.positionen) ? b.positionen.slice(0, 30) : [];
 if (!pos.length) return fehler('Warenkorb leer');
 let summe = 0, aufAnfrage = false;

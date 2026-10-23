@@ -275,7 +275,7 @@ def seite_fleisch(daten):
    <div class="feld"><label for="b-zeit">Uhrzeit *</label><select id="b-zeit" name="zeit" required></select></div>
    <div class="feld"><label for="b-name">Name *</label><input id="b-name" name="name" autocomplete="name" required></div>
    <div class="feld"><label for="b-email">E-Mail *</label><input id="b-email" name="email" type="email" autocomplete="email" required></div>
-   <div class="feld"><label for="b-tel">Telefon (optional)</label><input id="b-tel" name="tel" type="tel" autocomplete="tel"></div>
+   <div class="feld"><label for="b-tel">Telefon *</label><input id="b-tel" name="tel" type="tel" autocomplete="tel" required></div>
    <div class="feld voll"><label for="b-msg">Wünsche (optional)</label><textarea id="b-msg" name="msg" rows="3" placeholder="z. B. Steakdicke, vakuumiert, Anlass"></textarea></div>
   </div>
   <fieldset class="zahlung"><legend>Bezahlung</legend>
@@ -321,7 +321,7 @@ def seite_kontakt():
   <div class="felder">
    <div class="feld"><label for="r-datum">Datum *</label><input id="r-datum" name="datum" type="date" required></div>
    <div class="feld"><label for="r-zeit">Uhrzeit *</label><select id="r-zeit" name="zeit" required><option value="">Bitte Datum wählen</option></select></div>
-   <div class="feld"><label for="r-personen">Personen *</label><select id="r-personen" name="personen" required>{''.join(f'<option>{i}</option>' for i in range(1, 13))}<option>mehr als 12</option></select></div>
+   <div class="feld"><label for="r-personen">Personen *</label><input id="r-personen" name="personen" type="number" min="1" max="200" inputmode="numeric" placeholder="z. B. 4" required></div>
    <div class="feld"><label for="r-name">Name *</label><input id="r-name" name="name" autocomplete="name" required></div>
    <div class="feld"><label for="r-email">E-Mail *</label><input id="r-email" name="email" type="email" autocomplete="email" required></div>
    <div class="feld"><label for="r-tel">Telefon *</label><input id="r-tel" name="tel" type="tel" autocomplete="tel" required></div>
