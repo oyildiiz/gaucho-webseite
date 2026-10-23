@@ -68,7 +68,7 @@ function sende(form, daten, ok, knopf) {
   return fetch(form.dataset.ziel, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(daten) })
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json().catch(function () { return {}; }); })
     .then(function (antwort) { if (antwort && antwort.ok === false) throw new Error(antwort.fehler || 'abgelehnt'); ok(antwort || {}); })
-    .catch(function () { status.className = 'form-status fehler'; status.textContent = 'Das Senden hat leider nicht geklappt. Bitte versuchen Sie es erneut oder rufen Sie uns an: +43 5578 73027.'; })
+    .catch(function () { status.className = 'form-status fehler'; status.textContent = 'Das Senden hat leider nicht geklappt. Bitte versuchen Sie es erneut oder rufen Sie uns an: +43 676 9181402.'; })
     .finally(function () { knopf.disabled = false; });
 }
 
@@ -178,7 +178,7 @@ function sende(form, daten, ok, knopf) {
     sende(form, daten, function (a) {
       schreib([]); korbZeichnen();
       var wann = new Date(tag.value + 'T12:00').toLocaleDateString('de-AT', { weekday: 'long', day: 'numeric', month: 'long' });
-      form.innerHTML = '<div class="danke"><h3>¡Muchas gracias!</h3><p>Ihre Bestellung' + (a.nr ? ' <strong>' + a.nr + '</strong>' : '') + ' ist bei uns eingegangen.</p><p>Abholung: ' + wann + ', ' + daten.abholung.zeit + ' Uhr im Gaucho, Rheinstraße 89, Fußach. Bezahlung bei Abholung, bar oder mit Karte.</p><p>Bei Fragen melden wir uns bei Ihnen. Sie erreichen uns unter +43 5578 73027.</p></div>';
+      form.innerHTML = '<div class="danke"><h3>¡Muchas gracias!</h3><p>Ihre Bestellung' + (a.nr ? ' <strong>' + a.nr + '</strong>' : '') + ' ist bei uns eingegangen.</p><p>Abholung: ' + wann + ', ' + daten.abholung.zeit + ' Uhr im Gaucho, Rheinstraße 89, Fußach. Bezahlung bei Abholung, bar oder mit Karte.</p><p>Bei Fragen melden wir uns bei Ihnen. Sie erreichen uns unter +43 676 9181402.</p></div>';
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, form.querySelector('[data-bestellen]'));
   });

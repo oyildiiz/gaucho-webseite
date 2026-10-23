@@ -17,10 +17,10 @@ FIRMA = {
     "strasse": "Rheinstraße 89",
     "ort": "6972 Fußach",
     "region": "Vorarlberg, Österreich",
-    "tel": "+43 5578 73027",
-    "tel_link": "+43557873027",
-    "mobil": "+43 676 9181402",
-    "mobil_link": "+436769181402",
+    "tel": "+43 676 9181402",
+    "tel_link": "+436769181402",
+    "mobil": "+43 5578 73027",
+    "mobil_link": "+43557873027",
     "mail": "info@gaucho.at",
     "maps": "https://www.google.com/maps/search/?api=1&query=Argentinisches+Steakhaus+Gaucho+Rheinstra%C3%9Fe+89+6972+Fu%C3%9Fach",
 }
@@ -303,7 +303,7 @@ def seite_kontakt():
   <address>{e(FIRMA['strasse'])}<br>{e(FIRMA['ort'])}<br>{e(FIRMA['region'])}</address>
   <dl class="kontaktliste">
    <div><dt>Telefon</dt><dd><a href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></dd></div>
-   <div><dt>Mobil</dt><dd><a href="tel:{FIRMA['mobil_link']}">{e(FIRMA['mobil'])}</a></dd></div>
+   <div><dt>Festnetz</dt><dd><a href="tel:{FIRMA['mobil_link']}">{e(FIRMA['mobil'])}</a></dd></div>
    <div><dt>E-Mail</dt><dd><a href="mailto:{FIRMA['mail']}">{e(FIRMA['mail'])}</a></dd></div>
   </dl>
   <p>Fußach liegt direkt am Bodensee und grenzt an Gaißau, Höchst und Lustenau – nur wenige Minuten von Bregenz, Hard, Dornbirn, der Schweiz und Deutschland.</p>
