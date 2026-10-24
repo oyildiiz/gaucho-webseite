@@ -16,6 +16,6 @@ Statische Seite, erzeugt mit `python3 build/build.py` nach `public/` (Netlify ba
 - Netlify-Variablen (Site configuration → Environment variables): `RESEND_API_KEY` (nötig), `MAIL_FROM` (z. B. `GAUCHO Webseite <bestellung@gaucho.at>`, erst nach Bestätigung der Domain bei Resend), `MAIL_TO` (Standard `info@gaucho.at`), `TELEGRAM_BOT_TOKEN` und `TELEGRAM_CHAT_ID` (optional).
 - Preise stehen dann in `netlify/functions/lib/bestellung.mjs` (Tabelle `PREISE`) **und** in `daten/produkte.json`.
 
-## Cloudflare Pages
-- Seiten und Funktionen: Build-Befehl `python3 build/build.py`, Ausgabeordner `public`, Funktionen in `functions/api/` (`/api/bestellung`, `/api/reservierung`, nutzen dieselbe Logik aus `netlify/functions/lib/`).
-- Variablen in Cloudflare (Settings → Variables and Secrets): `GAUCHO_BACKEND=cloudflare`, `RESEND_API_KEY` (als Secret), optional `MAIL_FROM`, `MAIL_TO`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`.
+## Cloudflare (Worker mit Seiten)
+- Konfiguration: `wrangler.jsonc` (Seiten aus `public/`, Code in `worker/index.js`, nutzt die Logik aus `netlify/functions/lib/`). Build-Befehl `python3 build/build.py`, Deploy-Befehl `npx wrangler deploy`.
+- Laufzeit-Variablen in Cloudflare (Settings → Variables and Secrets): `RESEND_API_KEY` (Secret), optional `MAIL_FROM`, `MAIL_TO`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Standard sind die eigenen Funktionen; mit der Build-Variable `GAUCHO_BACKEND=n8n` läuft es über n8n.

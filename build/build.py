@@ -30,13 +30,13 @@ ZEITEN = [
     ("Samstag, Sonntag & Feiertage", "11:00 – 14:00 · 17:00 – 22:30"),
     ("Montag", "Ruhetag"),
 ]
-# Standard: n8n. Mit der Umgebungsvariable GAUCHO_BACKEND=netlify oder =cloudflare laufen Bestellung und Reservierung über die Netlify-Funktionen
-if os.environ.get("GAUCHO_BACKEND") in ("netlify", "cloudflare"):
-    BESTELL_WEBHOOK = "/api/bestellung"
-    RESERVIER_WEBHOOK = "/api/reservierung"
-else:
+# Standard: die eigenen Funktionen unter /api. Mit der Umgebungsvariable GAUCHO_BACKEND=n8n läuft es wieder über n8n
+if os.environ.get("GAUCHO_BACKEND") == "n8n":
     BESTELL_WEBHOOK = "https://oyildiz.app.n8n.cloud/webhook/gaucho-bestellung"
     RESERVIER_WEBHOOK = "https://oyildiz.app.n8n.cloud/webhook/gaucho-reservierung"
+else:
+    BESTELL_WEBHOOK = "/api/bestellung"
+    RESERVIER_WEBHOOK = "/api/reservierung"
 
 MENU = [
     ("index.html", "Start"),
