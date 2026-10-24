@@ -30,8 +30,8 @@ ZEITEN = [
     ("Samstag, Sonntag & Feiertage", "11:00 – 14:00 · 17:00 – 22:30"),
     ("Montag", "Ruhetag"),
 ]
-# Standard: n8n. Mit der Netlify-Umgebungsvariable GAUCHO_BACKEND=netlify laufen Bestellung und Reservierung über die Netlify-Funktionen
-if os.environ.get("GAUCHO_BACKEND") == "netlify":
+# Standard: n8n. Mit der Umgebungsvariable GAUCHO_BACKEND=netlify oder =cloudflare laufen Bestellung und Reservierung über die Netlify-Funktionen
+if os.environ.get("GAUCHO_BACKEND") in ("netlify", "cloudflare"):
     BESTELL_WEBHOOK = "/api/bestellung"
     RESERVIER_WEBHOOK = "/api/reservierung"
 else:
@@ -373,6 +373,20 @@ def main():
     }
     for name, inhalt in seiten.items():
         (OUT / name).write_text(inhalt, encoding="utf-8")
+    # Kopfzeilen für Cloudflare Pages (bei Netlify steht dasselbe in netlify.toml)
+    (OUT / "_headers").write_text("""/*.html
+  Cache-Control: max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+/assets/*
+  Cache-Control: max-age=0, must-revalidate
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+/daten/*
+  Cache-Control: max-age=0, must-revalidate
+  Access-Control-Allow-Origin: *
+""", encoding="utf-8")
     (OUT / "404.html").write_text(layout("404.html", "Seite nicht gefunden – GAUCHO", "Seite nicht gefunden.",
                                          seitenkopf("404", "Diese Seite gibt es nicht", "Vielleicht finden Sie, was Sie suchen, auf der Startseite.") +
                                          '<section class="abschnitt"><div class="wrap mitte"><a class="btn" href="index.html">Zur Startseite</a></div></section>'), encoding="utf-8")
