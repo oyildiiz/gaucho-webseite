@@ -49,7 +49,7 @@
     k.addEventListener('mousemove', function (e) {
       var r = k.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
       k.classList.add('aktiv');
-      k.style.transform = 'perspective(900px) rotateY(' + ((x - .5) * 12).toFixed(2) + 'deg) rotateX(' + ((.5 - y) * 10).toFixed(2) + 'deg) translateZ(8px)';
+      k.style.transform = 'perspective(900px) rotateY(' + ((x - .5) * 8).toFixed(2) + 'deg) rotateX(' + ((.5 - y) * 6).toFixed(2) + 'deg) translateZ(8px)';
       glanz.style.setProperty('--gx', (x * 100) + '%'); glanz.style.setProperty('--gy', (y * 100) + '%');
     });
     k.addEventListener('mouseleave', function () { k.classList.remove('aktiv'); k.style.transform = ''; });
