@@ -173,8 +173,8 @@ def seite_start(produkte):
 <section class="abschnitt dunkler">
  <div class="wrap">
   <div class="abschnitt-kopf einblenden">
-   <div><p class="eyebrow">Neu · Zum Mitnehmen</p><h2>Premium-Fleisch aus <em>Argentinien</em></h2></div>
-   <p>Die Cuts, die bei uns auf den Grill kommen – jetzt für Ihre eigene Küche. Online bestellen, Abholzeit wählen, bei uns abholen und bequem vor Ort bezahlen.</p>
+   <div><p class="eyebrow">Neu · Rohes Fleisch zum Mitnehmen</p><h2>Premium-Fleisch aus <em>Argentinien</em></h2></div>
+   <p>Die Cuts, die bei uns auf den Grill kommen – roh und frisch zugeschnitten für Ihren eigenen Grill zu Hause. Kein fertiges Essen, sondern Fleisch zum Selbstzubereiten: online bestellen, Abholzeit wählen, bei uns abholen und bequem vor Ort bezahlen.</p>
   </div>
   <div class="cuts einblenden">{karten}</div>
   <div class="mitte einblenden"><a class="btn" href="fleisch.html">Zum Fleisch-Shop</a></div>
@@ -250,13 +250,15 @@ def seite_fleisch(daten):
   </div>
  </article>"""
     produkt_json = json.dumps(daten, ensure_ascii=False).replace("</", "<\\/")
-    inhalt = seitenkopf("Carnicería · Zum Mitnehmen", "Premium-Fleisch <em>aus Argentinien</em>",
-                        "Bestellen Sie die Cuts aus unserer Küche für Ihren eigenen Grill. Wir schneiden frisch für Sie zu – Sie holen zur gewünschten Zeit bei uns ab und bezahlen bequem vor Ort.") + f"""
+    inhalt = seitenkopf("Carnicería · Rohes Fleisch zum Mitnehmen", "Premium-Fleisch <em>aus Argentinien</em>",
+                        "Bestellen Sie die Cuts aus unserer Küche roh für Ihren eigenen Grill. Wir schneiden frisch für Sie zu – Sie holen zur gewünschten Zeit bei uns ab und bezahlen bequem vor Ort.") + f"""
 <section class="abschnitt shop-ablauf"><div class="wrap drei">
  <div><span class="nr">1</span><h3>Auswählen</h3><p>Cut, Zuschnitt und Menge wählen.</p></div>
  <div><span class="nr">2</span><h3>Abholzeit wählen</h3><p>Dienstag bis Freitag ab 15 Uhr, am Wochenende zu unseren Öffnungszeiten – auch sofort: schon 15 Minuten nach der Bestellung abholbereit.</p></div>
  <div><span class="nr">3</span><h3>Abholen & bezahlen</h3><p>Bar oder mit Karte bei Abholung im Gaucho.</p></div>
-</div></section>
+</div>
+ <p class="hinweis roh-hinweis"><strong>Bitte beachten:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen – keine fertigen Speisen. Möchten Sie unsere Steaks frisch vom Grill genießen, <a href="kontakt.html#reservieren">reservieren Sie gerne einen Tisch</a>.</p>
+</section>
 <section class="abschnitt produkte"><div class="wrap">{karten}
  <p class="hinweis">{e(daten['hinweis'])}</p>
 </div></section>
@@ -266,7 +268,7 @@ def seite_fleisch(daten):
   <h2>Ihr Warenkorb</h2>
   <div class="korb-liste" data-korb-liste><p class="leer">Ihr Warenkorb ist noch leer.</p></div>
   <div class="korb-summe" data-korb-summe hidden><span>Richtpreis gesamt</span><strong data-summe>–</strong></div>
-  <p class="klein">Richtpreis inkl. MwSt. – der Endpreis richtet sich nach dem tatsächlichen Gewicht beim Zuschnitt.</p>
+  <p class="klein">Rohes Fleisch zum Selbstzubereiten, nicht gegart. Richtpreis inkl. MwSt. – der Endpreis richtet sich nach dem tatsächlichen Gewicht beim Zuschnitt.</p>
  </div>
  <form class="bestellung" id="bestellung" data-ziel="{BESTELL_WEBHOOK}" novalidate>
   <h2>Abholung & Kontakt</h2>

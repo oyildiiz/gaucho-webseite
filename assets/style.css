@@ -280,3 +280,5 @@ address{font-style:normal;font-family:var(--serif);font-size:1.6rem;line-height:
 .js .einblenden{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .js .einblenden.sichtbar{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .einblenden{opacity:1;transform:none;transition:none}*{transition-duration:.01ms!important}}
+
+.roh-hinweis { max-width: 46rem; margin: 2rem max(1rem, calc((100% - 46rem) / 2)) 0; padding: 1rem 1.25rem; border: 1px solid currentColor; border-radius: 6px; text-align: center; }
