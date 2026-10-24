@@ -1,0 +1,69 @@
+/* Bewegung & Tiefe – edel und zurückhaltend. Alles ist abgeschaltet bei „Bewegung reduzieren“. */
+.fortschritt{position:fixed;inset:0 0 auto;height:2px;z-index:150;background:linear-gradient(90deg,var(--rot),var(--gold));transform:scaleX(0);transform-origin:left;pointer-events:none}
+
+/* Einblenden: weicher, mit Tiefe und Staffelung */
+.js .einblenden{opacity:0;transform:translate3d(0,34px,0) scale(.985);filter:blur(6px);
+ transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1),filter 1s ease;transition-delay:var(--verz,0s)}
+.js .einblenden.sichtbar{opacity:1;transform:none;filter:none}
+.js .cuts>.cut{opacity:0}
+.js .cuts.sichtbar>.cut{opacity:1;animation:karte 1.1s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0) * .12s)}
+@keyframes karte{from{opacity:0;transform:translate3d(0,40px,0) rotateX(8deg)}}
+.js .cuts.einblenden{filter:none;transform:none}
+
+/* Goldene Linien zeichnen sich */
+.js .eyebrow::before{transform:scaleX(0);transform-origin:left;transition:transform 1s .25s cubic-bezier(.2,.7,.2,1)}
+.js .sichtbar .eyebrow::before,.js .sichtbar.eyebrow::before,.js .hero-in .eyebrow::before{transform:none}
+.js .hero-in .eyebrow::before{animation:linie 1.2s .5s cubic-bezier(.2,.7,.2,1) both}
+@keyframes linie{from{transform:scaleX(0)}to{transform:none}}
+
+/* Hero: Ankunft, langsamer Zoom, Tiefe */
+.hero-bild{perspective:1200px;overflow:hidden}
+.hero-bild img{transform:scale(1.12);animation:hero-zoom 22s ease-out forwards;will-change:transform}
+@keyframes hero-zoom{to{transform:scale(1.02)}}
+.hero-bild.bewegt img{animation:none;transform:translate3d(var(--px,0),var(--py,0),0) scale(1.06)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:radial-gradient(420px 420px at var(--mx,70%) var(--my,35%),rgba(201,164,106,.13),transparent 70%);transition:background .2s}
+.js .hero h1,.js .hero .lead,.js .hero .aktionen,.js .hero .eyebrow,.js .hero-leiste{opacity:0;transform:translate3d(0,28px,0);animation:ankunft 1.3s cubic-bezier(.2,.7,.2,1) forwards}
+.js .hero .eyebrow{animation-delay:.15s}
+.js .hero h1{animation-delay:.3s}
+.js .hero h1 em{display:block}
+.js .hero .lead{animation-delay:.6s}
+.js .hero .aktionen{animation-delay:.85s}
+.js .hero-leiste{animation-delay:1.1s;transform:translate3d(0,40px,0)}
+@keyframes ankunft{to{opacity:1;transform:none}}
+
+/* 3D-Neigung für Karten und Bilder */
+.kippen{transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.kippen.aktiv{transition:transform .12s linear}
+.kippen figure,.kippen.produkt-bild{position:relative}
+.glanz{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s;
+ background:radial-gradient(380px 380px at var(--gx,50%) var(--gy,50%),rgba(255,236,200,.22),transparent 60%);mix-blend-mode:soft-light}
+.kippen.aktiv .glanz,.kippen.aktiv>.glanz{opacity:1}
+.cut figure{box-shadow:0 20px 40px -24px rgba(0,0,0,.8);transition:box-shadow .6s,border-color .6s}
+.cut:hover figure{border-color:var(--linie-gold);box-shadow:0 34px 60px -26px rgba(0,0,0,.9),0 0 0 1px rgba(201,164,106,.25)}
+.produkt-bild img,.cut img{transform:scale(1.08) translate3d(0,var(--ver,0),0)}
+.cut:hover img{transform:scale(1.14) translate3d(0,var(--ver,0),0)}
+
+/* Knöpfe: Lichtstreifen */
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;z-index:-1;
+ background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-20deg);transition:left .9s cubic-bezier(.2,.7,.2,1)}
+.btn:hover::after{left:130%}
+.btn:hover{box-shadow:0 14px 30px -14px rgba(184,29,36,.7)}
+.btn-hohl:hover{box-shadow:0 14px 30px -18px rgba(201,164,106,.6)}
+
+/* Spalten-Linien und Zahlen */
+.saeulen>div,.shop-ablauf>.wrap>div{transition:border-color .5s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.saeulen>div:hover{border-color:var(--gold);transform:translateY(-4px)}
+
+/* Kopf gleitet beim Scrollen weg und kommt zurück */
+.kopf{transition:background .35s,box-shadow .35s,transform .5s cubic-bezier(.2,.7,.2,1)}
+.kopf.weg:not(.offen){transform:translateY(-100%)}
+
+@media(prefers-reduced-motion:reduce){
+ .js .einblenden,.js .cuts>.cut,.js .cuts.sichtbar>.cut,.js .hero h1,.js .hero .lead,.js .hero .aktionen,.js .hero .eyebrow,.js .hero-leiste{opacity:1;transform:none;filter:none;animation:none;transition:none}
+ .hero-bild img{animation:none;transform:none}
+ .js .eyebrow::before{transform:none;transition:none;animation:none}
+ .fortschritt,.glanz{display:none}
+ .kopf.weg{transform:none}
+}

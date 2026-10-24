@@ -81,6 +81,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <link rel="preload" href="assets/fonts/CormorantGaramond-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts.css?v={version('fonts.css')}">
 <link rel="stylesheet" href="assets/style.css?v={version('style.css')}">
+<link rel="stylesheet" href="assets/effekte.css?v={version('effekte.css')}">
 </head>
 <body class="{body_klasse}">
 <a class="skip" href="#inhalt">Zum Inhalt</a>
@@ -114,6 +115,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
  </div>
 </footer>
 <script src="assets/site.js?v={version('site.js')}" defer></script>
+<script src="assets/effekte.js?v={version('effekte.js')}" defer></script>
 </body>
 </html>
 """
