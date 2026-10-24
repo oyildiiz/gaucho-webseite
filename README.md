@@ -9,3 +9,9 @@ Statische Seite, erzeugt mit `python3 build/build.py` nach `public/` (Netlify ba
 - Code der n8n-Prüfung zum Nachlesen: `n8n/bestellung-pruefen.js`
 
 **Preis ändern:** in `daten/produkte.json` **und** im n8n-Workflow „Gaucho – Fleisch-Bestellung“ (Knoten „Bestellung prüfen und berechnen“, Tabelle `PREISE`).
+
+## Bestellung & Reservierung ohne n8n (Netlify-Funktionen)
+- Code: `netlify/functions/` (`bestellung.mjs`, `reservierung.mjs`, Prüflogik in `lib/`), Adressen `/api/bestellung` und `/api/reservierung`.
+- Umschalten: in Netlify die Variable `GAUCHO_BACKEND=netlify` setzen und neu veröffentlichen. Ohne die Variable läuft weiter n8n.
+- Netlify-Variablen (Site configuration → Environment variables): `RESEND_API_KEY` (nötig), `MAIL_FROM` (z. B. `GAUCHO Webseite <bestellung@gaucho.at>`, erst nach Bestätigung der Domain bei Resend), `MAIL_TO` (Standard `info@gaucho.at`), `TELEGRAM_BOT_TOKEN` und `TELEGRAM_CHAT_ID` (optional).
+- Preise stehen dann in `netlify/functions/lib/bestellung.mjs` (Tabelle `PREISE`) **und** in `daten/produkte.json`.

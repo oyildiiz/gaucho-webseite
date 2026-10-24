@@ -3,6 +3,7 @@
 import hashlib
 import html
 import json
+import os
 import shutil
 from pathlib import Path
 
@@ -29,8 +30,13 @@ ZEITEN = [
     ("Samstag, Sonntag & Feiertage", "11:00 – 14:00 · 17:00 – 22:30"),
     ("Montag", "Ruhetag"),
 ]
-BESTELL_WEBHOOK = "https://oyildiz.app.n8n.cloud/webhook/gaucho-bestellung"
-RESERVIER_WEBHOOK = "https://oyildiz.app.n8n.cloud/webhook/gaucho-reservierung"
+# Standard: n8n. Mit der Netlify-Umgebungsvariable GAUCHO_BACKEND=netlify laufen Bestellung und Reservierung über die Netlify-Funktionen
+if os.environ.get("GAUCHO_BACKEND") == "netlify":
+    BESTELL_WEBHOOK = "/api/bestellung"
+    RESERVIER_WEBHOOK = "/api/reservierung"
+else:
+    BESTELL_WEBHOOK = "https://oyildiz.app.n8n.cloud/webhook/gaucho-bestellung"
+    RESERVIER_WEBHOOK = "https://oyildiz.app.n8n.cloud/webhook/gaucho-reservierung"
 
 MENU = [
     ("index.html", "Start"),

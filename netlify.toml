@@ -28,3 +28,6 @@
   [headers.values]
     Cache-Control = "max-age=0, must-revalidate"
     Access-Control-Allow-Origin = "*"
+
+[functions]
+  directory = "netlify/functions"
