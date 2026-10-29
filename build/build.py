@@ -26,8 +26,8 @@ FIRMA = {
     "maps": "https://www.google.com/maps/search/?api=1&query=Argentinisches+Steakhaus+Gaucho+Rheinstra%C3%9Fe+89+6972+Fu%C3%9Fach",
 }
 ZEITEN = [
-    ("Dienstag bis Freitag", "17:00 bis 22:30 Uhr"),
-    ("Samstag, Sonntag & Feiertage", "11:00 bis 14:00 und 17:00 bis 22:30 Uhr"),
+    ("Dienstag – Freitag", "17:00 – 22:30"),
+    ("Samstag, Sonntag & Feiertage", "11:00 – 14:00 · 17:00 – 22:30"),
     ("Montag", "Ruhetag"),
 ]
 # Standard: die eigenen Funktionen unter /api. Mit der Umgebungsvariable GAUCHO_BACKEND=n8n läuft es wieder über n8n
@@ -94,7 +94,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <a class="skip" href="#inhalt">Zum Inhalt</a>
 <header class="kopf" id="kopf">
  <div class="wrap kopf-in">
-  <a class="marke" href="index.html" aria-label="{e(FIRMA['name'])}, zur Startseite"><img src="assets/logo-hell.svg?v={version('logo-hell.svg')}" alt="{e(FIRMA['name'])}" width="200" height="100"></a>
+  <a class="marke" href="index.html" aria-label="{e(FIRMA['name'])} – Startseite"><img src="assets/logo-hell.svg?v={version('logo-hell.svg')}" alt="{e(FIRMA['name'])}" width="200" height="100"></a>
   <nav class="nav" id="nav" aria-label="Hauptnavigation"><ul>{nav}</ul></nav>
   <div class="kopf-aktionen">
    <a class="korb-knopf" href="fleisch.html#korb" aria-label="Warenkorb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="korb-zahl" data-korb-zahl hidden>0</span></a>
@@ -232,7 +232,7 @@ def seite_start(produkte):
   <div class="aktionen"><a class="btn" href="reservieren.html">Online reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
  </div>
 </section>"""
-    return layout("index.html", "Argentinisches Steakhaus GAUCHO | Steaks in Fußach am Bodensee",
+    return layout("index.html", "Argentinisches Steakhaus GAUCHO – Steaks in Fußach am Bodensee",
                   "Argentinisches Steakhaus GAUCHO in Fußach, Vorarlberg: saftige Steaks vom Grill, original argentinische Küche und rohes Premium-Fleisch zum Mitnehmen. Online bestellen und abholen.",
                   inhalt, "index.html", "start")
 
@@ -256,7 +256,7 @@ def seite_speisekarte(karte):
 <section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><p class="pro-person">Alle Portionen und Preise sind pro Person gerechnet.</p><div class="karte-raster">{essen}</div></div></section>
 <section class="abschnitt karte dunkler" id="trinken"><div class="wrap"><h2 class="karte-titel">Bebidas <em>· Trinken</em></h2><div class="karte-raster">{trinken}</div></div></section>
 <section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise und Tagesangebote erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
-    return layout("speisekarte.html", "Speisekarte | Argentinisches Steakhaus GAUCHO",
+    return layout("speisekarte.html", "Speisekarte – Argentinisches Steakhaus GAUCHO",
                   "Speisekarte des Argentinischen Steakhauses GAUCHO in Fußach: Steaks vom Grill, Grill- und Lammspezialitäten, argentinische Weine.",
                   inhalt, "speisekarte.html")
 
@@ -303,7 +303,7 @@ def seite_fleisch(daten):
  <div class="korb">
   <h2>Ihr Warenkorb</h2>
   <div class="korb-liste" data-korb-liste><p class="leer">Ihr Warenkorb ist noch leer.</p></div>
-  <div class="korb-summe" data-korb-summe hidden><span>Richtpreis gesamt</span><strong data-summe></strong></div>
+  <div class="korb-summe" data-korb-summe hidden><span>Richtpreis gesamt</span><strong data-summe>–</strong></div>
   <p class="klein">Rohes Fleisch zum Selbstzubereiten, nicht gegart. Der Preis ist ein Richtpreis inklusive MwSt. Abgerechnet wird nach dem tatsächlichen Gewicht beim Zuschnitt.</p>
  </div>
  <form class="bestellung" id="bestellung" data-ziel="{BESTELL_WEBHOOK}" novalidate>
@@ -327,7 +327,7 @@ def seite_fleisch(daten):
  </form>
 </div></section>
 <script id="produktdaten" type="application/json">{produkt_json}</script>"""
-    return layout("fleisch.html", "Fleisch-Shop: argentinisches Premium-Fleisch zum Mitnehmen | GAUCHO",
+    return layout("fleisch.html", "Fleisch-Shop – argentinisches Premium-Fleisch zum Mitnehmen | GAUCHO",
                   "Argentinisches Premium-Fleisch vom Steakhaus GAUCHO online bestellen und in Fußach abholen: Lomo, Bife Ancho, Rumpsteak, Churrasco und Lammkrone.",
                   inhalt, "fleisch.html", "shop")
 
@@ -355,7 +355,7 @@ def seite_kontakt():
  <p class="lead" style="margin-inline:auto">Reservieren Sie bequem online oder rufen Sie uns an.</p>
  <div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
 </div></section>"""
-    return layout("kontakt.html", "Kontakt & Anfahrt | Argentinisches Steakhaus GAUCHO",
+    return layout("kontakt.html", "Kontakt & Anfahrt – Argentinisches Steakhaus GAUCHO",
                   "Argentinisches Steakhaus GAUCHO, Rheinstraße 89, 6972 Fußach: Öffnungszeiten, Anfahrt und Telefon.",
                   inhalt, "kontakt.html")
 
@@ -388,14 +388,14 @@ def seite_reservieren():
  <div class="einblenden"><h2>Öffnungszeiten</h2>{zeiten_liste()}<p class="hinweis links">Montag ist unser Ruhetag. Silvester sind wir immer für Sie da.</p></div>
  <div class="einblenden"><h2>So finden Sie uns</h2><address>{e(FIRMA['strasse'])}<br>{e(FIRMA['ort'])}<br>{e(FIRMA['region'])}</address><p><a class="btn btn-hohl" href="{FIRMA['maps']}" target="_blank" rel="noopener">Route in Google Maps</a></p><p class="klein">Wir sind ein Nichtraucherrestaurant.</p></div>
 </div></section>"""
-    return layout("reservieren.html", "Tisch reservieren | Argentinisches Steakhaus GAUCHO in Fußach",
+    return layout("reservieren.html", "Tisch reservieren – Argentinisches Steakhaus GAUCHO in Fußach",
                   "Tisch im Argentinischen Steakhaus GAUCHO in Fußach am Bodensee online reservieren. Steaks vom Grill und original argentinische Küche.",
                   inhalt, "reservieren.html")
 
 
 def rechtsseite(datei, titel, html_inhalt, beschreibung):
     inhalt = seitenkopf("Rechtliches", titel) + f'<section class="abschnitt"><div class="wrap recht">{html_inhalt}</div></section>'
-    return layout(datei, f"{titel} | Argentinisches Steakhaus GAUCHO", beschreibung, inhalt)
+    return layout(datei, f"{titel} – Argentinisches Steakhaus GAUCHO", beschreibung, inhalt)
 
 
 def main():
@@ -433,7 +433,7 @@ def main():
   Cache-Control: max-age=0, must-revalidate
   Access-Control-Allow-Origin: *
 """, encoding="utf-8")
-    (OUT / "404.html").write_text(layout("404.html", "Seite nicht gefunden | GAUCHO", "Seite nicht gefunden.",
+    (OUT / "404.html").write_text(layout("404.html", "Seite nicht gefunden – GAUCHO", "Seite nicht gefunden.",
                                          seitenkopf("404", "Diese Seite gibt es nicht", "Vielleicht finden Sie, was Sie suchen, auf der Startseite.") +
                                          '<section class="abschnitt"><div class="wrap mitte"><a class="btn" href="index.html">Zur Startseite</a></div></section>'), encoding="utf-8")
     print(f"{len(seiten) + 1} Seiten nach {OUT} geschrieben")

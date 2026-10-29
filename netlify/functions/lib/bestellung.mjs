@@ -50,7 +50,7 @@ export function pruefeBestellung(b = {}) {
     } else if (p.vid === 'stueck' && GANZ[p.pid]) {
       const n = Math.round(+p.anzahl), [von, bis] = GANZ[p.pid];
       if (!(n >= 1 && n <= 5)) return fehler('Menge ungültig');
-      kg = n * (von + bis) / 2; kiloPreis = pr.stueck; text = `${n} × ${p.pid === 'lammkrone' ? 'ganze Krone, tiefgefroren' : 'ganzes Stück'}, je ca. ${String(von).replace('.', ',')} bis ${String(bis).replace('.', ',')} kg (je nach Lager)`;
+      kg = n * (von + bis) / 2; kiloPreis = pr.stueck; text = `${n} × ${p.pid === 'lammkrone' ? 'ganze Krone, tiefgefroren' : 'ganzes Stück'}, je ca. ${String(von).replace('.', ',')}–${String(bis).replace('.', ',')} kg (je nach Lager)`;
     } else return fehler('Zuschnitt ungültig');
     const betrag = kiloPreis ? Math.round(kg * kiloPreis * 100) / 100 : null;
     if (betrag) summe += betrag;
@@ -64,10 +64,10 @@ export function pruefeBestellung(b = {}) {
   const tabelle = zeilen.map(z => `<tr><td style="padding:8px 16px 8px 0;border-bottom:1px solid #eee"><b>${esc(z.produkt)}</b><br><span style="color:#666">${esc(z.menge)}</span></td><td style="padding:8px 16px 8px 0;border-bottom:1px solid #eee;color:#666">${esc(z.kilopreis)}</td><td style="padding:8px 0;border-bottom:1px solid #eee;text-align:right">${esc(z.betrag)}</td></tr>`).join('');
   const html = `<div style="font-family:Arial,sans-serif;font-size:14px;color:#222"><div style="background:#f4efe6;border-left:4px solid #b08d57;padding:12px 16px;margin:0 0 16px;font-size:16px"><b>${esc(name)}</b><br><a href="mailto:${esc(email)}">${esc(email)}</a> · <a href="tel:${esc(tel.replace(/[^\d+]/g, ''))}">${esc(tel)}</a></div><h2 style="margin:0 0 4px">Neue Fleisch-Bestellung ${nr}</h2><p style="margin:0 0 18px;font-size:16px"><b>Abholung: ${esc(wann)}</b></p>
   <table style="border-collapse:collapse;width:100%;max-width:640px">${tabelle}<tr><td colspan="2" style="padding:12px 0"><b>Richtpreis gesamt</b> (nach Gewicht)</td><td style="padding:12px 0;text-align:right"><b>ca. ${euro(summe)}${aufAnfrage ? ' + Anfrage' : ''}</b></td></tr></table>
-  <p><b>Kunde:</b> ${esc(name)}<br><b>E-Mail:</b> ${esc(email)}<br><b>Telefon:</b> ${esc(tel) || 'keine Angabe'}<br><b>Bezahlung:</b> ${esc(zahlart)}</p>
+  <p><b>Kunde:</b> ${esc(name)}<br><b>E-Mail:</b> ${esc(email)}<br><b>Telefon:</b> ${esc(tel) || '–'}<br><b>Bezahlung:</b> ${esc(zahlart)}</p>
   ${b.msg ? `<p><b>Wünsche:</b><br>${esc(b.msg).replace(/\n/g, '<br>')}</p>` : ''}
   <p style="color:#666;font-size:12px">Mit „Antworten“ schreiben Sie direkt an den Kunden. Bestellung über gaucho-webseite (Fleisch-Shop).</p></div>`;
-  const mail = { subject: `${name} (${email}) | Fleisch-Bestellung ${nr} | Abholung ${wann}`, html, replyTo: email };
+  const mail = { subject: `${name} (${email}) – Fleisch-Bestellung ${nr} – Abholung ${wann}`, html, replyTo: email };
   // Telegram (HTML): Kundeneingaben maskieren
   const nachricht = `🥩 <b>Neue Fleisch-Bestellung ${nr}</b>\n<b>Abholung: ${esc(wann)}</b>\n\n${zeilen.map(z => `${esc(z.produkt)}: ${esc(z.menge)}`).join('\n')}\nca. ${euro(summe)}\n\n${esc(name)}\nTel: ${esc(tel)}\n${esc(email)}${b.msg ? '\n\nWünsche: ' + esc(String(b.msg).slice(0, 300)) : ''}`;
   return { gueltig: true, spam: false, nr, mail, nachricht, zeile: { nr, abholung: `${datum} ${zeit}`, kunde: name, email, tel, positionen: zeilen.map(z => `${z.produkt}: ${z.menge} (${z.betrag})`).join(' | '), summe_eur: summe, zahlart, status: 'neu', wunsch: String(b.msg || '').slice(0, 600) } };

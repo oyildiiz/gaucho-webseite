@@ -106,7 +106,7 @@ function sende(form, daten, ok, knopf) {
   function mitte(v) { return (v.gewicht_kg[0] + v.gewicht_kg[1]) / 2; }
   function stueckWort(pid, n) { return n + (pid === 'lammkrone' ? (n === 1 ? ' ganze Krone' : ' ganze Kronen') : (n === 1 ? ' ganzes Stück' : ' ganze Stücke')); }
   function kgText(x) { return x.toLocaleString('de-AT'); }
-  function spanne(v) { return 'ca. ' + kgText(v.gewicht_kg[0]) + ' bis ' + kgText(v.gewicht_kg[1]) + ' kg'; }
+  function spanne(v) { return 'ca. ' + kgText(v.gewicht_kg[0]) + '–' + kgText(v.gewicht_kg[1]) + ' kg'; }
   function preisVon(pos) { var v = variante(pos.pid, pos.vid); return v && v.preis_kg ? kgVon(pos) * v.preis_kg : null; }
   function variante(pid, vid) { var p = P[pid]; if (!p) return null; for (var i = 0; i < p.varianten.length; i++) if (p.varianten[i].id === vid) return p.varianten[i]; return null; }
   function beschreibung(pos) {
@@ -142,7 +142,7 @@ function sende(form, daten, ok, knopf) {
     }
     function rechne() {
       var pos = position(), v = aktuelleVariante(), pr = preisVon(pos);
-      var zusatz = v.art === 'ganz' ? 'je nach Gewicht ' + euro(pos.anzahl * v.gewicht_kg[0] * v.preis_kg) + ' bis ' + euro(pos.anzahl * v.gewicht_kg[1] * v.preis_kg) + ' · inkl. MwSt.' : 'Richtpreis inkl. MwSt.';
+      var zusatz = v.art === 'ganz' ? 'je nach Gewicht ' + euro(pos.anzahl * v.gewicht_kg[0] * v.preis_kg) + ' – ' + euro(pos.anzahl * v.gewicht_kg[1] * v.preis_kg) + ' · inkl. MwSt.' : 'Richtpreis inkl. MwSt.';
       rp.innerHTML = pr === null ? 'Preis auf Anfrage<small>wir bestätigen ihn vor der Abholung</small>' : 'ca. ' + euro(pr) + '<small>' + zusatz + '</small>';
     }
     karte.querySelectorAll('input[type=radio]').forEach(function (r) { r.addEventListener('change', zeichneMenge); });
