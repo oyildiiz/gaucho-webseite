@@ -83,6 +83,22 @@
       "untertitel": "Argentinisches Fleisch vom Grill",
       "gerichte": [
         [
+          "Lomo",
+          "Filetsteak ca. 200 g"
+        ],
+        [
+          "Lomo",
+          "Filetsteak ca. 300 g"
+        ],
+        [
+          "Lomo",
+          "Filetsteak ca. 400 g"
+        ],
+        [
+          "Lomo",
+          "Filetsteak ca. 500 g"
+        ],
+        [
           "Bife Ancho",
           "Entrecôte ca. 300 g"
         ],
@@ -109,22 +125,6 @@
         [
           "Bife",
           "Rumpsteak ca. 500 g"
-        ],
-        [
-          "Lomo",
-          "Filetsteak ca. 200 g"
-        ],
-        [
-          "Lomo",
-          "Filetsteak ca. 300 g"
-        ],
-        [
-          "Lomo",
-          "Filetsteak ca. 400 g"
-        ],
-        [
-          "Lomo",
-          "Filetsteak ca. 500 g"
         ],
         [
           "Churrasco",
