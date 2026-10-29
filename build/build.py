@@ -237,18 +237,6 @@ def seite_start(produkte):
  </div>
 </section>
 
-<section class="abschnitt galerie-abschnitt">
- <div class="wrap">
-  <div class="abschnitt-kopf einblenden">
-   <div><p class="eyebrow">Parrilla</p><h2>Vom <em>offenen Feuer</em></h2></div>
-   <p>Bei uns kommt das Fleisch über die Glut. Jedes Steak wird einzeln gegrillt, genau auf den Punkt, den Sie sich wünschen.</p>
-  </div>
-  <div class="galerie einblenden">
-   <figure class="foto-rahmen breit">{foto('grill-gemischt', 'Gegrillte Steaks und Lammkoteletts auf einer Holzplatte vor offenem Feuer', '(min-width: 900px) 90vw, 100vw')}</figure>
-  </div>
- </div>
-</section>
-
 <section class="abschnitt">
  <div class="wrap drei saeulen">
   <div class="einblenden"><span class="nr">I</span><h3>Vom Grill</h3><p>Lomo, Bife Ancho, Bife und Churrasco, in der Größe, die Sie möchten, und auf den Punkt gegrillt.</p></div>
@@ -304,13 +292,14 @@ def allergene_block():
 def seite_speisekarte(karte):
     essen = "".join(speise_block(k) for k in karte["essen"])
     trinken = "".join(speise_block(k) for k in karte["trinken"])
-    hintergrund = f'<div class="seiten-hintergrund" aria-hidden="true">{foto("steak-gedeck", "", "100vw", lazy=False)}</div>'
+    hintergrund = f'<div class="seiten-hintergrund" aria-hidden="true">{foto("dessert-tiramisu", "", "100vw", lazy=False)}</div>'
+    unten = f'<div class="seiten-hintergrund unten" aria-hidden="true">{foto("grill-gemischt", "", "100vw")}</div>'
     inhalt = hintergrund + seitenkopf("La Carta", "Speisekarte", "Original argentinische Küche: vom Grill, aus der Küche und aus dem Weinkeller.") + f"""
 <nav class="tabs wrap" aria-label="Speisekarte"><a href="#essen">Essen</a><a href="#trinken">Trinken</a></nav>
 <section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><p class="pro-person">Alle Portionen und Preise sind pro Person gerechnet.</p><div class="karte-raster">{essen}</div></div></section>
 <section class="abschnitt karte dunkler" id="trinken"><div class="wrap"><h2 class="karte-titel">Bebidas <em>· Trinken</em></h2><div class="karte-raster">{trinken}</div></div></section>
 {allergene_block()}
-<section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
+<section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>""" + unten
     return layout("speisekarte.html", "Speisekarte – Argentinisches Steakhaus GAUCHO",
                   "Speisekarte des Argentinischen Steakhauses GAUCHO in Fußach: Steaks vom Grill, Grill- und Lammspezialitäten, argentinische Weine.",
                   inhalt, "speisekarte.html")
