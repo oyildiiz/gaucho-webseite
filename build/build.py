@@ -223,11 +223,34 @@ def seite_start(produkte):
  <div class="wrap mitte einblenden"><a class="btn btn-hohl" href="speisekarte.html">Speisekarte ansehen</a></div>
 </section>
 
+<div class="laufband" aria-hidden="true"><div class="laufband-spur"><span>Rohes Fleisch zum Mitnehmen</span><span>Online bestellen</span><span>Abholbereit in 15 Minuten</span><span>Premium aus Argentinien</span><span>Zahlung bei Abholung</span><span>Rohes Fleisch zum Mitnehmen</span><span>Online bestellen</span><span>Abholbereit in 15 Minuten</span><span>Premium aus Argentinien</span><span>Zahlung bei Abholung</span></div></div>
+
+<section class="abschnitt shop-werbung">
+ <div class="wrap shop-werbung-in">
+  <div class="shop-werbung-text einblenden">
+   <p class="eyebrow">Neu bei uns · Fleisch-Shop</p>
+   <h2>Rohes Premium-Fleisch.<br><em>Online bestellen. Zum Mitnehmen.</em></h2>
+   <p class="lead">Lomo, Bife Ancho, Bife, Churrasco und Lammkrone, <strong>roh und frisch zugeschnitten</strong>, für Ihren eigenen Grill zu Hause. Das ist kein fertiges Gericht, sondern Fleisch in Restaurantqualität zum Selbstzubereiten.</p>
+   <ul class="schritte-kurz">
+    <li><b>1</b> Cut und Menge wählen</li>
+    <li><b>2</b> Abholzeit aussuchen, schon 15 Minuten später möglich</li>
+    <li><b>3</b> Bei uns abholen und vor Ort bezahlen</li>
+   </ul>
+   <div class="aktionen"><a class="btn btn-gross" href="fleisch.html">Jetzt Fleisch bestellen</a><span class="ab-preis">ab {euro(ab_preis)} pro kg</span></div>
+   <p class="klein">Hinweis: Im Fleisch-Shop verkaufen wir ausschließlich <strong>rohes, unzubereitetes Fleisch</strong>. Gegrillte Gerichte gibt es im Restaurant.</p>
+  </div>
+  <div class="shop-werbung-bilder einblenden" aria-hidden="false">
+   <figure class="bild-gross">{foto('roh-vakuum', 'Frisch zugeschnittenes, vakuumiertes rohes Rindfleisch zum Mitnehmen', '(min-width: 900px) 30vw, 80vw')}</figure>
+   <figure class="bild-klein">{foto('roh-ribeye', 'Rohes, fein marmoriertes Entrecôte auf einer Schieferplatte', '(min-width: 900px) 20vw, 50vw')}</figure>
+  </div>
+ </div>
+</section>
+
 <section class="abschnitt dunkler">
  <div class="wrap">
   <div class="abschnitt-kopf einblenden">
-   <div><p class="eyebrow">Zusätzlich bei uns</p><h2>Rohes Fleisch <em>zum Mitnehmen</em></h2></div>
-   <p>Neben dem Restaurant verkaufen wir die Cuts von unserem Grill auch <strong>roh</strong> für zu Hause. Online bestellen, frisch zuschneiden lassen und bei uns abholen.</p>
+   <div><p class="eyebrow">Fleisch-Shop</p><h2>Unsere <em>Cuts</em></h2></div>
+   <p>Das sind die Cuts, die bei uns auf den Grill kommen. Sie gibt es auch <strong>roh</strong> zum Mitnehmen, frisch für Sie zugeschnitten.</p>
   </div>
   <div class="cuts einblenden">{karten}</div>
   <div class="mitte einblenden"><a class="btn" href="fleisch.html">Zum Fleisch-Shop</a></div>
