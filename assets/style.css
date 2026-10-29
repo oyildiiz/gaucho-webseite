@@ -355,3 +355,9 @@ input[type=number][data-g]{min-height:50px}
 .galerie-abschnitt{border-top:1px solid var(--linie)}
 .foto-rahmen img{transform:scale(1.06) translate3d(0,var(--ver,0),0);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
 .galerie .foto-rahmen:hover img{transform:scale(1.11) translate3d(0,var(--ver,0),0)}
+
+.aussen-paar{display:grid;gap:clamp(10px,1.6vw,20px);margin-bottom:clamp(40px,6vw,72px);padding-top:8px}
+@media(min-width:700px){.aussen-paar{grid-template-columns:1fr 1fr}}
+.aussen-paar .foto-rahmen{aspect-ratio:4/3}
+.block-bild{margin-top:28px;aspect-ratio:16/10}
+@media(min-width:1000px){.galerie{grid-template-columns:repeat(4,1fr)}}

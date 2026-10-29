@@ -237,6 +237,7 @@ def seite_start(produkte):
    <figure class="foto-rahmen breit">{foto('grill-gemischt', 'Gegrillte Steaks und Lammkoteletts auf einer Holzplatte vor offenem Feuer', '(min-width: 900px) 90vw, 100vw')}</figure>
    <figure class="foto-rahmen">{foto('grill-gar', 'Steaks mit Grillmuster auf dem heißen Rost', '(min-width: 900px) 30vw, 50vw')}</figure>
    <figure class="foto-rahmen">{foto('grill-roh-feuer', 'Rohe Steaks auf dem Rost über der Flamme', '(min-width: 900px) 30vw, 50vw')}</figure>
+   <figure class="foto-rahmen">{foto('grill-mix', 'Gegrillte und rohe Fleischstücke gemeinsam auf dem Rost', '(min-width: 900px) 22vw, 50vw')}</figure>
    <figure class="foto-rahmen">{foto('grill-roh-wuerfel', 'Frisch geschnittene Fleischstücke auf dem Grill', '(min-width: 900px) 30vw, 50vw')}</figure>
   </div>
  </div>
@@ -270,8 +271,9 @@ def speise_block(k):
         extra = f'<span class="groessen">{e(g[2])}</span>' if len(g) > 2 else ""
         zeilen += f'<li><span class="gericht">{e(name)}</span>{f"<span class=\"beschr\">{e(beschr)}</span>" if beschr else ""}{extra}</li>'
     klasse = "karte-block" + (" kompakt" if k.get("kompakt") else "") + (" grill" if k.get("grill") else "")
+    bildhtml = f'<figure class="foto-rahmen block-bild">{foto(k["bild"][0], k["bild"][1], "(min-width: 900px) 40vw, 100vw")}</figure>' if k.get("bild") else ""
     hinweis = f'<p class="block-hinweis">{e(k["hinweis"])}</p>' if k.get("hinweis") else ""
-    return f'<section class="{klasse} einblenden"><h3>{e(k["titel"])}<small>{e(k["untertitel"])}</small></h3><ul>{zeilen}</ul>{hinweis}</section>'
+    return f'<section class="{klasse} einblenden"><h3>{e(k["titel"])}<small>{e(k["untertitel"])}</small></h3><ul>{zeilen}</ul>{hinweis}{bildhtml}</section>'
 
 
 def seite_speisekarte(karte):
@@ -360,6 +362,10 @@ def seite_fleisch(daten):
 def seite_kontakt():
     inhalt = seitenkopf("Contacto", "Kontakt <em>&amp; Anfahrt</em>",
                         "Wir sind in Fußach, im Dreiländereck am Bodensee, und freuen uns auf Ihren Besuch.") + f"""
+<div class="wrap aussen-paar einblenden">
+ <figure class="foto-rahmen">{foto('aussen-terrasse', 'Das Restaurant Gaucho in Fußach mit Terrasse im Abendlicht', '(min-width: 900px) 45vw, 100vw', lazy=False)}</figure>
+ <figure class="foto-rahmen">{foto('aussen-eingang', 'Der Eingang des Gaucho mit Schild, Terrasse und Parkplatz', '(min-width: 900px) 45vw, 100vw', lazy=False)}</figure>
+</div>
 <section class="abschnitt"><div class="wrap zwei kontakt">
  <div class="einblenden">
   <h2>{e(FIRMA['name'])}</h2>
