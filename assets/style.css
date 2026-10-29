@@ -334,3 +334,6 @@ select{-webkit-appearance:none;appearance:none;min-height:50px;background-image:
 
 .gewicht-hinweis{display:block;margin-top:6px;color:var(--grau);font-size:.78rem;line-height:1.4}
 input[type=number][data-g]{min-height:50px}
+
+.block-hinweis{margin:18px 0 0;color:var(--gold);font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.45}
+.pro-person{margin:-28px 0 40px;color:var(--grau);font-size:.95rem}

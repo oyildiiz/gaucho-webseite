@@ -84,21 +84,22 @@
       "gerichte": [
         [
           "Lomo",
-          "Filetsteak mit 200, 300, 400, 500 oder 600 g. Jedes andere Gewicht ist auch frei wählbar."
+          "Filetsteak mit 200, 300, 400, 500 oder 600 g"
         ],
         [
           "Bife Ancho",
-          "Entrecôte mit 300, 400, 500 oder 600 g. Jedes andere Gewicht ist auch frei wählbar."
+          "Entrecôte mit 300, 400, 500 oder 600 g"
         ],
         [
           "Bife",
-          "Rumpsteak mit 200, 300, 400, 500 oder 600 g. Jedes andere Gewicht ist auch frei wählbar."
+          "Rumpsteak mit 200, 300, 400, 500 oder 600 g"
         ],
         [
           "Churrasco",
-          "Hüftsteak mit 200, 300, 400, 500 oder 600 g. Jedes andere Gewicht ist auch frei wählbar."
+          "Hüftsteak mit 200, 300, 400, 500 oder 600 g"
         ]
-      ]
+      ],
+      "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid."
     },
     {
       "titel": "Especialidades",
@@ -128,19 +129,24 @@
           "Peceto a la Pimienta",
           "Hüftsteak 200 g mit Pfefferrahmsauce, Broccoli, Folienkartoffel und gemischtem Salat"
         ]
-      ]
+      ],
+      "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid."
     },
     {
       "titel": "Cordero",
       "untertitel": "Lammspezialitäten",
       "gerichte": [
         [
-          "Lammkarree",
-          "Ab 300 g, Gewicht frei wählbar, mit Spinat, Folienkartoffel und gemischtem Salat"
+          "Lammkarree 300 g",
+          "Mit Spinat, Folienkartoffel und gemischtem Salat"
         ],
         [
-          "Lammkotelett",
-          "Ab 300 g, Gewicht frei wählbar, mit Spinat, Folienkartoffel und gemischtem Salat"
+          "Lammkarree 500 g",
+          "Mit Spinat, Folienkartoffel und gemischtem Salat"
+        ],
+        [
+          "Lammkotelett 300 g",
+          "Mit Spinat, Folienkartoffel und gemischtem Salat"
         ]
       ]
     },

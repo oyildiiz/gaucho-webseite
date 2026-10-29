@@ -244,7 +244,8 @@ def speise_block(k):
         extra = f'<span class="groessen">{e(g[2])}</span>' if len(g) > 2 else ""
         zeilen += f'<li><span class="gericht">{e(name)}</span>{f"<span class=\"beschr\">{e(beschr)}</span>" if beschr else ""}{extra}</li>'
     klasse = "karte-block" + (" kompakt" if k.get("kompakt") else "") + (" grill" if k.get("grill") else "")
-    return f'<section class="{klasse} einblenden"><h3>{e(k["titel"])}<small>{e(k["untertitel"])}</small></h3><ul>{zeilen}</ul></section>'
+    hinweis = f'<p class="block-hinweis">{e(k["hinweis"])}</p>' if k.get("hinweis") else ""
+    return f'<section class="{klasse} einblenden"><h3>{e(k["titel"])}<small>{e(k["untertitel"])}</small></h3><ul>{zeilen}</ul>{hinweis}</section>'
 
 
 def seite_speisekarte(karte):
@@ -252,9 +253,9 @@ def seite_speisekarte(karte):
     trinken = "".join(speise_block(k) for k in karte["trinken"])
     inhalt = seitenkopf("La Carta", "Speisekarte", "Original argentinische Küche: vom Grill, aus der Küche und aus dem Weinkeller.") + f"""
 <nav class="tabs wrap" aria-label="Speisekarte"><a href="#essen">Essen</a><a href="#trinken">Trinken</a></nav>
-<section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><div class="karte-raster">{essen}</div></div></section>
+<section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><p class="pro-person">Alle Portionen und Preise sind pro Person gerechnet.</p><div class="karte-raster">{essen}</div></div></section>
 <section class="abschnitt karte dunkler" id="trinken"><div class="wrap"><h2 class="karte-titel">Bebidas <em>· Trinken</em></h2><div class="karte-raster">{trinken}</div></div></section>
-<section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise und Tagesangebote erhalten Sie im Restaurant. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
+<section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise und Tagesangebote erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
     return layout("speisekarte.html", "Speisekarte | Argentinisches Steakhaus GAUCHO",
                   "Speisekarte des Argentinischen Steakhauses GAUCHO in Fußach: Steaks vom Grill, Grill- und Lammspezialitäten, argentinische Weine.",
                   inhalt, "speisekarte.html")
