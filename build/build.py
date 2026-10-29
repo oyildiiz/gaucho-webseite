@@ -290,7 +290,7 @@ def seite_fleisch(daten):
                         "Bestellen Sie die Cuts aus unserer Küche roh für Ihren eigenen Grill. Wir schneiden frisch für Sie zu, Sie holen zur gewünschten Zeit bei uns ab und bezahlen vor Ort.") + f"""
 <section class="abschnitt shop-ablauf"><div class="wrap drei">
  <div><span class="nr">1</span><h3>Auswählen</h3><p>Cut, Zuschnitt und Menge wählen.</p></div>
- <div><span class="nr">2</span><h3>Abholzeit wählen</h3><p>Dienstag bis Freitag ab 15 Uhr, am Wochenende zu unseren Öffnungszeiten. Auch kurzfristig möglich: schon 15 Minuten nach der Bestellung ist alles abholbereit.</p></div>
+ <div><span class="nr">2</span><h3>Abholzeit wählen</h3><p>Dienstag bis Freitag ab 15 Uhr, am Wochenende von 11 bis 14 Uhr und ab 16 Uhr. Auch kurzfristig möglich: schon 15 Minuten nach der Bestellung ist alles abholbereit.</p></div>
  <div><span class="nr">3</span><h3>Abholen & bezahlen</h3><p>Bar oder mit Karte bei Abholung im Gaucho.</p></div>
 </div>
  <p class="hinweis roh-hinweis"><strong>Bitte beachten:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen, keine fertigen Speisen. Möchten Sie unsere Steaks frisch vom Grill genießen, <a href="reservieren.html">reservieren Sie gerne einen Tisch</a>.</p>
