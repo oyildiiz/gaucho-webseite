@@ -423,7 +423,7 @@ def seite_kontakt():
   <p>Fußach liegt direkt am Bodensee und grenzt an Gaißau, Höchst und Lustenau. Bregenz, Hard, Dornbirn, die Schweiz und Deutschland sind nur wenige Minuten entfernt.</p>
   <a class="btn btn-hohl" href="{FIRMA['maps']}" target="_blank" rel="noopener">Route in Google Maps</a>
  </div>
- <div class="einblenden"><h2>Öffnungszeiten</h2>{zeiten_liste()}<p class="hinweis links">Damit Sie den vollen Genuss haben, sind wir ein Nichtraucherrestaurant.</p></div>
+ <div class="einblenden"><h2>Öffnungszeiten</h2>{zeiten_liste()}</div>
 </div></section>
 
 <section class="abschnitt dunkler"><div class="wrap mitte einblenden">
@@ -463,7 +463,7 @@ def seite_reservieren():
 <div class="wrap seitenbild einblenden"><figure class="foto-rahmen">{foto('lokal-bar', 'Blick in den Gastraum des Gaucho mit der Bar im Hintergrund', '(min-width: 1200px) 1100px, 100vw')}</figure></div>
 <section class="abschnitt"><div class="wrap zwei">
  <div class="einblenden"><h2>Öffnungszeiten</h2>{zeiten_liste()}<p class="hinweis links">Montag ist unser Ruhetag. Silvester sind wir immer für Sie da.</p></div>
- <div class="einblenden"><h2>So finden Sie uns</h2><address>{e(FIRMA['strasse'])}<br>{e(FIRMA['ort'])}<br>{e(FIRMA['region'])}</address><p><a class="btn btn-hohl" href="{FIRMA['maps']}" target="_blank" rel="noopener">Route in Google Maps</a></p><p class="klein">Wir sind ein Nichtraucherrestaurant.</p></div>
+ <div class="einblenden"><h2>So finden Sie uns</h2><address>{e(FIRMA['strasse'])}<br>{e(FIRMA['ort'])}<br>{e(FIRMA['region'])}</address><p><a class="btn btn-hohl" href="{FIRMA['maps']}" target="_blank" rel="noopener">Route in Google Maps</a></p></div>
 </div></section>"""
     return layout("reservieren.html", "Tisch reservieren – Argentinisches Steakhaus GAUCHO in Fußach",
                   "Tisch im Argentinischen Steakhaus GAUCHO in Fußach am Bodensee online reservieren. Steaks vom Grill und original argentinische Küche.",
