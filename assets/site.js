@@ -17,8 +17,8 @@ document.documentElement.classList.add('js');
 
 // Öffnungszeiten -> mögliche Uhrzeiten (0 = Sonntag)
 var OEFFNUNG = { 0: [['11:00', '14:00'], ['17:00', '22:30']], 1: [], 2: [['17:00', '22:30']], 3: [['17:00', '22:30']], 4: [['17:00', '22:30']], 5: [['17:00', '22:30']], 6: [['11:00', '14:00'], ['17:00', '22:30']] };
-// Fleisch-Abholung: Di–Fr schon ab 15:00, Sa/So 11:00 bis 14:00 und ab 16:00 (letzte Abholung 30 Minuten vor Ende der Zeitspanne, daher 14:30 und 22:30 als Ende)
-var ABHOLUNG = { 0: [['11:00', '14:30'], ['16:00', '22:30']], 1: [], 2: [['15:00', '22:30']], 3: [['15:00', '22:30']], 4: [['15:00', '22:30']], 5: [['15:00', '22:30']], 6: [['11:00', '14:30'], ['16:00', '22:30']] };
+// Fleisch-Abholung: Di–Fr 15:00 bis 21:00, Sa/So 11:00 bis 14:00 und 16:00 bis 21:00 (letzte Abholung 30 Minuten vor Ende der Zeitspanne, daher 14:30 und 21:30 als Ende)
+var ABHOLUNG = { 0: [['11:00', '14:30'], ['16:00', '21:30']], 1: [], 2: [['15:00', '21:30']], 3: [['15:00', '21:30']], 4: [['15:00', '21:30']], 5: [['15:00', '21:30']], 6: [['11:00', '14:30'], ['16:00', '21:30']] };
 var TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
 var VORLAUF = 15; // Minuten: so kurzfristig kann man heute noch reservieren oder abholen
 function minuten(t) { var p = t.split(':'); return +p[0] * 60 + +p[1]; }

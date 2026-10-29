@@ -11,8 +11,8 @@ export function pruefeBestellung(b = {}) {
   const GANZ = { lomo: [1.6, 1.8], 'bife-ancho': [2.5, 3.5], bife: [3.5, 4.5], churrasco: [2.5, 3.5], lammkrone: [1.0, 1.3] };
   // Steakgewicht: frei wählbar in 100-g-Schritten, mindestens 200 g (Bife Ancho 300 g), höchstens 5 kg je Steak
   const MIN_G = { 'bife-ancho': 300 }, STANDARD_MIN_G = 200, MAX_G = 5000;
-  // Abholzeiten: Di–Fr 15:00–22:00, Sa/So 11:00–14:00 und 16:00–22:00 (jeweils Ende minus 30 Minuten)
-  const OEFFNUNG = { 0: [[660, 870], [960, 1350]], 1: [], 2: [[900, 1350]], 3: [[900, 1350]], 4: [[900, 1350]], 5: [[900, 1350]], 6: [[660, 870], [960, 1350]] };
+  // Abholzeiten: Di–Fr 15:00–21:00, Sa/So 11:00–14:00 und 16:00–21:00 (jeweils Ende minus 30 Minuten)
+  const OEFFNUNG = { 0: [[660, 870], [960, 1290]], 1: [], 2: [[900, 1290]], 3: [[900, 1290]], 4: [[900, 1290]], 5: [[900, 1290]], 6: [[660, 870], [960, 1290]] };
   const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
   const esc = s => String(s == null ? '' : s).slice(0, 600).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const euro = x => '€ ' + x.toFixed(2).replace('.', ',');
