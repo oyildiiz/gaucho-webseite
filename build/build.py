@@ -422,7 +422,6 @@ def seite_reservieren():
 <section class="abschnitt dunkler"><div class="wrap zwei">
  <div class="einblenden"><p class="eyebrow">Reservar</p><h2>Ihre <em>Anfrage</em></h2>
   <p>Schicken Sie uns Ihre Reservierungsanfrage, wir bestätigen sie Ihnen per E-Mail. Ist zu Ihrem Wunschtermin kein Tisch mehr frei, melden wir uns telefonisch bei Ihnen.</p>
-  <p>Kurzfristig oder für größere Gruppen? Rufen Sie uns an: <a href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></p>
  </div>
  <form class="reservierung einblenden" id="reservierung" data-ziel="{RESERVIER_WEBHOOK}" novalidate>
   <div class="felder">
