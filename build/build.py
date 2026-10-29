@@ -26,8 +26,8 @@ FIRMA = {
     "maps": "https://www.google.com/maps/search/?api=1&query=Argentinisches+Steakhaus+Gaucho+Rheinstra%C3%9Fe+89+6972+Fu%C3%9Fach",
 }
 ZEITEN = [
-    ("Dienstag – Freitag", "17:00 – 22:30"),
-    ("Samstag, Sonntag & Feiertage", "11:00 – 14:00 · 17:00 – 22:30"),
+    ("Dienstag – Freitag", "17:00 – 22:00"),
+    ("Samstag, Sonntag & Feiertage", "11:00 – 14:00 · 17:00 – 22:00"),
     ("Montag", "Ruhetag"),
 ]
 # Standard: die eigenen Funktionen unter /api. Mit der Umgebungsvariable GAUCHO_BACKEND=n8n läuft es wieder über n8n
