@@ -182,7 +182,7 @@ function sende(form, daten, ok, knopf) {
     if (!k.length) { status.className = 'form-status fehler'; status.textContent = 'Bitte legen Sie zuerst Fleisch in den Warenkorb.'; return; }
     if (!form.checkValidity()) { form.reportValidity(); return; }
     var f = form.elements;
-    var daten = { name: f['name'].value.trim(), email: f['email'].value.trim(), tel: f['tel'].value.trim(), msg: f['msg'].value.trim(), website: f['website'].value,
+    var daten = { anrede: f['anrede'].value, name: f['name'].value.trim(), email: f['email'].value.trim(), tel: f['tel'].value.trim(), msg: f['msg'].value.trim(), website: f['website'].value,
       abholung: { datum: tag.value, zeit: zeit.value }, zahlung: (form.querySelector('input[name=zahlung]:checked') || {}).value || 'abholung', positionen: k };
     sende(form, daten, function (a) {
       schreib([]); korbZeichnen();

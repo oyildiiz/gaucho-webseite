@@ -365,6 +365,7 @@ def seite_fleisch(daten):
   <div class="felder">
    <div class="feld"><label for="b-datum">Abholtag *</label><input id="b-datum" name="datum" type="date" required></div>
    <div class="feld"><label for="b-zeit">Uhrzeit *</label><select id="b-zeit" name="zeit" required></select></div>
+   <div class="feld"><label for="b-anrede">Anrede (optional)</label><select id="b-anrede" name="anrede"><option value="">Keine Angabe</option><option value="Herr">Herr</option><option value="Frau">Frau</option></select></div>
    <div class="feld"><label for="b-name">Name *</label><input id="b-name" name="name" autocomplete="name" required></div>
    <div class="feld"><label for="b-email">E-Mail *</label><input id="b-email" name="email" type="email" autocomplete="email" required></div>
    <div class="feld"><label for="b-tel">Telefon *</label><input id="b-tel" name="tel" type="tel" autocomplete="tel" required></div>
@@ -428,6 +429,7 @@ def seite_reservieren():
    <div class="feld"><label for="r-datum">Datum *</label><input id="r-datum" name="datum" type="date" required></div>
    <div class="feld"><label for="r-zeit">Uhrzeit *</label><select id="r-zeit" name="zeit" required></select></div>
    <div class="feld"><label for="r-personen">Personen *</label><input id="r-personen" name="personen" type="number" min="1" max="200" inputmode="numeric" placeholder="z. B. 4" required></div>
+   <div class="feld"><label for="r-anrede">Anrede (optional)</label><select id="r-anrede" name="anrede"><option value="">Keine Angabe</option><option value="Herr">Herr</option><option value="Frau">Frau</option></select></div>
    <div class="feld"><label for="r-name">Name *</label><input id="r-name" name="name" autocomplete="name" required></div>
    <div class="feld"><label for="r-email">E-Mail *</label><input id="r-email" name="email" type="email" autocomplete="email" required></div>
    <div class="feld"><label for="r-tel">Telefon *</label><input id="r-tel" name="tel" type="tel" autocomplete="tel" required></div>

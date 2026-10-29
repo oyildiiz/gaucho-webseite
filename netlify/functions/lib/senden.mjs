@@ -30,3 +30,11 @@ export async function sendeTelegram(text, env = process.env) {
 }
 
 export const antwort = (status, daten) => new Response(JSON.stringify(daten), { status, headers: { 'Content-Type': 'application/json' } });
+
+// Anrede für die vorbereitete Antwort: mit Auswahl „Herr/Frau“ förmlich, sonst „Guten Tag Vorname Nachname“
+export function begruessung(anrede, name) {
+  const nachname = String(name).trim().split(/\s+/).slice(-1)[0];
+  if (anrede === 'Herr') return `Sehr geehrter Herr ${nachname}`;
+  if (anrede === 'Frau') return `Sehr geehrte Frau ${nachname}`;
+  return `Guten Tag ${name}`;
+}
