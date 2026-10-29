@@ -342,7 +342,7 @@ def seite_fleisch(daten):
  </article>"""
     produkt_json = json.dumps(daten, ensure_ascii=False).replace("</", "<\\/")
     inhalt = seitenkopf("Carnicería · Rohes Fleisch zum Mitnehmen", "Premium-Fleisch <em>aus Argentinien</em>",
-                        "Bestellen Sie die Cuts aus unserer Küche roh für Ihren eigenen Grill. Wir schneiden frisch für Sie zu, Sie holen zur gewünschten Zeit bei uns ab und bezahlen vor Ort.", extra='<p class="roh-hinweis"><strong>BITTE BEACHTEN:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen, keine fertigen Speisen. <strong>Die Preise gelten nur für den Verkauf zum Mitnehmen.</strong> Im Restaurant gelten andere Preise, sie stehen auf der Speisekarte im Restaurant.</p>') + f"""
+                        "Bestellen Sie die Cuts aus unserer Küche roh für Ihren eigenen Grill. Wir schneiden frisch für Sie zu, Sie holen zur gewünschten Zeit bei uns ab und bezahlen vor Ort.", extra='<p class="roh-hinweis"><strong>BITTE BEACHTEN:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen, keine fertigen Speisen. <strong>Die Preise gelten nur für den Verkauf zum Mitnehmen, für das rohe Fleisch zum Selbermachen.</strong> Im Restaurant gelten andere Preise.</p>') + f"""
 <section class="abschnitt shop-ablauf"><div class="wrap drei">
  <div><span class="nr">1</span><h3>Auswählen</h3><p>Cut, Zuschnitt und Menge wählen.</p></div>
  <div><span class="nr">2</span><h3>Abholzeit wählen</h3><p>Dienstag bis Freitag von 15 bis 21 Uhr, am Wochenende von 12 bis 14 Uhr und von 16 bis 21 Uhr. Auch kurzfristig möglich: schon 15 Minuten nach der Bestellung ist alles abholbereit.</p></div>
