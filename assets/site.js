@@ -114,6 +114,8 @@ function sende(form, daten, ok, knopf) {
     if (pos.art === 'ganz') return stueckWort(pos.pid, pos.anzahl) + ', je ' + spanne(variante(pos.pid, pos.vid));
     return pos.anzahl + ' Stück';
   }
+  // Gewicht auf 100 g runden, zwischen Mindest- und Höchstgewicht halten
+  function gewichtOk(wert, v) { var g = Math.round((+wert || v.min_g) / v.schritt_g) * v.schritt_g; return Math.min(v.max_g, Math.max(v.min_g, g)); }
   function optionen(werte, text, vorgabe) { return werte.map(function (w) { return '<option value="' + w + '"' + (w === vorgabe ? ' selected' : '') + '>' + text(w) + '</option>'; }).join(''); }
 
   document.querySelectorAll('[data-produkt]').forEach(function (karte) {
@@ -121,15 +123,20 @@ function sende(form, daten, ok, knopf) {
     function aktuelleVariante() { var r = karte.querySelector('input[type=radio]:checked'); return variante(p.id, r ? r.value : p.varianten[0].id); }
     function zeichneMenge() {
       var v = aktuelleVariante(), id = p.id;
-      if (v.art === 'steak') menge.innerHTML = '<div><label for="g-' + id + '">Steakgröße</label><select id="g-' + id + '" data-g>' + optionen(v.groessen_g || DATEN.steak_groessen_g, function (g) { return 'ca. ' + (g >= 1000 ? (g / 1000).toString().replace('.', ',') + ' kg' : g + ' g'); }, 300) + '</select></div><div><label for="a-' + id + '">Anzahl</label><select id="a-' + id + '" data-a>' + optionen([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], function (a) { return a + (a === 1 ? ' Steak' : ' Steaks'); }, 2) + '</select></div>';
+      if (v.art === 'steak') menge.innerHTML = '<div><label for="g-' + id + '">Gewicht pro Steak (in Gramm)</label><input id="g-' + id + '" data-g type="number" inputmode="numeric" min="' + v.min_g + '" max="' + v.max_g + '" step="' + v.schritt_g + '" value="' + Math.max(v.min_g, 300) + '"><small class="gewicht-hinweis">Frei wählbar in 100-g-Schritten, ab ' + v.min_g + ' g – zum Beispiel 400, 700 oder 1500.</small></div><div><label for="a-' + id + '">Anzahl</label><select id="a-' + id + '" data-a>' + optionen([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], function (a) { return a + (a === 1 ? ' Steak' : ' Steaks'); }, 2) + '</select></div>';
       else if (v.art === 'ganz') menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5], function (a) { return stueckWort(p.id, a) + ' (je ' + spanne(v) + ')'; }, 1) + '</select></div>';
       else menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5, 6], function (a) { return a + ' Stück'; }, 1) + '</select></div>';
       menge.querySelectorAll('select').forEach(function (s) { s.addEventListener('change', rechne); });
+      var gf = menge.querySelector('[data-g]');
+      if (gf) {
+        gf.addEventListener('input', rechne);
+        gf.addEventListener('change', function () { gf.value = gewichtOk(gf.value, v); rechne(); });
+      }
       rechne();
     }
     function position() {
       var v = aktuelleVariante(), pos = { pid: p.id, vid: v.id, art: v.art };
-      if (v.art === 'steak') { pos.groesse_g = +menge.querySelector('[data-g]').value; pos.anzahl = +menge.querySelector('[data-a]').value; }
+      if (v.art === 'steak') { pos.groesse_g = gewichtOk(menge.querySelector('[data-g]').value, v); pos.anzahl = +menge.querySelector('[data-a]').value; }
       else pos.anzahl = +menge.querySelector('[data-s]').value;
       return pos;
     }

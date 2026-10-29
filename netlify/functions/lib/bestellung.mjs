@@ -9,7 +9,8 @@ export function pruefeBestellung(b = {}) {
   };
   // Ganze Stücke: Gewichtsspanne je Stück in kg (Richtpreis mit dem Mittelwert)
   const GANZ = { lomo: [1.6, 1.8], 'bife-ancho': [2.5, 3.5], bife: [3.5, 4.5], churrasco: [2.5, 3.5], lammkrone: [1.0, 1.3] };
-  const GROESSEN = { 'bife-ancho': [300, 400, 500, 600, 700, 800, 900, 1000] }, STANDARD_GROESSEN = [200, 300, 400, 500, 600, 700, 800, 900, 1000];
+  // Steakgewicht: frei wählbar in 100-g-Schritten, mindestens 200 g (Bife Ancho 300 g), höchstens 5 kg je Steak
+  const MIN_G = { 'bife-ancho': 300 }, STANDARD_MIN_G = 200, MAX_G = 5000;
   // Abholzeiten: Di–Fr 15:00–22:00, Sa/So 11:00–13:30 und 17:00–22:00 (jeweils Ende minus 30 Minuten)
   const OEFFNUNG = { 0: [[660, 840], [1020, 1350]], 1: [], 2: [[900, 1350]], 3: [[900, 1350]], 4: [[900, 1350]], 5: [[900, 1350]], 6: [[660, 840], [1020, 1350]] };
   const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
@@ -44,7 +45,7 @@ export function pruefeBestellung(b = {}) {
     let text, kg = 0, kiloPreis;
     if (p.vid === 'portion' && pr.portion) {
       const g = +p.groesse_g, n = Math.round(+p.anzahl);
-      if (!(GROESSEN[p.pid] || STANDARD_GROESSEN).includes(g) || !(n >= 1 && n <= 30)) return fehler('Menge ungültig');
+      if (!(Number.isInteger(g) && g % 100 === 0 && g >= (MIN_G[p.pid] || STANDARD_MIN_G) && g <= MAX_G) || !(n >= 1 && n <= 30)) return fehler('Menge ungültig');
       kg = n * g / 1000; kiloPreis = pr.portion; text = `${n} × ${g} g Steak, portioniert`;
     } else if (p.vid === 'stueck' && GANZ[p.pid]) {
       const n = Math.round(+p.anzahl), [von, bis] = GANZ[p.pid];

@@ -22,10 +22,10 @@
       ["Ensalada Gaucho", "Verschiedene Salate mit Weichkäse, Tomaten, Sellerie, Zwiebel, Paprika und Oliven"]
     ]},
     { "titel": "Carnes a la Parrilla", "untertitel": "Argentinisches Fleisch vom Grill", "grill": true, "gerichte": [
-      ["Lomo", "Filetsteak", "200 g bis 1 kg"],
-      ["Bife Ancho", "Entrecôte", "300 g bis 1 kg"],
-      ["Bife", "Rumpsteak", "200 g bis 1 kg"],
-      ["Churrasco", "Hüftsteak", "200 g bis 1 kg"]
+      ["Lomo", "Filetsteak", "ab 200 g – Gewicht frei wählbar"],
+      ["Bife Ancho", "Entrecôte", "ab 300 g – Gewicht frei wählbar"],
+      ["Bife", "Rumpsteak", "ab 200 g – Gewicht frei wählbar"],
+      ["Churrasco", "Hüftsteak", "ab 200 g – Gewicht frei wählbar"]
     ]},
     { "titel": "Especialidades", "untertitel": "Grillspezialitäten", "gerichte": [
       ["Plato Gaucho", "Verschiedene Fleischsorten mit Folienkartoffel, Mais und gemischtem Salat"],

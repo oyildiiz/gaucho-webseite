@@ -27,17 +27,9 @@
           "info": "Sehnenfrei geputzt, küchenfertig zugeschnitten",
           "preis_kg": 48.9,
           "art": "steak",
-          "groessen_g": [
-            200,
-            300,
-            400,
-            500,
-            600,
-            700,
-            800,
-            900,
-            1000
-          ]
+          "min_g": 200,
+          "schritt_g": 100,
+          "max_g": 5000
         }
       ]
     },
@@ -67,16 +59,9 @@
           "info": "Küchenfertig zugeschnitten",
           "preis_kg": 41.9,
           "art": "steak",
-          "groessen_g": [
-            300,
-            400,
-            500,
-            600,
-            700,
-            800,
-            900,
-            1000
-          ]
+          "min_g": 300,
+          "schritt_g": 100,
+          "max_g": 5000
         }
       ]
     },
@@ -106,17 +91,9 @@
           "info": "Küchenfertig zugeschnitten",
           "preis_kg": 33.9,
           "art": "steak",
-          "groessen_g": [
-            200,
-            300,
-            400,
-            500,
-            600,
-            700,
-            800,
-            900,
-            1000
-          ]
+          "min_g": 200,
+          "schritt_g": 100,
+          "max_g": 5000
         }
       ]
     },
@@ -146,17 +123,9 @@
           "info": "Küchenfertig zugeschnitten",
           "preis_kg": 28.9,
           "art": "steak",
-          "groessen_g": [
-            200,
-            300,
-            400,
-            500,
-            600,
-            700,
-            800,
-            900,
-            1000
-          ]
+          "min_g": 200,
+          "schritt_g": 100,
+          "max_g": 5000
         }
       ]
     },
@@ -182,16 +151,5 @@
         }
       ]
     }
-  ],
-  "steak_groessen_g": [
-    200,
-    300,
-    400,
-    500,
-    600,
-    700,
-    800,
-    900,
-    1000
   ]
 }
