@@ -90,6 +90,24 @@ def zeiten_liste(klasse="zeiten"):
     return f'<dl class="{klasse}">{zeilen}</dl>'
 
 
+def schema_json():
+    import json as _j
+    d = {
+        "@context": "https://schema.org", "@type": "Restaurant",
+        "name": "Argentinisches Steakhaus GAUCHO", "servesCuisine": ["Argentinisch", "Steakhaus"],
+        "url": SEITE + "/", "image": SEITE + "/assets/vorschau.jpg", "foundingDate": "2008",
+        "telephone": FIRMA["tel"], "email": FIRMA["mail"], "priceRange": "€€",
+        "address": {"@type": "PostalAddress", "streetAddress": "Rheinstraße 89", "postalCode": "6972", "addressLocality": "Fußach", "addressRegion": "Vorarlberg", "addressCountry": "AT"},
+        "openingHoursSpecification": [
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "17:00", "closes": "22:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "11:00", "closes": "14:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "17:00", "closes": "22:00"},
+        ],
+        "acceptsReservations": "True", "hasMenu": SEITE + "/speisekarte.html",
+    }
+    return '<script type="application/ld+json">' + _j.dumps(d, ensure_ascii=False) + "</script>"
+
+
 def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
     nav = "".join(
         f'<li><a href="{h}"{" aria-current=\"page\"" if h == aktiv else ""}>{e(t)}</a></li>' for h, t in MENU
@@ -102,6 +120,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <title>{e(titel)}</title>
 <meta name="description" content="{e(beschreibung)}">
 <meta name="theme-color" content="#0f0c0b">
+<link rel="canonical" href="{SEITE}/{"" if datei == "index.html" else datei}">
 <meta property="og:title" content="{e(titel)}">
 <meta property="og:description" content="{e(beschreibung)}">
 <meta property="og:type" content="website">
@@ -119,6 +138,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <link rel="stylesheet" href="assets/fonts.css?v={version('fonts.css')}">
 <link rel="stylesheet" href="assets/style.css?v={version('style.css')}">
 <link rel="stylesheet" href="assets/effekte.css?v={version('effekte.css')}">
+{schema_json() if datei == "index.html" else ""}
 </head>
 <body class="{body_klasse}">
 <a class="skip" href="#inhalt">Zum Inhalt</a>
@@ -476,13 +496,22 @@ def main():
     }
     for name, inhalt in seiten.items():
         (OUT / name).write_text(inhalt, encoding="utf-8")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SEITE}/sitemap.xml\n", encoding="utf-8")
+    urls = ["", "speisekarte.html", "reservieren.html", "fleisch.html", "kontakt.html"]
+    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{SEITE}/{u}</loc></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
     # Kopfzeilen für Cloudflare Pages (bei Netlify steht dasselbe in netlify.toml)
     (OUT / "_headers").write_text("""/*.html
   Cache-Control: max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
 /assets/*
-  Cache-Control: max-age=0, must-revalidate
+  Cache-Control: public, max-age=3600, must-revalidate
+/assets/*.css
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.js
+  Cache-Control: public, max-age=31536000, immutable
+/assets/bilder/*
+  Cache-Control: public, max-age=86400
 /assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
   Access-Control-Allow-Origin: *
