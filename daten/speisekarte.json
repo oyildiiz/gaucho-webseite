@@ -64,8 +64,10 @@
         ]
       ],
       "allergene": {
-        "Consomé con Huevo": "C",
-        "Sopa de Fideos con Carne": "A"
+        "Consomé con Huevo": "C, L",
+        "Sopa de Fideos con Carne": "A, L",
+        "Sopa Ranchera": "L",
+        "Chili con Carne": "L"
       }
     },
     {
@@ -320,7 +322,7 @@
         "Panqueques con Dulce de Leche": "A, C, G",
         "Helado con Frutas": "G",
         "Helado Mixto": "G",
-        "Tartufo": "G, H",
+        "Tartufo": "C, G, H",
         "Flan de Huevos": "C, G",
         "Tiramisu": "A, C, G"
       }
@@ -436,7 +438,10 @@
       ],
       "allergene": {
         "Schlumberger Brut": "O",
-        "Kir Royal": "O"
+        "Kir Royal": "O",
+        "Martini Bianco · Rosso": "O",
+        "Gancia": "O",
+        "Cynar · Campari · Sherry": "O"
       }
     },
     {
