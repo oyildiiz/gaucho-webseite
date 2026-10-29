@@ -172,7 +172,7 @@ def seite_start(produkte):
     ab_preis = min(v["preis_kg"] for p in produkte for v in p["varianten"] if v.get("preis_kg"))
     inhalt = f"""
 <section class="hero">
- <div class="hero-bild">{bild('entrecote', 'Bife Ancho vom GAUCHO auf Schieferplatte mit Saucen, Tomaten und Paprika', '(min-width: 900px) 46vw, 100vw', lazy=False)}</div>
+ <div class="hero-bild">{foto('lokal-abend', 'Der Gastraum des Gaucho am Abend: gedeckte Tische, warmes Licht und ein Panoramabild von Buenos Aires', '(min-width: 900px) 50vw, 100vw', lazy=False)}</div>
  <div class="wrap hero-in">
   <p class="eyebrow">Fußach am Bodensee · Vorarlberg</p>
   <h1>Argentinische Steaks. <em>Direkt am Bodensee.</em></h1>
@@ -213,7 +213,7 @@ def seite_start(produkte):
   <div class="einblenden">
    <p class="eyebrow">Bienvenidos</p>
    <h2>Willkommen im <em>Gaucho</em></h2>
-   <figure class="foto-rahmen willkommen-bild">{foto('lokal-abend', 'Der Gastraum des Gaucho am Abend: gedeckte Tische, warmes Licht und ein Panoramabild von Buenos Aires', '(min-width: 900px) 40vw, 100vw')}</figure>
+   <figure class="foto-rahmen willkommen-bild">{foto('lokal-bar', 'Blick in den Gastraum des Gaucho mit der Bar im Hintergrund', '(min-width: 900px) 40vw, 100vw')}</figure>
   </div>
   <div class="einblenden text">
    <p class="lead">Lassen Sie sich mit original argentinischer Küche verwöhnen.</p>
@@ -245,10 +245,6 @@ def seite_start(produkte):
   </div>
   <div class="galerie einblenden">
    <figure class="foto-rahmen breit">{foto('grill-gemischt', 'Gegrillte Steaks und Lammkoteletts auf einer Holzplatte vor offenem Feuer', '(min-width: 900px) 90vw, 100vw')}</figure>
-   <figure class="foto-rahmen">{foto('grill-gar', 'Steaks mit Grillmuster auf dem heißen Rost', '(min-width: 900px) 30vw, 50vw')}</figure>
-   <figure class="foto-rahmen">{foto('grill-roh-feuer', 'Rohe Steaks auf dem Rost über der Flamme', '(min-width: 900px) 30vw, 50vw')}</figure>
-   <figure class="foto-rahmen">{foto('grill-mix', 'Gegrillte und rohe Fleischstücke gemeinsam auf dem Rost', '(min-width: 900px) 22vw, 50vw')}</figure>
-   <figure class="foto-rahmen">{foto('grill-roh-wuerfel', 'Frisch geschnittene Fleischstücke auf dem Grill', '(min-width: 900px) 30vw, 50vw')}</figure>
   </div>
  </div>
 </section>

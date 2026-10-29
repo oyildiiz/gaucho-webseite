@@ -364,3 +364,8 @@ input[type=number][data-g]{min-height:50px}
 
 .seitenbild .foto-rahmen.aussen-bild{aspect-ratio:4/3}
 @media(min-width:900px){.seitenbild .foto-rahmen.aussen-bild{aspect-ratio:16/9}}
+
+.hero-bild img{object-position:50% 50%}
+.galerie{grid-template-columns:1fr!important}
+.galerie .foto-rahmen.breit{aspect-ratio:16/8}
+@media(max-width:699px){.galerie .foto-rahmen.breit{aspect-ratio:4/3}}
