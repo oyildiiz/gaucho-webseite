@@ -83,20 +83,64 @@
       "untertitel": "Argentinisches Fleisch vom Grill",
       "gerichte": [
         [
-          "Lomo",
-          "Filetsteak, 200, 300, 400, 500 g"
+          "Bife Ancho",
+          "Entrecôte ca. 300 g"
         ],
         [
           "Bife Ancho",
-          "Entrecôte, 300, 400, 500 g"
+          "Entrecôte ca. 400 g"
+        ],
+        [
+          "Bife Ancho",
+          "Entrecôte ca. 500 g"
         ],
         [
           "Bife",
-          "Rumpsteak, 200, 300, 400, 500 g"
+          "Rumpsteak ca. 200 g"
+        ],
+        [
+          "Bife",
+          "Rumpsteak ca. 300 g"
+        ],
+        [
+          "Bife",
+          "Rumpsteak ca. 400 g"
+        ],
+        [
+          "Bife",
+          "Rumpsteak ca. 500 g"
+        ],
+        [
+          "Lomo",
+          "Filetsteak ca. 200 g"
+        ],
+        [
+          "Lomo",
+          "Filetsteak ca. 300 g"
+        ],
+        [
+          "Lomo",
+          "Filetsteak ca. 400 g"
+        ],
+        [
+          "Lomo",
+          "Filetsteak ca. 500 g"
         ],
         [
           "Churrasco",
-          "Hüftsteak, 200, 300, 400, 500 g"
+          "Hüftsteak ca. 200 g"
+        ],
+        [
+          "Churrasco",
+          "Hüftsteak ca. 300 g"
+        ],
+        [
+          "Churrasco",
+          "Hüftsteak ca. 400 g"
+        ],
+        [
+          "Churrasco",
+          "Hüftsteak ca. 500 g"
         ]
       ],
       "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid."
