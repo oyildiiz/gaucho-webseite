@@ -395,3 +395,5 @@ main>.seitenkopf{background:transparent!important;border-bottom:0}
 .seitenbild .foto-rahmen.aussen-bild{aspect-ratio:4/3}
 @media(min-width:900px){.seitenbild .foto-rahmen.aussen-bild{aspect-ratio:16/10}}
 .aussen-bild img{object-position:50% 40%}
+
+.seiten-hintergrund.unten img{object-position:50% 45%}

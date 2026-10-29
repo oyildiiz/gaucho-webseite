@@ -293,7 +293,7 @@ def seite_speisekarte(karte):
     essen = "".join(speise_block(k) for k in karte["essen"])
     trinken = "".join(speise_block(k) for k in karte["trinken"])
     hintergrund = f'<div class="seiten-hintergrund" aria-hidden="true">{foto("grill-gemischt", "", "100vw", lazy=False)}</div>'
-    unten = f'<div class="seiten-hintergrund unten" aria-hidden="true">{foto("dessert-tiramisu", "", "100vw")}</div>'
+    unten = f'<div class="seiten-hintergrund unten" aria-hidden="true">{foto("grill-roh-feuer", "", "100vw")}</div>'
     inhalt = hintergrund + seitenkopf("La Carta", "Speisekarte", "Original argentinische Küche: vom Grill, aus der Küche und aus dem Weinkeller.") + f"""
 <nav class="tabs wrap" aria-label="Speisekarte"><a href="#essen">Essen</a><a href="#trinken">Trinken</a></nav>
 <section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><p class="pro-person">Alle Portionen und Preise sind pro Person gerechnet.</p><div class="karte-raster">{essen}</div></div></section>
