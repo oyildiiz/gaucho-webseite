@@ -285,11 +285,10 @@ def speise_block(k):
 def seite_speisekarte(karte):
     essen = "".join(speise_block(k) for k in karte["essen"])
     trinken = "".join(speise_block(k) for k in karte["trinken"])
-    inhalt = seitenkopf("La Carta", "Speisekarte", "Original argentinische Küche: vom Grill, aus der Küche und aus dem Weinkeller.") + f"""
-<div class="wrap seitenbild einblenden"><figure class="foto-rahmen">{foto('steak-gedeck', 'Gegrilltes Steak mit gratinierter Tomate, Pommes frites und Broccoli', '(min-width: 1200px) 1100px, 100vw', lazy=False)}</figure></div>
+    hintergrund = f'<div class="seiten-hintergrund" aria-hidden="true">{foto("steak-gedeck", "", "100vw", lazy=False)}</div>'
+    inhalt = hintergrund + seitenkopf("La Carta", "Speisekarte", "Original argentinische Küche: vom Grill, aus der Küche und aus dem Weinkeller.") + f"""
 <nav class="tabs wrap" aria-label="Speisekarte"><a href="#essen">Essen</a><a href="#trinken">Trinken</a></nav>
 <section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><p class="pro-person">Alle Portionen und Preise sind pro Person gerechnet.</p><div class="karte-raster">{essen}</div></div></section>
-<div class="wrap seitenbild einblenden"><figure class="foto-rahmen">{foto('steak-reis', 'Zwei gegrillte Steaks auf Steinplatten mit Wildreis', '(min-width: 1200px) 1100px, 100vw')}</figure></div>
 <section class="abschnitt karte dunkler" id="trinken"><div class="wrap"><h2 class="karte-titel">Bebidas <em>· Trinken</em></h2><div class="karte-raster">{trinken}</div></div></section>
 <section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise und Tagesangebote erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
     return layout("speisekarte.html", "Speisekarte – Argentinisches Steakhaus GAUCHO",

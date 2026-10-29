@@ -369,3 +369,12 @@ input[type=number][data-g]{min-height:50px}
 .galerie{grid-template-columns:1fr!important}
 .galerie .foto-rahmen.breit{aspect-ratio:16/8}
 @media(max-width:699px){.galerie .foto-rahmen.breit{aspect-ratio:4/3}}
+
+/* Speisekarte: Foto nur als sanfter Hintergrund ganz oben */
+main{position:relative}
+.seiten-hintergrund{position:absolute;inset:0 0 auto 0;height:min(78vh,720px);overflow:hidden;pointer-events:none;z-index:0;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 55%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 55%,transparent 100%)}
+.seiten-hintergrund img{width:100%;height:100%;object-fit:cover;opacity:.17;filter:saturate(.85) blur(1px);transform:scale(1.04)}
+main>*:not(.seiten-hintergrund){position:relative;z-index:1}
+main>.seitenkopf{background:transparent!important;border-bottom:0}
+.seiten-hintergrund+.seitenkopf{background:transparent!important}
