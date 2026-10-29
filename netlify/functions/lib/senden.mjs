@@ -1,11 +1,15 @@
 // Versand: Mail über Resend, Nachricht an Telegram. Zugangsdaten stehen nur in den Netlify-Umgebungsvariablen.
-export async function sendeMail({ subject, html, replyTo }, env = process.env) {
+export async function sendeMail({ subject, html, replyTo, absender }, env = process.env) {
   if (!env.RESEND_API_KEY) throw new Error('RESEND_API_KEY fehlt');
+  // Nur der Anzeigename wechselt (Bestellung / Reservierungsanfrage), die Adresse bleibt die bestätigte
+  const basis = env.MAIL_FROM || 'GAUCHO Webseite <onboarding@resend.dev>';
+  const adresse = (basis.match(/<([^>]+)>/) || [, basis])[1];
+  const von = absender ? `${absender} <${adresse}>` : basis;
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: env.MAIL_FROM || 'GAUCHO Webseite <onboarding@resend.dev>',
+      from: von,
       to: [env.MAIL_TO || 'info@gaucho.at'],
       reply_to: replyTo,
       subject, html
