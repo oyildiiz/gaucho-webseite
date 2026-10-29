@@ -362,10 +362,10 @@ def seite_fleisch(daten):
 def seite_kontakt():
     inhalt = seitenkopf("Contacto", "Kontakt <em>&amp; Anfahrt</em>",
                         "Wir sind in Fußach, im Dreiländereck am Bodensee, und freuen uns auf Ihren Besuch.") + f"""
-<div class="wrap aussen-paar einblenden">
- <figure class="foto-rahmen">{foto('aussen-terrasse', 'Das Restaurant Gaucho in Fußach mit Terrasse im Abendlicht', '(min-width: 900px) 45vw, 100vw', lazy=False)}</figure>
- <figure class="foto-rahmen">{foto('aussen-eingang', 'Der Eingang des Gaucho mit Schild, Terrasse und Parkplatz', '(min-width: 900px) 45vw, 100vw', lazy=False)}</figure>
+<div class="wrap seitenbild einblenden">
+ <figure class="foto-rahmen aussen-bild">{foto('aussen-terrasse-neu', 'Das Restaurant Gaucho in Fußach mit Terrasse im Abendlicht', '(min-width: 1200px) 1100px, 100vw', lazy=False)}</figure>
 </div>
+
 <section class="abschnitt"><div class="wrap zwei kontakt">
  <div class="einblenden">
   <h2>{e(FIRMA['name'])}</h2>

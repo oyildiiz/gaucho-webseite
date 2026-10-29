@@ -361,3 +361,6 @@ input[type=number][data-g]{min-height:50px}
 .aussen-paar .foto-rahmen{aspect-ratio:4/3}
 .block-bild{margin-top:28px;aspect-ratio:16/10}
 @media(min-width:1000px){.galerie{grid-template-columns:repeat(4,1fr)}}
+
+.seitenbild .foto-rahmen.aussen-bild{aspect-ratio:4/3}
+@media(min-width:900px){.seitenbild .foto-rahmen.aussen-bild{aspect-ratio:16/9}}
