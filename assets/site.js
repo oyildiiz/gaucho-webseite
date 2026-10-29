@@ -50,11 +50,11 @@ function datumsFeld(datum, zeit, plan, wort) {
   function zeiten() {
     var meldung = '';
     if (!datum.value) meldung = 'Bitte ein Datum wählen.';
-    else if (datum.value < datum.min) meldung = 'Dieses Datum liegt in der Vergangenheit – bitte ein späteres wählen.';
+    else if (datum.value < datum.min) meldung = 'Dieses Datum liegt in der Vergangenheit. Bitte wählen Sie ein späteres.';
     else {
       var tag = new Date(datum.value + 'T12:00');
       fuelleZeiten(zeit, tag, 30, true, plan);
-      if (!zeit.value) meldung = tag.getDay() === 1 ? 'Montag ist Ruhetag – bitte einen anderen Tag wählen.' : 'An diesem Tag ist keine ' + wort + ' mehr möglich.';
+      if (!zeit.value) meldung = tag.getDay() === 1 ? 'Montag ist Ruhetag. Bitte wählen Sie einen anderen Tag.' : 'An diesem Tag ist keine ' + wort + ' mehr möglich.';
     }
     if (meldung) zeit.innerHTML = '<option value="">' + meldung + '</option>';
     datum.setCustomValidity(meldung);
@@ -106,7 +106,7 @@ function sende(form, daten, ok, knopf) {
   function mitte(v) { return (v.gewicht_kg[0] + v.gewicht_kg[1]) / 2; }
   function stueckWort(pid, n) { return n + (pid === 'lammkrone' ? (n === 1 ? ' ganze Krone' : ' ganze Kronen') : (n === 1 ? ' ganzes Stück' : ' ganze Stücke')); }
   function kgText(x) { return x.toLocaleString('de-AT'); }
-  function spanne(v) { return 'ca. ' + kgText(v.gewicht_kg[0]) + '–' + kgText(v.gewicht_kg[1]) + ' kg'; }
+  function spanne(v) { return 'ca. ' + kgText(v.gewicht_kg[0]) + ' bis ' + kgText(v.gewicht_kg[1]) + ' kg'; }
   function preisVon(pos) { var v = variante(pos.pid, pos.vid); return v && v.preis_kg ? kgVon(pos) * v.preis_kg : null; }
   function variante(pid, vid) { var p = P[pid]; if (!p) return null; for (var i = 0; i < p.varianten.length; i++) if (p.varianten[i].id === vid) return p.varianten[i]; return null; }
   function beschreibung(pos) {
@@ -123,7 +123,7 @@ function sende(form, daten, ok, knopf) {
     function aktuelleVariante() { var r = karte.querySelector('input[type=radio]:checked'); return variante(p.id, r ? r.value : p.varianten[0].id); }
     function zeichneMenge() {
       var v = aktuelleVariante(), id = p.id;
-      if (v.art === 'steak') menge.innerHTML = '<div><label for="g-' + id + '">Gewicht pro Steak (in Gramm)</label><input id="g-' + id + '" data-g type="number" inputmode="numeric" min="' + v.min_g + '" max="' + v.max_g + '" step="' + v.schritt_g + '" value="' + Math.max(v.min_g, 300) + '"><small class="gewicht-hinweis">Frei wählbar in 100-g-Schritten, ab ' + v.min_g + ' g – zum Beispiel 400, 700 oder 1500.</small></div><div><label for="a-' + id + '">Anzahl</label><select id="a-' + id + '" data-a>' + optionen([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], function (a) { return a + (a === 1 ? ' Steak' : ' Steaks'); }, 2) + '</select></div>';
+      if (v.art === 'steak') menge.innerHTML = '<div><label for="g-' + id + '">Gewicht pro Steak (in Gramm)</label><input id="g-' + id + '" data-g type="number" inputmode="numeric" min="' + v.min_g + '" max="' + v.max_g + '" step="' + v.schritt_g + '" value="' + Math.max(v.min_g, 300) + '"><small class="gewicht-hinweis">Frei wählbar in 100-g-Schritten, ab ' + v.min_g + ' g. Zum Beispiel 400, 700 oder 1500.</small></div><div><label for="a-' + id + '">Anzahl</label><select id="a-' + id + '" data-a>' + optionen([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20], function (a) { return a + (a === 1 ? ' Steak' : ' Steaks'); }, 2) + '</select></div>';
       else if (v.art === 'ganz') menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5], function (a) { return stueckWort(p.id, a) + ' (je ' + spanne(v) + ')'; }, 1) + '</select></div>';
       else menge.innerHTML = '<div><label for="s-' + id + '">Anzahl</label><select id="s-' + id + '" data-s>' + optionen([1, 2, 3, 4, 5, 6], function (a) { return a + ' Stück'; }, 1) + '</select></div>';
       menge.querySelectorAll('select').forEach(function (s) { s.addEventListener('change', rechne); });
@@ -142,7 +142,7 @@ function sende(form, daten, ok, knopf) {
     }
     function rechne() {
       var pos = position(), v = aktuelleVariante(), pr = preisVon(pos);
-      var zusatz = v.art === 'ganz' ? 'je nach Gewicht ' + euro(pos.anzahl * v.gewicht_kg[0] * v.preis_kg) + ' – ' + euro(pos.anzahl * v.gewicht_kg[1] * v.preis_kg) + ' · inkl. MwSt.' : 'Richtpreis inkl. MwSt.';
+      var zusatz = v.art === 'ganz' ? 'je nach Gewicht ' + euro(pos.anzahl * v.gewicht_kg[0] * v.preis_kg) + ' bis ' + euro(pos.anzahl * v.gewicht_kg[1] * v.preis_kg) + ' · inkl. MwSt.' : 'Richtpreis inkl. MwSt.';
       rp.innerHTML = pr === null ? 'Preis auf Anfrage<small>wir bestätigen ihn vor der Abholung</small>' : 'ca. ' + euro(pr) + '<small>' + zusatz + '</small>';
     }
     karte.querySelectorAll('input[type=radio]').forEach(function (r) { r.addEventListener('change', zeichneMenge); });
