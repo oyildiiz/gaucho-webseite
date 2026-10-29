@@ -282,3 +282,45 @@ address{font-style:normal;font-family:var(--serif);font-size:1.6rem;line-height:
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .einblenden{opacity:1;transform:none;transition:none}*{transition-duration:.01ms!important}}
 
 .roh-hinweis { max-width: 46rem; margin: 2rem max(1rem, calc((100% - 46rem) / 2)) 0; padding: 1rem 1.25rem; border: 1px solid currentColor; border-radius: 6px; text-align: center; }
+
+
+/* Fleisch-Werbung auf der Startseite */
+.laufband{overflow:hidden;background:var(--rot);color:#fff;border-block:1px solid rgba(255,255,255,.18)}
+.laufband-spur{display:flex;gap:56px;width:max-content;padding:13px 0;animation:lauf 38s linear infinite}
+.laufband-spur span{white-space:nowrap;font:500 .78rem/1 var(--sans);letter-spacing:.28em;text-transform:uppercase}
+.laufband-spur span::before{content:"✦";margin-right:56px;color:rgba(255,255,255,.55)}
+@keyframes lauf{to{transform:translateX(-50%)}}
+.shop-werbung{background:radial-gradient(70% 90% at 85% 40%,rgba(184,29,36,.28),transparent 70%),var(--kohle2);border-bottom:1px solid var(--linie)}
+.shop-werbung-in{display:grid;gap:56px;align-items:center}
+@media(min-width:900px){.shop-werbung-in{grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,96px)}}
+.shop-werbung h2{font-size:clamp(2.4rem,5.4vw,4.4rem);margin-bottom:24px}
+.shop-werbung h2 em{display:block;font-size:.72em;margin-top:8px}
+.shop-werbung .lead{color:var(--grau)}
+.shop-werbung .lead strong{color:var(--creme);font-weight:500}
+.schritte-kurz{list-style:none;margin:28px 0 34px;padding:0;display:grid;gap:12px}
+.schritte-kurz li{display:flex;align-items:center;gap:16px;color:var(--creme)}
+.schritte-kurz b{flex:none;display:grid;place-items:center;width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;font:500 1rem/1 var(--serif);color:var(--gold)}
+.btn-gross{min-height:62px;padding:0 44px;font-size:.9rem}
+.ab-preis{align-self:center;color:var(--gold);font-family:var(--serif);font-style:italic;font-size:1.35rem}
+.shop-werbung .klein{margin-top:22px}
+.shop-werbung-bilder{position:relative;min-height:380px}
+.shop-werbung-bilder figure{margin:0;overflow:hidden;border:1px solid var(--linie-gold);box-shadow:0 30px 60px -28px rgba(0,0,0,.9);background:#000}
+.shop-werbung-bilder img{width:100%;height:100%;object-fit:cover}
+.bild-gross{width:78%;aspect-ratio:3/4}
+.bild-klein{position:absolute;right:0;bottom:-26px;width:50%;aspect-ratio:1/1;border-color:var(--gold)!important}
+@media(max-width:899px){.shop-werbung-bilder{min-height:0;padding-bottom:30px}}
+
+/* Über uns */
+.fakten{list-style:none;margin:30px 0 8px;padding:24px 0 0;border-top:1px solid var(--linie-gold);display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.fakten b{display:block;font:500 clamp(1.5rem,3vw,2.2rem)/1.1 var(--serif);color:var(--gold)}
+.fakten span{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--grau)}
+.eyebrow.zentriert{justify-content:center}
+@media(prefers-reduced-motion:reduce){.laufband-spur{animation:none}}
+
+/* Navigation mit fünf Punkten: nie umbrechen */
+.nav a{white-space:nowrap}
+@media(min-width:1000px){
+ .nav ul{gap:clamp(16px,2.1vw,34px)}
+ .nav a{letter-spacing:.14em;font-size:.74rem}
+}
+@media(min-width:1000px) and (max-width:1399px){.kopf-aktionen .nur-desktop{display:none}}

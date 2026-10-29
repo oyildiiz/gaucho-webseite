@@ -41,6 +41,7 @@ else:
 MENU = [
     ("index.html", "Start"),
     ("speisekarte.html", "Speisekarte"),
+    ("reservieren.html", "Reservieren"),
     ("fleisch.html", "Fleisch-Shop"),
     ("kontakt.html", "Kontakt & Anfahrt"),
 ]
@@ -97,7 +98,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
   <nav class="nav" id="nav" aria-label="Hauptnavigation"><ul>{nav}</ul></nav>
   <div class="kopf-aktionen">
    <a class="korb-knopf" href="fleisch.html#korb" aria-label="Warenkorb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="korb-zahl" data-korb-zahl hidden>0</span></a>
-   <a class="btn btn-klein nur-desktop" href="kontakt.html#reservieren">Tisch reservieren</a>
+   <a class="btn btn-klein nur-desktop" href="reservieren.html">Tisch reservieren</a>
    <button class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen"><span></span></button>
   </div>
  </div>
@@ -109,7 +110,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
  <div class="wrap fuss-raster">
   <div class="fuss-marke">
    <img src="assets/logo-hell.svg?v={version('logo-hell.svg')}" alt="{e(FIRMA['name'])}" width="220" height="110" loading="lazy">
-   <p>Original argentinische Küche und Premium-Fleisch zum Mitnehmen – in Fußach am Bodensee.</p>
+   <p>Familienbetrieb seit 2008 – original argentinische Küche und rohes Premium-Fleisch zum Mitnehmen, in Fußach am Bodensee.</p>
   </div>
   <div><h2 class="fuss-titel">Besuchen</h2><p>{e(FIRMA['strasse'])}<br>{e(FIRMA['ort'])}<br>{e(FIRMA['region'])}</p><p><a href="{FIRMA['maps']}" target="_blank" rel="noopener">Route planen</a></p></div>
   <div><h2 class="fuss-titel">Kontakt</h2><p><a href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a><br><a href="tel:{FIRMA['mobil_link']}">{e(FIRMA['mobil'])}</a><br><a href="mailto:{FIRMA['mail']}">{e(FIRMA['mail'])}</a></p></div>
@@ -148,19 +149,43 @@ def seite_start(produkte):
    <span class="cut-name">{e(p['name'])}</span><span class="cut-sub">{e(p['untertitel'])}</span>
    <span class="cut-preis">ab {euro(v['preis_kg'])} / kg</span>
   </a>"""
+    ab_preis = min(v["preis_kg"] for p in produkte for v in p["varianten"] if v.get("preis_kg"))
     inhalt = f"""
 <section class="hero">
  <div class="hero-bild">{bild('entrecote', 'Bife Ancho vom GAUCHO auf Schieferplatte mit Saucen, Tomaten und Paprika', '(min-width: 900px) 46vw, 100vw', lazy=False)}</div>
  <div class="wrap hero-in">
   <p class="eyebrow">Fußach am Bodensee · Vorarlberg</p>
   <h1>Argentinische Steaks. <em>Direkt am Bodensee.</em></h1>
-  <p class="lead">Saftig vom Grill, genau so, wie Sie es sich wünschen – und jetzt auch zum Mitnehmen: argentinisches Premium-Fleisch, online bestellt und frisch für Sie zugeschnitten.</p>
+  <p class="lead">Saftig vom Grill, genau so, wie Sie es sich wünschen – und jetzt auch <strong>rohes Premium-Fleisch zum Mitnehmen</strong>: online bestellen, frisch zugeschnitten, bei uns abholen.</p>
   <div class="aktionen">
-   <a class="btn" href="kontakt.html#reservieren">Tisch reservieren</a>
-   <a class="btn btn-hohl" href="fleisch.html">Fleisch bestellen</a>
+   <a class="btn" href="reservieren.html">Tisch reservieren</a>
+   <a class="btn btn-hohl" href="fleisch.html">Rohes Fleisch bestellen</a>
   </div>
  </div>
  <div class="hero-leiste"><div class="wrap">{zeiten_liste('zeiten zeiten-leiste')}</div></div>
+</section>
+
+<div class="laufband" aria-hidden="true"><div class="laufband-spur"><span>Rohes Fleisch zum Mitnehmen</span><span>Online bestellen</span><span>Abholbereit in 15 Minuten</span><span>Premium aus Argentinien</span><span>Zahlung bei Abholung</span><span>Rohes Fleisch zum Mitnehmen</span><span>Online bestellen</span><span>Abholbereit in 15 Minuten</span><span>Premium aus Argentinien</span><span>Zahlung bei Abholung</span></div></div>
+
+<section class="abschnitt shop-werbung">
+ <div class="wrap shop-werbung-in">
+  <div class="shop-werbung-text einblenden">
+   <p class="eyebrow">Neu bei uns · Fleisch-Shop</p>
+   <h2>Rohes Premium-Fleisch.<br><em>Online bestellen. Zum Mitnehmen.</em></h2>
+   <p class="lead">Lomo, Bife Ancho, Bife, Churrasco und Lammkrone – <strong>roh und frisch zugeschnitten</strong> für Ihren eigenen Grill zu Hause. Kein fertiges Gericht, sondern Fleisch in Restaurantqualität zum Selbstzubereiten.</p>
+   <ul class="schritte-kurz">
+    <li><b>1</b> Cut und Menge wählen</li>
+    <li><b>2</b> Abholzeit aussuchen – schon 15 Minuten später</li>
+    <li><b>3</b> Bei uns abholen und vor Ort bezahlen</li>
+   </ul>
+   <div class="aktionen"><a class="btn btn-gross" href="fleisch.html">Jetzt Fleisch bestellen</a><span class="ab-preis">ab {euro(ab_preis)} pro kg</span></div>
+   <p class="klein">Hinweis: Im Fleisch-Shop verkaufen wir ausschließlich <strong>rohes, unzubereitetes Fleisch</strong>. Gegrillte Gerichte gibt es im Restaurant.</p>
+  </div>
+  <div class="shop-werbung-bilder einblenden" aria-hidden="false">
+   <figure class="bild-gross">{bild('entrecote', 'Rohes Bife Ancho (Entrecôte) aus Argentinien zum Mitnehmen', '(min-width: 900px) 30vw, 80vw')}</figure>
+   <figure class="bild-klein">{bild('lomo', 'Rohes Lomo (Rinderfilet) aus Argentinien zum Mitnehmen', '(min-width: 900px) 20vw, 50vw')}</figure>
+  </div>
+ </div>
 </section>
 
 <section class="abschnitt">
@@ -173,6 +198,8 @@ def seite_start(produkte):
    <p class="lead">Lassen Sie sich mit original argentinischer Küche verwöhnen.</p>
    <p>In unserem gemütlichen Restaurant in Fußach grillen wir saftige, herzhafte Steaks – genau so, wie Sie es sich wünschen. Mit hochwertigen Produkten und frischen Zutaten bereiten unsere Köche nicht nur exzellente Steakgerichte zu, sondern auch weitere argentinische Köstlichkeiten.</p>
    <p>Fußach liegt direkt am Bodensee, gleich neben Gaißau, Höchst und Lustenau – und nur wenige Minuten von Bregenz, Hard, Dornbirn, der Schweiz und Deutschland entfernt.</p>
+   <p>Das Gaucho gibt es <strong>seit 2008</strong>, und es ist in Vorarlberg über die Jahre zu einer beliebten Adresse für Steaks und argentinische Küche geworden. Wir sind ein <strong>Familienbetrieb</strong> – bei uns sollen Sie sich wie zu Hause fühlen.</p>
+   <ul class="fakten"><li><b>2008</b><span>gegründet</span></li><li><b>Familie</b><span>geführter Betrieb</span></li><li><b>Fußach</b><span>am Bodensee</span></li></ul>
    <p class="signatur">Wir freuen uns auf Sie – Ihr Team vom Gaucho</p>
   </div>
  </div>
@@ -202,7 +229,7 @@ def seite_start(produkte):
  <div class="wrap band-in einblenden">
   <img class="band-stier" src="assets/stier-hell.svg?v={version('stier-hell.svg')}" alt="" width="180" height="202" loading="lazy">
   <div><h2>Ihr Tisch im <em>Gaucho</em></h2><p>Reservieren Sie online oder rufen Sie uns an – wir bestätigen Ihre Reservierung per E-Mail.</p></div>
-  <div class="aktionen"><a class="btn" href="kontakt.html#reservieren">Online reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
+  <div class="aktionen"><a class="btn" href="reservieren.html">Online reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
  </div>
 </section>"""
     return layout("index.html", "Argentinisches Steakhaus GAUCHO – Steaks in Fußach am Bodensee",
@@ -227,7 +254,7 @@ def seite_speisekarte(karte):
 <nav class="tabs wrap" aria-label="Speisekarte"><a href="#essen">Essen</a><a href="#trinken">Trinken</a></nav>
 <section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><div class="karte-raster">{essen}</div></div></section>
 <section class="abschnitt karte dunkler" id="trinken"><div class="wrap"><h2 class="karte-titel">Bebidas <em>· Trinken</em></h2><div class="karte-raster">{trinken}</div></div></section>
-<section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise und Tagesangebote erhalten Sie im Restaurant. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="kontakt.html#reservieren">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
+<section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise und Tagesangebote erhalten Sie im Restaurant. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
     return layout("speisekarte.html", "Speisekarte – Argentinisches Steakhaus GAUCHO",
                   "Speisekarte des Argentinischen Steakhauses GAUCHO in Fußach: Steaks vom Grill, Grill- und Lammspezialitäten, argentinische Weine.",
                   inhalt, "speisekarte.html")
@@ -265,7 +292,7 @@ def seite_fleisch(daten):
  <div><span class="nr">2</span><h3>Abholzeit wählen</h3><p>Dienstag bis Freitag ab 15 Uhr, am Wochenende zu unseren Öffnungszeiten – auch sofort: schon 15 Minuten nach der Bestellung abholbereit.</p></div>
  <div><span class="nr">3</span><h3>Abholen & bezahlen</h3><p>Bar oder mit Karte bei Abholung im Gaucho.</p></div>
 </div>
- <p class="hinweis roh-hinweis"><strong>Bitte beachten:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen – keine fertigen Speisen. Möchten Sie unsere Steaks frisch vom Grill genießen, <a href="kontakt.html#reservieren">reservieren Sie gerne einen Tisch</a>.</p>
+ <p class="hinweis roh-hinweis"><strong>Bitte beachten:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen – keine fertigen Speisen. Möchten Sie unsere Steaks frisch vom Grill genießen, <a href="reservieren.html">reservieren Sie gerne einen Tisch</a>.</p>
 </section>
 <section class="abschnitt produkte"><div class="wrap">{karten}
  <p class="hinweis">{e(daten['hinweis'])}</p>
@@ -322,8 +349,21 @@ def seite_kontakt():
  <div class="einblenden"><h2>Öffnungszeiten</h2>{zeiten_liste()}<p class="hinweis links">Damit Sie den vollen Genuss haben, sind wir ein Nichtraucherrestaurant.</p></div>
 </div></section>
 
-<section class="abschnitt dunkler" id="reservieren"><div class="wrap zwei">
- <div class="einblenden"><p class="eyebrow">Reservar</p><h2>Tisch <em>reservieren</em></h2>
+<section class="abschnitt dunkler"><div class="wrap mitte einblenden">
+ <p class="eyebrow zentriert">Reservar</p><h2>Einen <em>Tisch</em> bei uns?</h2>
+ <p class="lead" style="margin-inline:auto">Reservieren Sie bequem online oder rufen Sie uns an.</p>
+ <div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
+</div></section>"""
+    return layout("kontakt.html", "Kontakt & Anfahrt – Argentinisches Steakhaus GAUCHO",
+                  "Argentinisches Steakhaus GAUCHO, Rheinstraße 89, 6972 Fußach: Öffnungszeiten, Anfahrt und Telefon.",
+                  inhalt, "kontakt.html")
+
+
+def seite_reservieren():
+    inhalt = seitenkopf("Reservar", "Tisch <em>reservieren</em>",
+                        "Sichern Sie sich Ihren Platz im Gaucho – online in wenigen Schritten, wir bestätigen per E-Mail.") + f"""
+<section class="abschnitt dunkler"><div class="wrap zwei">
+ <div class="einblenden"><p class="eyebrow">Reservar</p><h2>Ihre <em>Anfrage</em></h2>
   <p>Senden Sie uns Ihre Reservierungsanfrage – wir bestätigen Ihre Reservierung per E-Mail. Ist zu Ihrem Wunschtermin kein Tisch mehr frei, melden wir uns telefonisch bei Ihnen.</p>
   <p>Kurzfristig oder für größere Gruppen? Rufen Sie uns an: <a href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></p>
  </div>
@@ -342,10 +382,14 @@ def seite_kontakt():
   <button class="btn btn-voll" type="submit">Reservierung anfragen</button>
   <p class="form-status" role="status" aria-live="polite"></p>
  </form>
+</div></section>
+<section class="abschnitt"><div class="wrap zwei">
+ <div class="einblenden"><h2>Öffnungszeiten</h2>{zeiten_liste()}<p class="hinweis links">Montag ist unser Ruhetag. Silvester sind wir immer für Sie da.</p></div>
+ <div class="einblenden"><h2>So finden Sie uns</h2><address>{e(FIRMA['strasse'])}<br>{e(FIRMA['ort'])}<br>{e(FIRMA['region'])}</address><p><a class="btn btn-hohl" href="{FIRMA['maps']}" target="_blank" rel="noopener">Route in Google Maps</a></p><p class="klein">Wir sind ein Nichtraucherrestaurant.</p></div>
 </div></section>"""
-    return layout("kontakt.html", "Kontakt, Anfahrt & Reservierung – Argentinisches Steakhaus GAUCHO",
-                  "Argentinisches Steakhaus GAUCHO, Rheinstraße 89, 6972 Fußach: Öffnungszeiten, Anfahrt, Telefon und Online-Reservierung.",
-                  inhalt, "kontakt.html")
+    return layout("reservieren.html", "Tisch reservieren – Argentinisches Steakhaus GAUCHO in Fußach",
+                  "Online einen Tisch im Argentinischen Steakhaus GAUCHO in Fußach am Bodensee reservieren – Steaks vom Grill und original argentinische Küche.",
+                  inhalt, "reservieren.html")
 
 
 def rechtsseite(datei, titel, html_inhalt, beschreibung):
@@ -366,6 +410,7 @@ def main():
         "index.html": seite_start(produkte["produkte"]),
         "speisekarte.html": seite_speisekarte(karte),
         "fleisch.html": seite_fleisch(produkte),
+        "reservieren.html": seite_reservieren(),
         "kontakt.html": seite_kontakt(),
         "impressum.html": rechtsseite("impressum.html", "Impressum", (DATEN / "impressum.html.inhalt").read_text(encoding="utf-8"), "Impressum des Argentinischen Steakhauses GAUCHO."),
         "datenschutz.html": rechtsseite("datenschutz.html", "Datenschutz", (DATEN / "datenschutz.html.inhalt").read_text(encoding="utf-8"), "Datenschutzerklärung des Argentinischen Steakhauses GAUCHO."),
