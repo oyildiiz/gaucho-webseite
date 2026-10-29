@@ -1,97 +1,385 @@
 {
   "essen": [
-    { "titel": "Entradas", "untertitel": "Vorspeisen", "gerichte": [
-      ["Gambas al Ajillo", "Garnelen in Knoblauchsauce"],
-      ["Provoletta", "Gegrillter Provolone-Käse"],
-      ["Tomates con Mozzarella", "Tomaten mit Mozzarella"],
-      ["Cocktail de Gambas", "Shrimps-Cocktail"],
-      ["Gambas a la Plancha", "Gegrillte Garnelen"],
-      ["Scharfer Spieß", "Spieß vom Rindsfilet mit Tabasco"],
-      ["Carpaccio", "Hauchdünne Scheiben vom rohen Rindsfilet mit Rucola und Parmesan"]
-    ]},
-    { "titel": "Sopas", "untertitel": "Suppen", "gerichte": [
-      ["Consomé con Huevo", "Kraftbrühe mit Ei"],
-      ["Sopa Ranchera", "Gemüsesuppe mit Fleisch"],
-      ["Sopa de Fideos con Carne", "Nudelsuppe mit Fleisch"],
-      ["Chili con Carne", ""]
-    ]},
-    { "titel": "Ensaladas", "untertitel": "Salate", "gerichte": [
-      ["Ensalada Mixta", "Gemischter Salat"],
-      ["Ensalada de Tomates", "Tomatensalat"],
-      ["Ensalada Verde", "Grüner Salat"],
-      ["Ensalada Gaucho", "Verschiedene Salate mit Weichkäse, Tomaten, Sellerie, Zwiebel, Paprika und Oliven"]
-    ]},
-    { "titel": "Carnes a la Parrilla", "untertitel": "Argentinisches Fleisch vom Grill", "grill": true, "gerichte": [
-      ["Lomo", "Filetsteak", "ab 200 g – Gewicht frei wählbar"],
-      ["Bife Ancho", "Entrecôte", "ab 300 g – Gewicht frei wählbar"],
-      ["Bife", "Rumpsteak", "ab 200 g – Gewicht frei wählbar"],
-      ["Churrasco", "Hüftsteak", "ab 200 g – Gewicht frei wählbar"]
-    ]},
-    { "titel": "Especialidades", "untertitel": "Grillspezialitäten", "gerichte": [
-      ["Plato Gaucho", "Verschiedene Fleischsorten mit Folienkartoffel, Mais und gemischtem Salat"],
-      ["Combinado Gaucho", "Filetsteak 200 g mit Pfefferrahmsauce, Garnelen, Pommes frites und gemischtem Salat"],
-      ["Lomo Gaucho", "Filetsteak 200 g mit Sauce Hollandaise, Spinat, Folienkartoffel und gemischtem Salat"],
-      ["Pincho Spiedo", "Spieß mit Pommes frites, Champignonsauce und gemischtem Salat"],
-      ["Suprema de Pollo", "Hähnchenfilet mit Spinat, Folienkartoffel und gemischtem Salat"],
-      ["Peceto a la Pimienta", "Hüftsteak 200 g mit Pfefferrahmsauce, Broccoli, Folienkartoffel und gemischtem Salat"]
-    ]},
-    { "titel": "Cordero", "untertitel": "Lammspezialitäten", "gerichte": [
-      ["Lammkarree 300 g", "Mit Spinat, Folienkartoffel und gemischtem Salat"],
-      ["Lammkarree 500 g", "Mit Spinat, Folienkartoffel und gemischtem Salat"],
-      ["Lammkotelett 300 g", "Mit Spinat, Folienkartoffel und gemischtem Salat"]
-    ]},
-    { "titel": "Pescados", "untertitel": "Fischspezialitäten", "gerichte": [
-      ["Steak de Salmón", "Lachssteak mit Spinat, Reis und Salat"],
-      ["Camarones Gigantes", "Riesengarnelen mit Reis, Broccoli und gemischtem Salat"]
-    ]},
-    { "titel": "Guarniciones", "untertitel": "Beilagen & Saucen", "kompakt": true, "gerichte": [
-      ["Papa Asada", "Folienkartoffel mit Kräuterrahmsauce oder Kräuterbutter"],
-      ["Papas Fritas", "Pommes frites"],
-      ["Maíz Asado", "Maiskolben"],
-      ["Espinaca", "Spinat"],
-      ["Broccoli", ""],
-      ["Arroz", "Wildreis"],
-      ["Salsas", "Pfefferrahm · Champignon · Hollandaise · Bratensauce · Senf"]
-    ]},
-    { "titel": "Postres", "untertitel": "Desserts", "gerichte": [
-      ["Panqueques con Dulce de Leche", "Pfannkuchen mit argentinischer Milchkaramell, Früchten und zwei Kugeln Eis"],
-      ["Helado con Frutas", "Eis mit exotischen Früchten, drei Kugeln"],
-      ["Helado Mixto", "Eis mit Sahne, drei Kugeln"],
-      ["Tartufo", ""],
-      ["Flan de Huevos", "Karamellpudding"]
-    ]}
+    {
+      "titel": "Entradas",
+      "untertitel": "Vorspeisen",
+      "gerichte": [
+        [
+          "Gambas al Ajillo",
+          "Garnelen in Knoblauchsauce"
+        ],
+        [
+          "Provoletta",
+          "Gegrillter Provolone-Käse"
+        ],
+        [
+          "Tomates con Mozzarella",
+          "Tomaten mit Mozzarella"
+        ],
+        [
+          "Cocktail de Gambas",
+          "Shrimps-Cocktail"
+        ],
+        [
+          "Gambas a la Plancha",
+          "Gegrillte Garnelen"
+        ],
+        [
+          "Scharfer Spieß",
+          "Spieß vom Rindsfilet mit Tabasco"
+        ],
+        [
+          "Carpaccio",
+          "Hauchdünne Scheiben vom rohen Rindsfilet mit Rucola und Parmesan"
+        ]
+      ]
+    },
+    {
+      "titel": "Sopas",
+      "untertitel": "Suppen",
+      "gerichte": [
+        [
+          "Consomé con Huevo",
+          "Kraftbrühe mit Ei"
+        ],
+        [
+          "Sopa Ranchera",
+          "Gemüsesuppe mit Fleisch"
+        ],
+        [
+          "Sopa de Fideos con Carne",
+          "Nudelsuppe mit Fleisch"
+        ],
+        [
+          "Chili con Carne",
+          ""
+        ]
+      ]
+    },
+    {
+      "titel": "Ensaladas",
+      "untertitel": "Salate",
+      "gerichte": [
+        [
+          "Ensalada Mixta",
+          "Gemischter Salat"
+        ],
+        [
+          "Ensalada de Tomates",
+          "Tomatensalat"
+        ],
+        [
+          "Ensalada Verde",
+          "Grüner Salat"
+        ],
+        [
+          "Ensalada Gaucho",
+          "Verschiedene Salate mit Weichkäse, Tomaten, Sellerie, Zwiebel, Paprika und Oliven"
+        ]
+      ]
+    },
+    {
+      "titel": "Carnes a la Parrilla",
+      "untertitel": "Argentinisches Fleisch vom Grill",
+      "gerichte": [
+        [
+          "Lomo",
+          "Filetsteak – ab 200 g, Gewicht frei wählbar"
+        ],
+        [
+          "Bife Ancho",
+          "Entrecôte – ab 300 g, Gewicht frei wählbar"
+        ],
+        [
+          "Bife",
+          "Rumpsteak – ab 200 g, Gewicht frei wählbar"
+        ],
+        [
+          "Churrasco",
+          "Hüftsteak – ab 200 g, Gewicht frei wählbar"
+        ]
+      ]
+    },
+    {
+      "titel": "Especialidades",
+      "untertitel": "Grillspezialitäten",
+      "gerichte": [
+        [
+          "Plato Gaucho",
+          "Verschiedene Fleischsorten mit Folienkartoffel, Mais und gemischtem Salat"
+        ],
+        [
+          "Combinado Gaucho",
+          "Filetsteak 200 g mit Pfefferrahmsauce, Garnelen, Pommes frites und gemischtem Salat"
+        ],
+        [
+          "Lomo Gaucho",
+          "Filetsteak 200 g mit Sauce Hollandaise, Spinat, Folienkartoffel und gemischtem Salat"
+        ],
+        [
+          "Pincho Spiedo",
+          "Spieß mit Pommes frites, Champignonsauce und gemischtem Salat"
+        ],
+        [
+          "Suprema de Pollo",
+          "Hähnchenfilet mit Spinat, Folienkartoffel und gemischtem Salat"
+        ],
+        [
+          "Peceto a la Pimienta",
+          "Hüftsteak 200 g mit Pfefferrahmsauce, Broccoli, Folienkartoffel und gemischtem Salat"
+        ]
+      ]
+    },
+    {
+      "titel": "Cordero",
+      "untertitel": "Lammspezialitäten",
+      "gerichte": [
+        [
+          "Lammkarree",
+          "Ab 300 g, Gewicht frei wählbar – mit Spinat, Folienkartoffel und gemischtem Salat"
+        ],
+        [
+          "Lammkotelett",
+          "Ab 300 g, Gewicht frei wählbar – mit Spinat, Folienkartoffel und gemischtem Salat"
+        ]
+      ]
+    },
+    {
+      "titel": "Pescados",
+      "untertitel": "Fischspezialitäten",
+      "gerichte": [
+        [
+          "Steak de Salmón",
+          "Lachssteak mit Spinat, Reis und Salat"
+        ],
+        [
+          "Camarones Gigantes",
+          "Riesengarnelen mit Reis, Broccoli und gemischtem Salat"
+        ]
+      ]
+    },
+    {
+      "titel": "Guarniciones",
+      "untertitel": "Beilagen & Saucen",
+      "kompakt": true,
+      "gerichte": [
+        [
+          "Papa Asada",
+          "Folienkartoffel mit Kräuterrahmsauce oder Kräuterbutter"
+        ],
+        [
+          "Papas Fritas",
+          "Pommes frites"
+        ],
+        [
+          "Maíz Asado",
+          "Maiskolben"
+        ],
+        [
+          "Espinaca",
+          "Spinat"
+        ],
+        [
+          "Broccoli",
+          ""
+        ],
+        [
+          "Arroz",
+          "Wildreis"
+        ],
+        [
+          "Salsas",
+          "Pfefferrahm · Champignon · Hollandaise · Bratensauce · Senf"
+        ]
+      ]
+    },
+    {
+      "titel": "Postres",
+      "untertitel": "Desserts",
+      "gerichte": [
+        [
+          "Panqueques con Dulce de Leche",
+          "Pfannkuchen mit argentinischer Milchkaramell, Früchten und zwei Kugeln Eis"
+        ],
+        [
+          "Helado con Frutas",
+          "Eis mit exotischen Früchten, drei Kugeln"
+        ],
+        [
+          "Helado Mixto",
+          "Eis mit Sahne, drei Kugeln"
+        ],
+        [
+          "Tartufo",
+          ""
+        ],
+        [
+          "Flan de Huevos",
+          "Karamellpudding"
+        ],
+        [
+          "Tiramisu",
+          "Nicht immer auf der Karte – fragen Sie gerne nach"
+        ]
+      ]
+    }
   ],
   "trinken": [
-    { "titel": "Vinos Tintos", "untertitel": "Rotweine aus Argentinien", "gerichte": [
-      ["Broquel Malbec", "Dunkelrot mit violetten Reflexen, würzige Noten von Rauch · trocken · 14 % · 0,75 l"],
-      ["Broquel Cabernet Sauvignon", "Cassis und Erdbeere, elegante Rauchnote · 14 % · 0,75 l"],
-      ["Roble Malbec", "Brombeere und Pflaume · trocken · 13,5 % · 0,75 l"],
-      ["Roble Cabernet Sauvignon", "Würzig-fruchtig, Kirsche und Brombeere · trocken · 14 % · 0,75 l"],
-      ["Roble Syrah", "Rote Beerenfrüchte, würziger Charakter · trocken · 13,5 % · 0,75 l"]
-    ]},
-    { "titel": "Vinos Blancos & Rosado", "untertitel": "Weiß- und Roséweine", "gerichte": [
-      ["Septiembre Vino Blanco", "Frisch und spritzig, aus Torrontés · 11,5 % · 0,75 l"],
-      ["Chardonnay", "Feinfruchtig und spritzig · 13,5 % · 0,75 l"],
-      ["Sauvignon Blanc", "Exotische Früchte und Zitrus, leicht trocken · 13,5 % · 0,75 l"],
-      ["Rosé de Cabernet Sauvignon", "Erdbeere und dunkle Beeren · trocken · 13,5 % · 0,75 l"],
-      ["Astica offen", "Rot · Weiß · Rosé · 1/8 · 1/4 · 1/2 l"]
-    ]},
-    { "titel": "Aperitivos", "untertitel": "Aperitifs & Sekt", "kompakt": true, "gerichte": [
-      ["Martini Bianco · Rosso", ""], ["Gancia", "Argentinischer Wermut"], ["Cynar · Campari · Sherry", ""],
-      ["Schlumberger Brut", "Piccolo 0,2 l · Flasche 0,75 l"], ["Kir Royal", ""]
-    ]},
-    { "titel": "Cervezas", "untertitel": "Bier", "kompakt": true, "gerichte": [
-      ["Quilmes", "Argentinisches Bier · 0,33 l"], ["Mohren Spezial", "0,3 · 0,5 l"], ["Radler", "0,3 · 0,5 l"],
-      ["Weihenstephan Weizen", "0,5 l"], ["Erdinger alkoholfrei", "0,5 l"]
-    ]},
-    { "titel": "Digestivos", "untertitel": "Brandy, Grappa & Spirituosen", "kompakt": true, "gerichte": [
-      ["Cardenal Mendoza · Osborne · Rémy Martin", ""], ["Chivas Regal", ""], ["Grappa Berta · Cellina", ""],
-      ["Fernet Branca · Averna", ""], ["Tequila · Williams · Obstler · Wodka", ""]
-    ]},
-    { "titel": "Sin Alcohol", "untertitel": "Alkoholfrei & Kaffee", "kompakt": true, "gerichte": [
-      ["Römerquelle", "Mineralwasser prickelnd oder still"], ["Säfte & Gespritzte", "Apfel · Orange · Johannisbeere"],
-      ["Softdrinks", "Coca-Cola · Fanta · Sprite · Spezi · Bitter Lemon · Limonaden"],
-      ["Kaffee & Tee", "Espresso · Kaffee Crema · Cappuccino · Tee · Espresso Cognac"]
-    ]}
+    {
+      "titel": "Vinos Tintos",
+      "untertitel": "Rotweine aus Argentinien",
+      "gerichte": [
+        [
+          "Broquel Malbec",
+          "Dunkelrot mit violetten Reflexen, würzige Noten von Rauch · trocken · 14 % · 0,75 l"
+        ],
+        [
+          "Broquel Cabernet Sauvignon",
+          "Cassis und Erdbeere, elegante Rauchnote · 14 % · 0,75 l"
+        ],
+        [
+          "Roble Malbec",
+          "Brombeere und Pflaume · trocken · 13,5 % · 0,75 l"
+        ],
+        [
+          "Roble Cabernet Sauvignon",
+          "Würzig-fruchtig, Kirsche und Brombeere · trocken · 14 % · 0,75 l"
+        ],
+        [
+          "Roble Syrah",
+          "Rote Beerenfrüchte, würziger Charakter · trocken · 13,5 % · 0,75 l"
+        ]
+      ]
+    },
+    {
+      "titel": "Vinos Blancos & Rosado",
+      "untertitel": "Weiß- und Roséweine",
+      "gerichte": [
+        [
+          "Septiembre Vino Blanco",
+          "Frisch und spritzig, aus Torrontés · 11,5 % · 0,75 l"
+        ],
+        [
+          "Chardonnay",
+          "Feinfruchtig und spritzig · 13,5 % · 0,75 l"
+        ],
+        [
+          "Sauvignon Blanc",
+          "Exotische Früchte und Zitrus, leicht trocken · 13,5 % · 0,75 l"
+        ],
+        [
+          "Rosé de Cabernet Sauvignon",
+          "Erdbeere und dunkle Beeren · trocken · 13,5 % · 0,75 l"
+        ],
+        [
+          "Astica offen",
+          "Rot · Weiß · Rosé · 1/8 · 1/4 · 1/2 l"
+        ]
+      ]
+    },
+    {
+      "titel": "Aperitivos",
+      "untertitel": "Aperitifs & Sekt",
+      "kompakt": true,
+      "gerichte": [
+        [
+          "Martini Bianco · Rosso",
+          ""
+        ],
+        [
+          "Gancia",
+          "Argentinischer Wermut"
+        ],
+        [
+          "Cynar · Campari · Sherry",
+          ""
+        ],
+        [
+          "Schlumberger Brut",
+          "Piccolo 0,2 l · Flasche 0,75 l"
+        ],
+        [
+          "Kir Royal",
+          ""
+        ]
+      ]
+    },
+    {
+      "titel": "Cervezas",
+      "untertitel": "Bier",
+      "kompakt": true,
+      "gerichte": [
+        [
+          "Quilmes",
+          "Argentinisches Bier · 0,33 l"
+        ],
+        [
+          "Mohren Spezial",
+          "0,3 · 0,5 l"
+        ],
+        [
+          "Radler",
+          "0,3 · 0,5 l"
+        ],
+        [
+          "Weihenstephan Weizen",
+          "0,5 l"
+        ],
+        [
+          "Erdinger alkoholfrei",
+          "0,5 l"
+        ]
+      ]
+    },
+    {
+      "titel": "Digestivos",
+      "untertitel": "Brandy, Grappa & Spirituosen",
+      "kompakt": true,
+      "gerichte": [
+        [
+          "Cardenal Mendoza · Osborne · Rémy Martin",
+          ""
+        ],
+        [
+          "Chivas Regal",
+          ""
+        ],
+        [
+          "Grappa Berta · Cellina",
+          ""
+        ],
+        [
+          "Fernet Branca · Averna",
+          ""
+        ],
+        [
+          "Tequila · Williams · Obstler · Wodka",
+          ""
+        ]
+      ]
+    },
+    {
+      "titel": "Sin Alcohol",
+      "untertitel": "Alkoholfrei & Kaffee",
+      "kompakt": true,
+      "gerichte": [
+        [
+          "Römerquelle",
+          "Mineralwasser prickelnd oder still"
+        ],
+        [
+          "Säfte & Gespritzte",
+          "Apfel · Orange · Johannisbeere"
+        ],
+        [
+          "Softdrinks",
+          "Coca-Cola · Fanta · Sprite · Spezi · Bitter Lemon · Limonaden"
+        ],
+        [
+          "Kaffee & Tee",
+          "Espresso · Kaffee Crema · Cappuccino · Tee · Espresso Cognac"
+        ]
+      ]
+    }
   ]
 }
