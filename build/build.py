@@ -275,11 +275,30 @@ def speise_block(k):
     for g in k["gerichte"]:
         name, beschr = g[0], g[1]
         extra = f'<span class="groessen">{e(g[2])}</span>' if len(g) > 2 else ""
-        zeilen += f'<li><span class="gericht">{e(name)}</span>{f"<span class=\"beschr\">{e(beschr)}</span>" if beschr else ""}{extra}</li>'
+        al = k.get("allergene", {}).get(name, "")
+        name_html = e(name) + (f' <span class="allergene">({e(al)})</span>' if al else "")
+        zeilen += f'<li><span class="gericht">{name_html}</span>{f"<span class=\"beschr\">{e(beschr)}</span>" if beschr else ""}{extra}</li>'
     klasse = "karte-block" + (" kompakt" if k.get("kompakt") else "") + (" grill" if k.get("grill") else "")
     bildhtml = f'<figure class="foto-rahmen block-bild">{foto(k["bild"][0], k["bild"][1], "(min-width: 900px) 40vw, 100vw")}</figure>' if k.get("bild") else ""
     hinweis = f'<p class="block-hinweis">{e(k["hinweis"])}</p>' if k.get("hinweis") else ""
     return f'<section class="{klasse} einblenden"><h3>{e(k["titel"])}<small>{e(k["untertitel"])}</small></h3><ul>{zeilen}</ul>{hinweis}{bildhtml}</section>'
+
+
+ALLERGENE = [
+    ("A", "Gluten (glutenhaltiges Getreide wie Weizen, Roggen, Gerste, Hafer)"), ("B", "Krebstiere"), ("C", "Eier"), ("D", "Fisch"),
+    ("E", "Erdnüsse"), ("F", "Soja"), ("G", "Milch (einschließlich Laktose)"), ("H", "Schalenfrüchte (Nüsse)"),
+    ("L", "Sellerie"), ("M", "Senf"), ("N", "Sesam"), ("O", "Sulfite (Schwefeldioxid)"), ("P", "Lupinen"), ("R", "Weichtiere"),
+]
+
+
+def allergene_block():
+    zeilen = "".join(f'<li><b>{c}</b><span>{e(n)}</span></li>' for c, n in ALLERGENE)
+    return f'''<section class="abschnitt allergene-abschnitt" id="allergene"><div class="wrap">
+ <div class="einblenden"><p class="eyebrow">Wichtig für Ihre Gesundheit</p><h2>Die 14 <em>Allergene</em></h2>
+ <p>Die Buchstaben in Klammern hinter den Gerichten zeigen, welche Allergene enthalten sind. Fragen dazu beantwortet Ihnen gerne unser Service.</p></div>
+ <ul class="allergen-liste einblenden">{zeilen}</ul>
+ <p class="klein">Eine Nennung erfolgt, wenn die Stoffe oder daraus hergestellte Erzeugnisse als Zutat im fertigen Gericht enthalten sind. Trotz sorgfältiger Zubereitung können Spuren anderer Stoffe enthalten sein, die in der Küche verwendet werden. Alle Angaben ohne Gewähr.</p>
+</div></section>'''
 
 
 def seite_speisekarte(karte):
@@ -290,7 +309,8 @@ def seite_speisekarte(karte):
 <nav class="tabs wrap" aria-label="Speisekarte"><a href="#essen">Essen</a><a href="#trinken">Trinken</a></nav>
 <section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><p class="pro-person">Alle Portionen und Preise sind pro Person gerechnet.</p><div class="karte-raster">{essen}</div></div></section>
 <section class="abschnitt karte dunkler" id="trinken"><div class="wrap"><h2 class="karte-titel">Bebidas <em>· Trinken</em></h2><div class="karte-raster">{trinken}</div></div></section>
-<section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise und Tagesangebote erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
+{allergene_block()}
+<section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
     return layout("speisekarte.html", "Speisekarte – Argentinisches Steakhaus GAUCHO",
                   "Speisekarte des Argentinischen Steakhauses GAUCHO in Fußach: Steaks vom Grill, Grill- und Lammspezialitäten, argentinische Weine.",
                   inhalt, "speisekarte.html")

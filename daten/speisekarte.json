@@ -32,7 +32,15 @@
           "Carpaccio",
           "Hauchdünne Scheiben vom rohen Rindsfilet mit Rucola und Parmesan"
         ]
-      ]
+      ],
+      "allergene": {
+        "Gambas al Ajillo": "D",
+        "Provoletta": "G",
+        "Tomates con Mozzarella": "G",
+        "Cocktail de Gambas": "C, G",
+        "Gambas a la Plancha": "C, G",
+        "Carpaccio": "G, L"
+      }
     },
     {
       "titel": "Sopas",
@@ -54,7 +62,11 @@
           "Chili con Carne",
           ""
         ]
-      ]
+      ],
+      "allergene": {
+        "Consomé con Huevo": "C",
+        "Sopa de Fideos con Carne": "A"
+      }
     },
     {
       "titel": "Ensaladas",
@@ -76,7 +88,12 @@
           "Ensalada Gaucho",
           "Verschiedene Salate mit Weichkäse, Tomaten, Sellerie, Zwiebel, Paprika und Oliven"
         ]
-      ]
+      ],
+      "allergene": {
+        "Ensalada Mixta": "C, M",
+        "Ensalada Verde": "C, M",
+        "Ensalada Gaucho": "C, G, L, M"
+      }
     },
     {
       "titel": "Carnes a la Parrilla",
@@ -174,7 +191,15 @@
           "Hüftsteak, 200 g, mit Pfefferrahmsauce, Broccoli, Folienkartoffel und gemischtem Salat"
         ]
       ],
-      "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid."
+      "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid.",
+      "allergene": {
+        "Plato Gaucho": "C, G, M",
+        "Combinado Gaucho": "A, C, D, G, M",
+        "Lomo Gaucho": "A, C, G, M",
+        "Pincho Spiedo": "A, C, G, M",
+        "Suprema de Pollo": "A, C, G, M",
+        "Peceto a la Pimienta": "A, C, G, M"
+      }
     },
     {
       "titel": "Cordero",
@@ -197,7 +222,13 @@
           "Mit Spinat, Folienkartoffel und gemischtem Salat"
         ]
       ],
-      "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid."
+      "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid.",
+      "allergene": {
+        "Lammkarree 300 g": "C, G, M",
+        "Lammkarree 500 g": "C, G, M",
+        "Lammkotelett 300 g": "C, G, M",
+        "Lammkotelett 500 g": "C, G, M"
+      }
     },
     {
       "titel": "Pescados",
@@ -211,7 +242,11 @@
           "Camarones Gigantes",
           "Riesengarnelen mit Reis, Broccoli und gemischtem Salat"
         ]
-      ]
+      ],
+      "allergene": {
+        "Steak de Salmón": "A, D, G, M, O",
+        "Camarones Gigantes": "A, D, G, M, O"
+      }
     },
     {
       "titel": "Guarniciones",
@@ -244,9 +279,13 @@
         ],
         [
           "Salsas",
-          "Pfefferrahm · Champignon · Hollandaise · Bratensauce · Senf"
+          "Pfefferrahm (A, G, O) · Champignon (A, G, O) · Hollandaise (A, C, G, O) · Bratensauce (A, O) · Senf (A, G, M)"
         ]
-      ]
+      ],
+      "allergene": {
+        "Papa Asada": "G",
+        "Espinaca": "G"
+      }
     },
     {
       "titel": "Postres",
@@ -276,7 +315,12 @@
           "Tiramisu",
           "Nicht immer auf der Karte, fragen Sie gerne nach"
         ]
-      ]
+      ],
+      "allergene": {
+        "Panqueques con Dulce de Leche": "A, C, G",
+        "Helado con Frutas": "G",
+        "Helado Mixto": "G"
+      }
     }
   ],
   "trinken": [
@@ -304,7 +348,14 @@
           "Roble Syrah",
           "Rote Beerenfrüchte, würziger Charakter · trocken · 13,5 % · 0,75 l"
         ]
-      ]
+      ],
+      "allergene": {
+        "Broquel Malbec": "O",
+        "Broquel Cabernet Sauvignon": "O",
+        "Roble Malbec": "O",
+        "Roble Cabernet Sauvignon": "O",
+        "Roble Syrah": "O"
+      }
     },
     {
       "titel": "Vinos Blancos & Rosado",
@@ -330,7 +381,13 @@
           "Astica offen",
           "Rot · Weiß · Rosé · 1/8 · 1/4 · 1/2 l"
         ]
-      ]
+      ],
+      "allergene": {
+        "Chardonnay": "O",
+        "Sauvignon Blanc": "O",
+        "Rosé de Cabernet Sauvignon": "O",
+        "Astica offen": "O"
+      }
     },
     {
       "titel": "Aperitivos",
