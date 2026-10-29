@@ -117,7 +117,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
   <a class="marke" href="index.html" aria-label="{e(FIRMA['name'])} – Startseite"><img src="assets/logo-hell.svg?v={version('logo-hell.svg')}" alt="{e(FIRMA['name'])}" width="200" height="100"></a>
   <nav class="nav" id="nav" aria-label="Hauptnavigation"><ul>{nav}</ul></nav>
   <div class="kopf-aktionen">
-   <a class="korb-knopf" href="fleisch.html#korb" aria-label="Warenkorb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="korb-zahl" data-korb-zahl hidden>0</span></a>
+   <a class="korb-knopf" href="fleisch.html#korb" aria-label="Warenkorb"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 3.5h2.4l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h8.8a1.6 1.6 0 0 0 1.6-1.2l1.6-7.3H6"/><circle cx="9.5" cy="19.8" r="1.2"/><circle cx="17" cy="19.8" r="1.2"/></svg><span class="korb-zahl" data-korb-zahl hidden>0</span></a>
    <a class="btn btn-klein nur-desktop" href="reservieren.html">Tisch reservieren</a>
    <button class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menü öffnen"><span></span></button>
   </div>
