@@ -38,3 +38,18 @@ export function begruessung(anrede, name) {
   if (anrede === 'Frau') return `Sehr geehrte Frau ${nachname}`;
   return 'Sehr geehrte Kundin, sehr geehrter Kunde';
 }
+
+// Bestätigungsblock für die Mails: Knöpfe (mailto) und derselbe Text zum Kopieren, falls der Link am PC nicht aufgeht
+const esc2 = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+export function bestaetigung(email, optionen) {
+  const adresse = encodeURIComponent(email).replace(/%40/g, '@');
+  const knopf = (text, betreff, body, farbe) => {
+    const href = `mailto:${adresse}?subject=${encodeURIComponent(betreff)}&amp;body=${encodeURIComponent(body)}`;
+    return `<table cellpadding="0" cellspacing="0" border="0" style="display:inline-block;margin:0 10px 10px 0"><tr><td bgcolor="${farbe}" style="background:${farbe};padding:12px 20px"><a href="${href}" style="color:#ffffff;text-decoration:none;font-weight:bold"><span style="color:#ffffff">${esc2(text)}</span></a></td></tr></table>`;
+  };
+  const knoepfe = optionen.map((o) => knopf(o.knopf, o.betreff, o.text, o.farbe)).join('');
+  const kopie = optionen[0];
+  return `<p style="margin:18px 0 6px">${knoepfe}</p>
+<p style="color:#444;font-size:13px;margin:14px 0 4px"><b>Falls der Knopf nicht aufgeht:</b> Auf „Antworten“ klicken und diesen Text einfügen (Betreff: ${esc2(kopie.betreff)}):</p>
+<div style="border:1px solid #bbb;background:#f7f7f7;padding:12px 14px;font-size:14px;color:#000">${esc2(kopie.text).replace(/\n/g, '<br>')}</div>`;
+}
