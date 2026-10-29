@@ -34,11 +34,11 @@
         ]
       ],
       "allergene": {
-        "Gambas al Ajillo": "D",
+        "Gambas al Ajillo": "B, D",
         "Provoletta": "G",
         "Tomates con Mozzarella": "G",
-        "Cocktail de Gambas": "C, G",
-        "Gambas a la Plancha": "C, G",
+        "Cocktail de Gambas": "B, C, G",
+        "Gambas a la Plancha": "B, C, G",
         "Carpaccio": "G, L"
       }
     },
@@ -194,7 +194,7 @@
       "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid.",
       "allergene": {
         "Plato Gaucho": "C, G, M",
-        "Combinado Gaucho": "A, C, D, G, M",
+        "Combinado Gaucho": "A, B, C, D, G, M",
         "Lomo Gaucho": "A, C, G, M",
         "Pincho Spiedo": "A, C, G, M",
         "Suprema de Pollo": "A, C, G, M",
@@ -245,7 +245,7 @@
       ],
       "allergene": {
         "Steak de Salmón": "A, D, G, M, O",
-        "Camarones Gigantes": "A, D, G, M, O"
+        "Camarones Gigantes": "A, B, D, G, M, O"
       }
     },
     {
@@ -319,7 +319,10 @@
       "allergene": {
         "Panqueques con Dulce de Leche": "A, C, G",
         "Helado con Frutas": "G",
-        "Helado Mixto": "G"
+        "Helado Mixto": "G",
+        "Tartufo": "G, H",
+        "Flan de Huevos": "C, G",
+        "Tiramisu": "A, C, G"
       }
     }
   ],
@@ -386,7 +389,8 @@
         "Chardonnay": "O",
         "Sauvignon Blanc": "O",
         "Rosé de Cabernet Sauvignon": "O",
-        "Astica offen": "O"
+        "Astica offen": "O",
+        "Septiembre Vino Blanco": "O"
       }
     },
     {
