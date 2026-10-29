@@ -350,6 +350,18 @@
         [
           "Roble Syrah",
           "Rote Beerenfrüchte, würziger Charakter · trocken · 13,5 % · 0,75 l"
+        ],
+        [
+          "Cicchitti Edición Limitada Malbec",
+          "Dunkles, intensives Violett-Rot, konzentriertes Aroma mit dem typischen Veilchenduft von Malbec · 14,5 % · 0,75 l"
+        ],
+        [
+          "Tapiz Alta Collection Cabernet Sauvignon",
+          "Intensiver roter Farbton, Aroma nach roten Früchten mit einem Hauch von Cassis · 14 % · 0,75 l"
+        ],
+        [
+          "Ricardo Santos El Gran Malbec",
+          "Tiefvioletter Wein mit Aromen nach schwarzem Pfeffer, Geschmack von Waldfrüchten und weichen Tanninen · 14 % · 0,75 l"
         ]
       ],
       "allergene": {
@@ -357,7 +369,10 @@
         "Broquel Cabernet Sauvignon": "O",
         "Roble Malbec": "O",
         "Roble Cabernet Sauvignon": "O",
-        "Roble Syrah": "O"
+        "Roble Syrah": "O",
+        "Cicchitti Edición Limitada Malbec": "O",
+        "Tapiz Alta Collection Cabernet Sauvignon": "O",
+        "Ricardo Santos El Gran Malbec": "O"
       }
     },
     {
@@ -418,7 +433,11 @@
           "Kir Royal",
           ""
         ]
-      ]
+      ],
+      "allergene": {
+        "Schlumberger Brut": "O",
+        "Kir Royal": "O"
+      }
     },
     {
       "titel": "Cervezas",
@@ -445,7 +464,14 @@
           "Erdinger alkoholfrei",
           "0,5 l"
         ]
-      ]
+      ],
+      "allergene": {
+        "Quilmes": "A",
+        "Mohren Spezial": "A",
+        "Radler": "A",
+        "Weihenstephan Weizen": "A",
+        "Erdinger alkoholfrei": "A"
+      }
     },
     {
       "titel": "Digestivos",
