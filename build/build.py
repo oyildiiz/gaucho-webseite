@@ -313,7 +313,7 @@ def seite_fleisch(daten):
    <div class="feld"><label for="b-name">Name *</label><input id="b-name" name="name" autocomplete="name" required></div>
    <div class="feld"><label for="b-email">E-Mail *</label><input id="b-email" name="email" type="email" autocomplete="email" required></div>
    <div class="feld"><label for="b-tel">Telefon *</label><input id="b-tel" name="tel" type="tel" autocomplete="tel" required></div>
-   <div class="feld voll"><label for="b-msg">Wünsche (optional)</label><textarea id="b-msg" name="msg" rows="3" placeholder="z. B. Steakdicke, vakuumiert, Anlass"></textarea></div>
+   <div class="feld voll"><label for="b-msg">Wünsche (optional)</label><textarea id="b-msg" name="msg" rows="3"></textarea></div>
   </div>
   <fieldset class="zahlung"><legend>Bezahlung</legend>
    <label class="variante"><input type="radio" name="zahlung" value="abholung" checked><span class="v-kopf"><span class="v-name">Bei Abholung</span><span class="v-preis">bar oder Karte</span></span></label>
@@ -375,7 +375,7 @@ def seite_reservieren():
    <div class="feld"><label for="r-name">Name *</label><input id="r-name" name="name" autocomplete="name" required></div>
    <div class="feld"><label for="r-email">E-Mail *</label><input id="r-email" name="email" type="email" autocomplete="email" required></div>
    <div class="feld"><label for="r-tel">Telefon *</label><input id="r-tel" name="tel" type="tel" autocomplete="tel" required></div>
-   <div class="feld voll"><label for="r-msg">Bemerkung</label><textarea id="r-msg" name="msg" rows="3" placeholder="Anlass, Kinderstuhl, Allergien …"></textarea></div>
+   <div class="feld voll"><label for="r-msg">Bemerkung (optional)</label><textarea id="r-msg" name="msg" rows="3"></textarea></div>
   </div>
   <div class="hp" aria-hidden="true"><label for="r-website">Webseite</label><input id="r-website" name="website" tabindex="-1" autocomplete="off"></div>
   <label class="check"><input type="checkbox" id="r-ok" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Reservierung verwendet werden (<a href="datenschutz.html">Datenschutz</a>). *</span></label>
