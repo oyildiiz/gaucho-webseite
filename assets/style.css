@@ -337,3 +337,6 @@ input[type=number][data-g]{min-height:50px}
 
 .block-hinweis{margin:18px 0 0;color:var(--gold);font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.45}
 .pro-person{margin:-28px 0 40px;color:var(--grau);font-size:.95rem}
+
+.zahlung-info{margin:6px 0 18px;padding:14px 16px;border:1px solid var(--linie-gold);background:rgba(201,164,106,.06);color:var(--creme);font-size:.95rem}
+.zahlung-info strong{color:var(--gold);font-weight:500}

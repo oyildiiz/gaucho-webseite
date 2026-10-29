@@ -316,10 +316,7 @@ def seite_fleisch(daten):
    <div class="feld"><label for="b-tel">Telefon *</label><input id="b-tel" name="tel" type="tel" autocomplete="tel" required></div>
    <div class="feld voll"><label for="b-msg">Wünsche (optional)</label><textarea id="b-msg" name="msg" rows="3"></textarea></div>
   </div>
-  <fieldset class="zahlung"><legend>Bezahlung</legend>
-   <label class="variante"><input type="radio" name="zahlung" value="abholung" checked><span class="v-kopf"><span class="v-name">Bei Abholung</span><span class="v-preis">bar oder Karte</span></span></label>
-   <label class="variante aus"><input type="radio" name="zahlung" value="online" disabled><span class="v-kopf"><span class="v-name">Online bezahlen</span><span class="v-preis">in Kürze</span></span></label>
-  </fieldset>
+  <p class="zahlung-info"><strong>Bezahlung:</strong> Sie zahlen bei der Abholung im Gaucho, bar oder mit Karte.</p>
   <div class="hp" aria-hidden="true"><label for="b-website">Webseite</label><input id="b-website" name="website" tabindex="-1" autocomplete="off"></div>
   <label class="check"><input type="checkbox" id="b-ok" required> <span>Ich akzeptiere die <a href="agb.html">AGB</a> und bin einverstanden, dass meine Angaben zur Abwicklung der Bestellung verwendet werden (<a href="datenschutz.html">Datenschutz</a>). *</span></label>
   <button class="btn btn-voll" type="submit" data-bestellen>Verbindlich bestellen</button>

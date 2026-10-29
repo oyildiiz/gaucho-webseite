@@ -60,7 +60,7 @@ export function pruefeBestellung(b = {}) {
   const jetzt = new Date();
   const nr = 'G-' + datum.slice(2, 4) + datum.slice(5, 7) + datum.slice(8, 10) + '-' + String(jetzt.getTime()).slice(-4);
   const wann = `${TAGE[tag.getUTCDay()]}, ${datum.slice(8, 10)}.${datum.slice(5, 7)}.${datum.slice(0, 4)} um ${zeit} Uhr`;
-  const zahlart = b.zahlung === 'online' ? 'Online (noch nicht aktiv)' : 'Bei Abholung (bar/Karte)';
+  const zahlart = 'Bei Abholung (bar/Karte)';
   const tabelle = zeilen.map(z => `<tr><td style="padding:8px 16px 8px 0;border-bottom:1px solid #eee"><b>${esc(z.produkt)}</b><br><span style="color:#666">${esc(z.menge)}</span></td><td style="padding:8px 16px 8px 0;border-bottom:1px solid #eee;color:#666">${esc(z.kilopreis)}</td><td style="padding:8px 0;border-bottom:1px solid #eee;text-align:right">${esc(z.betrag)}</td></tr>`).join('');
   const html = `<div style="font-family:Arial,sans-serif;font-size:14px;color:#222"><div style="background:#f4efe6;border-left:4px solid #b08d57;padding:12px 16px;margin:0 0 16px;font-size:16px"><b>${esc(name)}</b><br><a href="mailto:${esc(email)}">${esc(email)}</a> · <a href="tel:${esc(tel.replace(/[^\d+]/g, ''))}">${esc(tel)}</a></div><h2 style="margin:0 0 4px">Neue Fleisch-Bestellung ${nr}</h2><p style="margin:0 0 18px;font-size:16px"><b>Abholung: ${esc(wann)}</b></p>
   <table style="border-collapse:collapse;width:100%;max-width:640px">${tabelle}<tr><td colspan="2" style="padding:12px 0"><b>Richtpreis gesamt</b> (nach Gewicht)</td><td style="padding:12px 0;text-align:right"><b>ca. ${euro(summe)}${aufAnfrage ? ' + Anfrage' : ''}</b></td></tr></table>
