@@ -207,7 +207,7 @@ def seite_start(produkte):
    <p class="lead">Lassen Sie sich mit original argentinischer Küche verwöhnen.</p>
    <p>In unserem gemütlichen Restaurant in Fußach grillen wir saftige Steaks, so wie Sie sie gern haben. Unsere Köche arbeiten mit guten Produkten und frischen Zutaten und kochen neben den Steaks auch andere argentinische Spezialitäten.</p>
    <p>Fußach liegt direkt am Bodensee, gleich neben Gaißau, Höchst und Lustenau. Bregenz, Hard, Dornbirn, die Schweiz und Deutschland sind nur ein paar Minuten entfernt.</p>
-   <p>Das Gaucho gibt es <strong>seit 2008</strong>. In Vorarlberg ist es über die Jahre zu einer beliebten Adresse für Steaks und argentinische Küche geworden. Wir sind ein <strong>Familienbetrieb</strong> und möchten, dass Sie sich bei uns wie zu Hause fühlen.</p>
+   <p>Das Argentinische Steakhaus Gaucho gibt es <strong>seit 2008</strong>. In Vorarlberg ist es über die Jahre zu einer beliebten Adresse für Steaks und argentinische Küche geworden. Wir sind ein <strong>Familienbetrieb</strong> und möchten, dass Sie sich bei uns wie zu Hause fühlen.</p>
    <ul class="fakten"><li><b>2008</b><span>gegründet</span></li><li><b>Familie</b><span>geführter Betrieb</span></li><li><b>Fußach</b><span>am Bodensee</span></li></ul>
    <p class="signatur">Wir freuen uns auf Sie! Ihr Team vom Gaucho</p>
   </div>
