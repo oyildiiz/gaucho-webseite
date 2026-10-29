@@ -38,7 +38,7 @@ else:
     BESTELL_WEBHOOK = "/api/bestellung"
     RESERVIER_WEBHOOK = "/api/reservierung"
 
-SEITE = os.environ.get("GAUCHO_URL", "https://gaucho-webseite.plain-union-1195.workers.dev")  # später: https://gaucho.at
+SEITE = os.environ.get("GAUCHO_URL", "https://gaucho.at")
 
 MENU = [
     ("index.html", "Start"),
