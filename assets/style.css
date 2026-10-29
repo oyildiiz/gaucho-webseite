@@ -399,3 +399,8 @@ main>.seitenkopf{background:transparent!important;border-bottom:0}
 .seiten-hintergrund.unten img{object-position:50% 45%}
 
 .korb-knopf svg{width:24px;height:24px}
+
+.seitenkopf .roh-hinweis{max-width:46rem;margin:28px 0 0;padding:16px 20px;border:1px solid var(--gold);background:rgba(201,164,106,.08);color:var(--creme);font-size:1rem;line-height:1.55;text-align:left}
+.seitenkopf .roh-hinweis strong{font-weight:700;color:var(--creme)}
+.seitenkopf .roh-hinweis strong:first-child{color:var(--gold);letter-spacing:.06em}
+.seitenkopf .roh-hinweis a{color:var(--gold)}
