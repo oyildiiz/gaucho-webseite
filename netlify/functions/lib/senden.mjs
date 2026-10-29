@@ -39,6 +39,27 @@ export function begruessung(anrede, name) {
   return 'Sehr geehrte Kundin, sehr geehrter Kunde';
 }
 
+
+// Signatur, wie sie das Restaurant in seinen Mails verwendet (reiner Text, damit sie im vorbereiteten Antworttext steht)
+export const SIGNATUR = `Mit freundlichen Grüßen
+
+Argentinisches Steakhaus Gaucho
+
+Rheinstraße 89
+6972 Fußach
+
+Mobil: +43 676 9181 402
+Tel.: +43 5578 73027
+E-Mail: info@gaucho.at
+UID-Nummer: ATU64560004
+
+Internet: https://www.gaucho.at
+Instagram: www.instagram.com/steakhausgaucho
+Facebook: www.facebook.com/ArgentinischesSteakhausGaucho
+
+Unsere Website finden Sie hier:
+https://www.gaucho.at`;
+
 // Bestätigungsblock für die Mails: Knöpfe (mailto) und derselbe Text zum Kopieren, falls der Link am PC nicht aufgeht
 const esc2 = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 export function bestaetigung(email, optionen) {
@@ -47,6 +68,7 @@ export function bestaetigung(email, optionen) {
     const href = `mailto:${adresse}?subject=${encodeURIComponent(betreff)}&amp;body=${encodeURIComponent(body)}`;
     return `<table cellpadding="0" cellspacing="0" border="0" style="display:inline-block;margin:0 10px 10px 0"><tr><td bgcolor="${farbe}" style="background:${farbe};padding:12px 20px"><a href="${href}" style="color:#ffffff;text-decoration:none;font-weight:bold"><span style="color:#ffffff">${esc2(text)}</span></a></td></tr></table>`;
   };
+  optionen = optionen.map((o) => ({ ...o, text: `${o.text}\n\n${SIGNATUR}` }));
   const knoepfe = optionen.map((o) => knopf(o.knopf, o.betreff, o.text, o.farbe)).join('');
   const kopie = optionen[0];
   return `<p style="margin:18px 0 6px">${knoepfe}</p>
