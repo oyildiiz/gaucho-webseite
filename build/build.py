@@ -38,6 +38,8 @@ else:
     BESTELL_WEBHOOK = "/api/bestellung"
     RESERVIER_WEBHOOK = "/api/reservierung"
 
+SEITE = os.environ.get("GAUCHO_URL", "https://gaucho-webseite.plain-union-1195.workers.dev")  # später: https://gaucho.at
+
 MENU = [
     ("index.html", "Start"),
     ("speisekarte.html", "Speisekarte"),
@@ -102,7 +104,15 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <meta name="theme-color" content="#0f0c0b">
 <meta property="og:title" content="{e(titel)}">
 <meta property="og:description" content="{e(beschreibung)}">
-<meta property="og:image" content="assets/bilder/entrecote-900.webp">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_AT">
+<meta property="og:site_name" content="Argentinisches Steakhaus GAUCHO">
+<meta property="og:image" content="{SEITE}/assets/vorschau.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Der Gastraum des Argentinischen Steakhauses GAUCHO in Fußach am Bodensee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{SEITE}/assets/vorschau.jpg">
 <link rel="icon" type="image/png" href="assets/favicon.png?v={version('favicon.png')}">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v={version('apple-touch-icon.png')}">
 <link rel="preload" href="assets/fonts/CormorantGaramond-500.woff2" as="font" type="font/woff2" crossorigin>
