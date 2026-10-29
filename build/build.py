@@ -63,6 +63,16 @@ def bild(name, alt, groesse="(min-width: 900px) 40vw, 100vw", lazy=True, klasse=
             f'{f" class=\"{klasse}\"" if klasse else ""}>')
 
 
+def foto(name, alt, groesse="(min-width: 900px) 46vw, 100vw", lazy=True, klasse=""):
+    """Foto mit allen vorhandenen Größen (600/900/1400 px breit)."""
+    breiten = [b for b in (600, 900, 1400) if (ROOT / "assets" / "bilder" / f"{name}-{b}.webp").exists()]
+    from PIL import Image
+    w, h = Image.open(ROOT / "assets" / "bilder" / f"{name}-{breiten[-1]}.webp").size
+    srcset = ", ".join(f"assets/bilder/{name}-{b}.webp {b}w" for b in breiten)
+    return (f'<img src="assets/bilder/{name}-{breiten[-1] if breiten[-1] <= 900 else 900}.webp" srcset="{srcset}" sizes="{groesse}" '
+            f'width="{w}" height="{h}" alt="{e(alt)}"{" loading=\"lazy\"" if lazy else ""}{f" class=\"{klasse}\"" if klasse else ""}>')
+
+
 def zeiten_liste(klasse="zeiten"):
     zeilen = "".join(f"<div><dt>{e(t)}</dt><dd>{e(z)}</dd></div>" for t, z in ZEITEN)
     return f'<dl class="{klasse}">{zeilen}</dl>'
@@ -182,8 +192,8 @@ def seite_start(produkte):
    <p class="klein">Hinweis: Im Fleisch-Shop verkaufen wir ausschließlich <strong>rohes, unzubereitetes Fleisch</strong>. Gegrillte Gerichte gibt es im Restaurant.</p>
   </div>
   <div class="shop-werbung-bilder einblenden" aria-hidden="false">
-   <figure class="bild-gross">{bild('entrecote', 'Rohes Bife Ancho (Entrecôte) aus Argentinien zum Mitnehmen', '(min-width: 900px) 30vw, 80vw')}</figure>
-   <figure class="bild-klein">{bild('lomo', 'Rohes Lomo (Rinderfilet) aus Argentinien zum Mitnehmen', '(min-width: 900px) 20vw, 50vw')}</figure>
+   <figure class="bild-gross">{foto('roh-vakuum', 'Frisch zugeschnittenes, vakuumiertes rohes Rindfleisch zum Mitnehmen', '(min-width: 900px) 30vw, 80vw')}</figure>
+   <figure class="bild-klein">{foto('roh-ribeye', 'Rohes, fein marmoriertes Entrecôte auf einer Schieferplatte', '(min-width: 900px) 20vw, 50vw')}</figure>
   </div>
  </div>
 </section>
@@ -193,6 +203,7 @@ def seite_start(produkte):
   <div class="einblenden">
    <p class="eyebrow">Bienvenidos</p>
    <h2>Willkommen im <em>Gaucho</em></h2>
+   <figure class="foto-rahmen willkommen-bild">{foto('lokal-abend', 'Der Gastraum des Gaucho am Abend: gedeckte Tische, warmes Licht und ein Panoramabild von Buenos Aires', '(min-width: 900px) 40vw, 100vw')}</figure>
   </div>
   <div class="einblenden text">
    <p class="lead">Lassen Sie sich mit original argentinischer Küche verwöhnen.</p>
@@ -213,6 +224,21 @@ def seite_start(produkte):
   </div>
   <div class="cuts einblenden">{karten}</div>
   <div class="mitte einblenden"><a class="btn" href="fleisch.html">Zum Fleisch-Shop</a></div>
+ </div>
+</section>
+
+<section class="abschnitt galerie-abschnitt">
+ <div class="wrap">
+  <div class="abschnitt-kopf einblenden">
+   <div><p class="eyebrow">Parrilla</p><h2>Vom <em>offenen Feuer</em></h2></div>
+   <p>Bei uns kommt das Fleisch über die Glut. Jedes Steak wird einzeln gegrillt, genau auf den Punkt, den Sie sich wünschen.</p>
+  </div>
+  <div class="galerie einblenden">
+   <figure class="foto-rahmen breit">{foto('grill-gemischt', 'Gegrillte Steaks und Lammkoteletts auf einer Holzplatte vor offenem Feuer', '(min-width: 900px) 90vw, 100vw')}</figure>
+   <figure class="foto-rahmen">{foto('grill-gar', 'Steaks mit Grillmuster auf dem heißen Rost', '(min-width: 900px) 30vw, 50vw')}</figure>
+   <figure class="foto-rahmen">{foto('grill-roh-feuer', 'Rohe Steaks auf dem Rost über der Flamme', '(min-width: 900px) 30vw, 50vw')}</figure>
+   <figure class="foto-rahmen">{foto('grill-roh-wuerfel', 'Frisch geschnittene Fleischstücke auf dem Grill', '(min-width: 900px) 30vw, 50vw')}</figure>
+  </div>
  </div>
 </section>
 
@@ -252,8 +278,10 @@ def seite_speisekarte(karte):
     essen = "".join(speise_block(k) for k in karte["essen"])
     trinken = "".join(speise_block(k) for k in karte["trinken"])
     inhalt = seitenkopf("La Carta", "Speisekarte", "Original argentinische Küche: vom Grill, aus der Küche und aus dem Weinkeller.") + f"""
+<div class="wrap seitenbild einblenden"><figure class="foto-rahmen">{foto('steak-gedeck', 'Gegrilltes Steak mit gratinierter Tomate, Pommes frites und Broccoli', '(min-width: 1200px) 1100px, 100vw', lazy=False)}</figure></div>
 <nav class="tabs wrap" aria-label="Speisekarte"><a href="#essen">Essen</a><a href="#trinken">Trinken</a></nav>
 <section class="abschnitt karte" id="essen"><div class="wrap"><h2 class="karte-titel">Comida <em>· Essen</em></h2><p class="pro-person">Alle Portionen und Preise sind pro Person gerechnet.</p><div class="karte-raster">{essen}</div></div></section>
+<div class="wrap seitenbild einblenden"><figure class="foto-rahmen">{foto('steak-reis', 'Zwei gegrillte Steaks auf Steinplatten mit Wildreis', '(min-width: 1200px) 1100px, 100vw')}</figure></div>
 <section class="abschnitt karte dunkler" id="trinken"><div class="wrap"><h2 class="karte-titel">Bebidas <em>· Trinken</em></h2><div class="karte-raster">{trinken}</div></div></section>
 <section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise und Tagesangebote erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>"""
     return layout("speisekarte.html", "Speisekarte – Argentinisches Steakhaus GAUCHO",
@@ -381,6 +409,7 @@ def seite_reservieren():
   <p class="form-status" role="status" aria-live="polite"></p>
  </form>
 </div></section>
+<div class="wrap seitenbild einblenden"><figure class="foto-rahmen">{foto('lokal-bar', 'Blick in den Gastraum des Gaucho mit der Bar im Hintergrund', '(min-width: 1200px) 1100px, 100vw')}</figure></div>
 <section class="abschnitt"><div class="wrap zwei">
  <div class="einblenden"><h2>Öffnungszeiten</h2>{zeiten_liste()}<p class="hinweis links">Montag ist unser Ruhetag. Silvester sind wir immer für Sie da.</p></div>
  <div class="einblenden"><h2>So finden Sie uns</h2><address>{e(FIRMA['strasse'])}<br>{e(FIRMA['ort'])}<br>{e(FIRMA['region'])}</address><p><a class="btn btn-hohl" href="{FIRMA['maps']}" target="_blank" rel="noopener">Route in Google Maps</a></p><p class="klein">Wir sind ein Nichtraucherrestaurant.</p></div>

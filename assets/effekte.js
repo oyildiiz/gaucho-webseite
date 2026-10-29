@@ -11,7 +11,7 @@
   // Fortschrittslinie, Kopf ein-/ausblenden, Parallax beim Scrollen
   var linie = document.createElement('div'); linie.className = 'fortschritt'; linie.setAttribute('aria-hidden', 'true'); document.body.appendChild(linie);
   var kopf = document.getElementById('kopf'), letzte = window.scrollY, wartet = false;
-  var para = Array.prototype.slice.call(document.querySelectorAll('.cut figure, .produkt-bild'));
+  var para = Array.prototype.slice.call(document.querySelectorAll('.cut figure, .produkt-bild, .galerie .foto-rahmen, .seitenbild .foto-rahmen, .willkommen-bild'));
   function frame() {
     wartet = false;
     var y = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
