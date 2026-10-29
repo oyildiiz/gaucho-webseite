@@ -261,7 +261,7 @@ def seite_start(produkte):
  <div class="wrap band-in einblenden">
   <img class="band-stier" src="assets/stier-hell.svg?v={version('stier-hell.svg')}" alt="" width="180" height="202" loading="lazy">
   <div><h2>Ihr Tisch im <em>Gaucho</em></h2><p>Reservieren Sie online oder rufen Sie uns kurz an. Wir bestätigen Ihre Reservierung per E-Mail.</p></div>
-  <div class="aktionen"><a class="btn" href="reservieren.html">Online reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
+  <div class="aktionen"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
  </div>
 </section>"""
     return layout("index.html", "Argentinisches Steakhaus GAUCHO – Steaks in Fußach am Bodensee",
