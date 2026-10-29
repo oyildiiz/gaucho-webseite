@@ -13,8 +13,8 @@ export function pruefeReservierung(b = {}) {
   // Silvester (31.12.) ist immer offen – fällt er auf einen Montag, gelten die Dienstagszeiten
   const wtag = tag.getUTCDay() === 1 && datum.slice(5) === '12-31' ? 2 : tag.getUTCDay();
   if (wtag === 1) return fehler('Montag ist Ruhetag');
-  // Reservierbar: Di–Fr 17:00–22:00, Sa/So 11:00–13:30 und 17:00–22:00
-  const FENSTER = { 0: [[660, 810], [1020, 1320]], 2: [[1020, 1320]], 3: [[1020, 1320]], 4: [[1020, 1320]], 5: [[1020, 1320]], 6: [[660, 810], [1020, 1320]] };
+  // Reservierbar: Di–Fr 17:00–21:45, Sa/So 11:00–13:30 und 17:00–21:45
+  const FENSTER = { 0: [[660, 810], [1020, 1305]], 2: [[1020, 1305]], 3: [[1020, 1305]], 4: [[1020, 1305]], 5: [[1020, 1305]], 6: [[660, 810], [1020, 1305]] };
   const min = +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5);
   if (!(FENSTER[wtag] || []).some(([v, bis]) => min >= v && min <= bis)) return fehler('Uhrzeit außerhalb der Reservierungszeiten');
   const TAGE = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
