@@ -63,11 +63,21 @@ def bild(name, alt, groesse="(min-width: 900px) 40vw, 100vw", lazy=True, klasse=
             f'{f" class=\"{klasse}\"" if klasse else ""}>')
 
 
+def _webp_groesse(pfad):
+    """Breite und Höhe einer WebP-Datei, ohne Zusatzpakete."""
+    import struct
+    d = pfad.read_bytes()[:40]
+    if d[12:16] == b"VP8 ":
+        w, h = struct.unpack("<HH", d[26:30]); return w & 0x3FFF, h & 0x3FFF
+    if d[12:16] == b"VP8L":
+        v = struct.unpack("<I", d[21:25])[0]; return (v & 0x3FFF) + 1, ((v >> 14) & 0x3FFF) + 1
+    return int.from_bytes(d[24:27], "little") + 1, int.from_bytes(d[27:30], "little") + 1
+
+
 def foto(name, alt, groesse="(min-width: 900px) 46vw, 100vw", lazy=True, klasse=""):
     """Foto mit allen vorhandenen Größen (600/900/1400 px breit)."""
     breiten = [b for b in (600, 900, 1400) if (ROOT / "assets" / "bilder" / f"{name}-{b}.webp").exists()]
-    from PIL import Image
-    w, h = Image.open(ROOT / "assets" / "bilder" / f"{name}-{breiten[-1]}.webp").size
+    w, h = _webp_groesse(ROOT / "assets" / "bilder" / f"{name}-{breiten[-1]}.webp")
     srcset = ", ".join(f"assets/bilder/{name}-{b}.webp {b}w" for b in breiten)
     return (f'<img src="assets/bilder/{name}-{breiten[-1] if breiten[-1] <= 900 else 900}.webp" srcset="{srcset}" sizes="{groesse}" '
             f'width="{w}" height="{h}" alt="{e(alt)}"{" loading=\"lazy\"" if lazy else ""}{f" class=\"{klasse}\"" if klasse else ""}>')
