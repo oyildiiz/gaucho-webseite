@@ -216,7 +216,7 @@ def seite_start(produkte):
 
 <section class="abschnitt">
  <div class="wrap drei saeulen">
-  <div class="einblenden"><span class="nr">I</span><h3>Vom Grill</h3><p>Steaks wie Lomo, Bife Ancho, Bife und Churrasco, dazu Lamm, Fisch und Maiskolben: alles frisch auf dem Grill zubereitet und auf den Punkt gegrillt.</p></div>
+  <div class="einblenden"><span class="nr">I</span><h3>Vom Grill</h3><p>Lomo, Bife Ancho, Bife und Churrasco, dazu Lamm und viele weitere Gerichte vom Grill: frisch zubereitet und auf den Punkt gegrillt.</p></div>
   <div class="einblenden"><span class="nr">II</span><h3>Argentinische Küche</h3><p>Von Provoletta und Gambas al Ajillo bis zu Panqueques con Dulce de Leche.</p></div>
   <div class="einblenden"><span class="nr">III</span><h3>Argentinische Weine</h3><p>Malbec, Cabernet Sauvignon und Syrah aus Argentinien passen sehr gut zu einem Steak.</p></div>
  </div>
