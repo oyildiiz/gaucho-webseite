@@ -84,19 +84,19 @@
       "gerichte": [
         [
           "Lomo",
-          "Filetsteak mit 200, 300, 400, 500 oder 600 g"
+          "Filetsteak, 200, 300, 400, 500 oder 600 g"
         ],
         [
           "Bife Ancho",
-          "Entrecôte mit 300, 400, 500 oder 600 g"
+          "Entrecôte, 300, 400, 500 oder 600 g"
         ],
         [
           "Bife",
-          "Rumpsteak mit 200, 300, 400, 500 oder 600 g"
+          "Rumpsteak, 200, 300, 400, 500 oder 600 g"
         ],
         [
           "Churrasco",
-          "Hüftsteak mit 200, 300, 400, 500 oder 600 g"
+          "Hüftsteak, 200, 300, 400, 500 oder 600 g"
         ]
       ],
       "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid."
@@ -111,11 +111,11 @@
         ],
         [
           "Combinado Gaucho",
-          "Filetsteak 200 g mit Pfefferrahmsauce, Garnelen, Pommes frites und gemischtem Salat"
+          "Filetsteak, 200 g, mit Pfefferrahmsauce, Garnelen, Pommes frites und gemischtem Salat"
         ],
         [
           "Lomo Gaucho",
-          "Filetsteak 200 g mit Sauce Hollandaise, Spinat, Folienkartoffel und gemischtem Salat"
+          "Filetsteak, 200 g, mit Sauce Hollandaise, Spinat, Folienkartoffel und gemischtem Salat"
         ],
         [
           "Pincho Spiedo",
@@ -127,7 +127,7 @@
         ],
         [
           "Peceto a la Pimienta",
-          "Hüftsteak 200 g mit Pfefferrahmsauce, Broccoli, Folienkartoffel und gemischtem Salat"
+          "Hüftsteak, 200 g, mit Pfefferrahmsauce, Broccoli, Folienkartoffel und gemischtem Salat"
         ]
       ],
       "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid."
@@ -148,7 +148,8 @@
           "Lammkotelett 300 g",
           "Mit Spinat, Folienkartoffel und gemischtem Salat"
         ]
-      ]
+      ],
+      "hinweis": "Möchten Sie mehr? Auch größere Mengen sind bestellbar, sagen Sie uns einfach Bescheid."
     },
     {
       "titel": "Pescados",
