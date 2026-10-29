@@ -404,3 +404,7 @@ main>.seitenkopf{background:transparent!important;border-bottom:0}
 .seitenkopf .roh-hinweis strong{font-weight:700;color:var(--creme)}
 .seitenkopf .roh-hinweis strong:first-child{color:var(--gold);letter-spacing:.06em}
 .seitenkopf .roh-hinweis a{color:var(--gold)}
+
+/* Größere Tippflächen für kleine Links am Handy */
+.tabs a,.fuss a,.fuss-unten a,.kontaktliste a,.klein a,.hinweis a,.roh-hinweis a,.zeiten a{display:inline-block;padding:10px 6px;margin:-10px -6px}
+.fuss-unten nav a{padding:12px 6px}
