@@ -421,7 +421,7 @@ def seite_reservieren():
                         "Sichern Sie sich Ihren Platz im Gaucho. Die Anfrage dauert nur eine Minute, wir bestätigen per E-Mail.") + f"""
 <section class="abschnitt dunkler"><div class="wrap zwei">
  <div class="einblenden"><p class="eyebrow">Reservar</p><h2>Ihre <em>Anfrage</em></h2>
-  <p>Schicken Sie uns Ihre Reservierungsanfrage, wir bestätigen sie Ihnen per E-Mail. Ist zu Ihrem Wunschtermin kein Tisch mehr frei, melden wir uns telefonisch bei Ihnen.</p>
+  <p>Schicken Sie uns Ihre Reservierungsanfrage, wir bestätigen sie Ihnen per E-Mail. Ist zu Ihrem Wunschtermin kein Tisch mehr frei, melden wir uns bei Ihnen.</p>
  </div>
  <form class="reservierung einblenden" id="reservierung" data-ziel="{RESERVIER_WEBHOOK}" novalidate>
   <div class="felder">
