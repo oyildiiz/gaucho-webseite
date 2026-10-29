@@ -391,3 +391,7 @@ main>.seitenkopf{background:transparent!important;border-bottom:0}
 .seiten-hintergrund.unten{inset:auto 0 0 0;height:min(70vh,640px);
  -webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.5) 55%,transparent 100%);mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.5) 55%,transparent 100%)}
 .seiten-hintergrund img{filter:saturate(.8) brightness(.75) blur(1px)}
+
+.seitenbild .foto-rahmen.aussen-bild{aspect-ratio:4/3}
+@media(min-width:900px){.seitenbild .foto-rahmen.aussen-bild{aspect-ratio:16/10}}
+.aussen-bild img{object-position:50% 40%}
