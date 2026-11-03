@@ -19,12 +19,3 @@ Statische Seite, erzeugt mit `python3 build/build.py` nach `public/` (Netlify ba
 ## Cloudflare (Worker mit Seiten)
 - Konfiguration: `wrangler.jsonc` (Seiten aus `public/`, Code in `worker/index.js`, nutzt die Logik aus `netlify/functions/lib/`). Build-Befehl `python3 build/build.py`, Deploy-Befehl `npx wrangler deploy`.
 - Laufzeit-Variablen in Cloudflare (Settings → Variables and Secrets): `RESEND_API_KEY` (Secret), optional `MAIL_FROM`, `MAIL_TO`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Standard sind die eigenen Funktionen; mit der Build-Variable `GAUCHO_BACKEND=n8n` läuft es über n8n.
-
-## Bestätigung per Knopf (Reservierung / Bestellung)
-
-Die Mails an das Restaurant enthalten Knöpfe („Reservierung bestätigen“, „Kein Tisch frei“, „Bestellung bestätigen“, „Rückfrage an den Kunden“). Ein Tipp öffnet `/api/bestaetigen?t=…` (Vorschau der Mail, es wird noch nichts gesendet), ein zweiter Tipp sendet die Mail an den Gast über Resend: Absender `Argentinisches Steakhaus Gaucho <bestellung@gaucho.at>`, Antworten gehen an `info@gaucho.at`, Kopie per BCC an `info@gaucho.at`, dazu die HTML-Signatur (`SIG_HTML` in `netlify/functions/lib/senden.mjs`, roter Name).
-
-- Die Links sind mit HMAC signiert (Schlüssel: `LINK_SECRET`, sonst `RESEND_API_KEY`) und 30 Tage gültig. Ändert man den Schlüssel, werden alte Links ungültig.
-- Eine schon gesendete Bestätigung wird im Cloudflare-Cache gemerkt (nur auf der eigenen Domain), ein zweites Senden verlangt eine Bestätigung.
-- Texte der Bestätigungen stehen in `lib/reservierung.mjs` und `lib/bestellung.mjs`, die Signatur in `lib/senden.mjs`.
-- Der Kopierblock unter den Knöpfen bleibt für eigene Texte.
