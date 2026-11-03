@@ -68,6 +68,7 @@
     v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
     v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
     v.preload = 'auto'; v.src = 'assets/video/hero.mp4';
+    v.addEventListener('error', function () { v.remove(); });
     v.addEventListener('playing', function () { v.classList.add('an'); }, { once: true });
     box.insertBefore(v, box.firstChild);
     var p = v.play(); if (p && p.catch) p.catch(function () { v.remove(); });
