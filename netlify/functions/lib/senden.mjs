@@ -1,73 +1,21 @@
-// Versand: Mail über Resend, Nachricht an Telegram. Zugangsdaten stehen nur in den Umgebungsvariablen.
-const adresseVon = (env) => {
-  const basis = env.MAIL_FROM || 'GAUCHO Webseite <onboarding@resend.dev>';
-  return { basis, adresse: (basis.match(/<([^>]+)>/) || [, basis])[1] };
-};
-
-async function resendSenden(env, body) {
+// Versand: Mail über Resend, Nachricht an Telegram. Zugangsdaten stehen nur in den Netlify-Umgebungsvariablen.
+export async function sendeMail({ subject, html, replyTo, absender }, env = process.env) {
   if (!env.RESEND_API_KEY) throw new Error('RESEND_API_KEY fehlt');
+  // Nur der Anzeigename wechselt (Bestellung / Reservierungsanfrage), die Adresse bleibt die bestätigte
+  const basis = env.MAIL_FROM || 'GAUCHO Webseite <onboarding@resend.dev>';
+  const adresse = (basis.match(/<([^>]+)>/) || [, basis])[1];
+  const von = absender ? `${absender} <${adresse}>` : basis;
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+    body: JSON.stringify({
+      from: von,
+      to: [env.MAIL_TO || 'info@gaucho.at'],
+      reply_to: replyTo,
+      subject, html
+    })
   });
   if (!r.ok) throw new Error('Mailversand fehlgeschlagen: HTTP ' + r.status + ' ' + (await r.text()).slice(0, 200));
-}
-
-// Mail an das Restaurant. „aktionen“ sind die Bestätigungsknöpfe: jeder bekommt einen signierten Link
-export async function sendeMail({ subject, html, replyTo, absender, aktionen }, env = process.env) {
-  if (!env.RESEND_API_KEY) throw new Error('RESEND_API_KEY fehlt');
-  // Nur der Anzeigename wechselt (Bestellung / Reservierungsanfrage), die Adresse bleibt die bestätigte
-  const { basis, adresse } = adresseVon(env);
-  const von = absender ? `${absender} <${adresse}>` : basis;
-  if (aktionen && aktionen.length) {
-    const seite = env.SEITE_URL || 'https://gaucho.at';
-    for (let i = 0; i < aktionen.length; i++) {
-      const token = await erzeugeToken({ ...aktionen[i], ts: Date.now() }, env);
-      html = html.split(`{{LINK:${i}}}`).join(`${seite}/api/bestaetigen?t=${token}`);
-    }
-  }
-  await resendSenden(env, { from: von, to: [env.MAIL_TO || 'info@gaucho.at'], reply_to: replyTo, subject, html });
-}
-
-// Bestätigung an den Gast: schöne Mail mit der Signatur des Restaurants (ohne Kopie, den Nachweis gibt es in Telegram und im Resend-Protokoll)
-export async function sendeBestaetigung(d, env = process.env) {
-  const { adresse } = adresseVon(env);
-  const intern = env.MAIL_TO || 'info@gaucho.at';
-  await resendSenden(env, {
-    from: `Argentinisches Steakhaus Gaucho <${adresse}>`,
-    to: [d.e], reply_to: intern,
-    subject: d.b, html: bestaetigungsHtml(d.x)
-  });
-}
-
-export function bestaetigungsHtml(text) {
-  const absaetze = String(text).split(/\n\n+/).map((a) => `<p style="margin:0 0 14px;line-height:1.6">${esc2(a).replace(/\n/g, '<br>')}</p>`).join('');
-  return `<div style="font-family:Calibri,Arial,sans-serif;font-size:15px;color:#000;max-width:600px">${absaetze}<div style="margin-top:22px">${SIG_HTML}</div></div>`;
-}
-
-// Signierte Links: nur wer die Mail vom Server bekommen hat, kann eine Bestätigung auslösen
-const enc = new TextEncoder();
-const b64u = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-const unb64u = (s) => Uint8Array.from(atob(String(s).replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0));
-async function schluessel(env) {
-  const geheim = env.LINK_SECRET || env.RESEND_API_KEY;
-  if (!geheim) throw new Error('Kein Geheimnis für die Links');
-  return crypto.subtle.importKey('raw', enc.encode('gaucho-bestaetigung:' + geheim), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);
-}
-export async function erzeugeToken(daten, env) {
-  const body = b64u(enc.encode(JSON.stringify(daten)));
-  return body + '.' + b64u(await crypto.subtle.sign('HMAC', await schluessel(env), enc.encode(body)));
-}
-export async function pruefeToken(token, env, maxTage = 30) {
-  try {
-    const [body, sig] = String(token).split('.');
-    if (!body || !sig) return null;
-    if (!(await crypto.subtle.verify('HMAC', await schluessel(env), unb64u(sig), enc.encode(body)))) return null;
-    const d = JSON.parse(new TextDecoder().decode(unb64u(body)));
-    if (!d.ts || Date.now() - d.ts > maxTage * 86400000) return null;
-    return d;
-  } catch (e) { return null; }
 }
 
 // Telegram ist optional: ohne Zugangsdaten passiert nichts, ein Fehler hier stoppt die Mail nicht
@@ -118,17 +66,17 @@ const SIG_HTML = `<p style="margin:0 0 18px;line-height:1.5">Mit freundlichen Gr
 <p style="margin:0 0 12px;line-height:1.6;color:#222">Instagram: <a href="https://www.instagram.com/steakhausgaucho" style="color:#222;text-decoration:none">@steakhausgaucho</a><br>Facebook: <a href="https://www.facebook.com/ArgentinischesSteakhausGaucho" style="color:#222;text-decoration:none">Argentinisches Steakhaus Gaucho</a></p>
 <p style="margin:0;line-height:1.6;color:#777;font-size:12px">UID-Nummer: ATU64560004</p>`;
 
-// Bestätigungsblock für die Mails: Knöpfe lösen die Bestätigung aus, darunter derselbe Text zum Kopieren (für eigene Änderungen)
+// Bestätigungsblock für die Mails: Knöpfe (mailto) öffnen die Antwort im eigenen Mailprogramm. Die Signatur kommt aus Outlook selbst, deshalb steht sie nicht im vorbereiteten Text. Darunter derselbe Text zum Kopieren, falls der Link nicht aufgeht
 const esc2 = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-export function bestaetigung(email, optionen, aktionen) {
-  const knopf = (o, i) => {
-    aktionen.push({ e: email, b: o.betreff, x: o.text, l: o.knopf });
-    return `<table cellpadding="0" cellspacing="0" border="0" style="display:inline-block;margin:0 10px 10px 0"><tr><td bgcolor="${o.farbe}" style="background:${o.farbe};padding:12px 20px"><a href="{{LINK:${i}}}" style="color:#ffffff;text-decoration:none;font-weight:bold"><span style="color:#ffffff">${esc2(o.knopf)}</span></a></td></tr></table>`;
+export function bestaetigung(email, optionen) {
+  const adresse = encodeURIComponent(email).replace(/%40/g, '@');
+  const knopf = (text, betreff, body, farbe) => {
+    const href = `mailto:${adresse}?subject=${encodeURIComponent(betreff)}&amp;body=${encodeURIComponent(body)}`;
+    return `<table cellpadding="0" cellspacing="0" border="0" style="display:inline-block;margin:0 10px 10px 0"><tr><td bgcolor="${farbe}" style="background:${farbe};padding:12px 20px"><a href="${href}" style="color:#ffffff;text-decoration:none;font-weight:bold"><span style="color:#ffffff">${esc2(text)}</span></a></td></tr></table>`;
   };
-  const knoepfe = optionen.map((o, i) => knopf(o, aktionen.length)).join('');
+  const knoepfe = optionen.map((o) => knopf(o.knopf, o.betreff, o.text, o.farbe)).join('');
   const kopie = optionen[0];
   return `<p style="margin:18px 0 6px">${knoepfe}</p>
-<p style="color:#666;font-size:12px;margin:2px 0 14px">Ein Tipp auf den Knopf öffnet eine Seite, dort senden Sie die Bestätigung mit einem weiteren Tipp an den Gast.</p>
-<p style="color:#444;font-size:13px;margin:14px 0 4px"><b>Eigener Text?</b> Auf „Antworten“ klicken und diesen Text einfügen (Betreff: ${esc2(kopie.betreff)}):</p>
+<p style="color:#444;font-size:13px;margin:14px 0 4px"><b>Falls der Knopf nicht aufgeht:</b> Auf „Antworten“ klicken und diesen Text einfügen (Betreff: ${esc2(kopie.betreff)}):</p>
 <div style="border:1px solid #bbb;background:#f7f7f7;padding:12px 14px;font-size:14px;color:#000">${esc2(kopie.text).replace(/\n/g, '<br>')}<br><br>${SIG_HTML}</div>`;
 }
