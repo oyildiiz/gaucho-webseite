@@ -64,7 +64,7 @@ async function bestaetige(request, env) {
   }
   await merke(token);
   await sendeTelegram(`✅ <b>${esc(d.l || 'Bestätigung')}</b> gesendet an ${esc(d.e)}`, env);
-  return seite('Gesendet', `<h1>Gesendet ✓</h1><p>Die Mail ist an <b>${esc(d.e)}</b> gegangen. Eine Kopie finden Sie im Postfach info@gaucho.at.</p>`);
+  return seite('Gesendet', `<h1>Gesendet ✓</h1><p>Die Mail ist an <b>${esc(d.e)}</b> gegangen. Antwortet der Gast, landet die Antwort im Postfach info@gaucho.at.</p>`);
 }
 
 export default {

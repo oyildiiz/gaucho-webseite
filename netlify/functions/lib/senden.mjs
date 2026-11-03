@@ -30,13 +30,13 @@ export async function sendeMail({ subject, html, replyTo, absender, aktionen }, 
   await resendSenden(env, { from: von, to: [env.MAIL_TO || 'info@gaucho.at'], reply_to: replyTo, subject, html });
 }
 
-// Bestätigung an den Gast: schöne Mail mit der Signatur des Restaurants, Kopie an das eigene Postfach
+// Bestätigung an den Gast: schöne Mail mit der Signatur des Restaurants (ohne Kopie, den Nachweis gibt es in Telegram und im Resend-Protokoll)
 export async function sendeBestaetigung(d, env = process.env) {
   const { adresse } = adresseVon(env);
   const intern = env.MAIL_TO || 'info@gaucho.at';
   await resendSenden(env, {
     from: `Argentinisches Steakhaus Gaucho <${adresse}>`,
-    to: [d.e], bcc: [intern], reply_to: intern,
+    to: [d.e], reply_to: intern,
     subject: d.b, html: bestaetigungsHtml(d.x)
   });
 }
