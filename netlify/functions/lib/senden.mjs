@@ -66,12 +66,12 @@ const SIG_HTML = `<p style="margin:0 0 18px;line-height:1.5">Mit freundlichen Gr
 <p style="margin:0 0 12px;line-height:1.6;color:#222">Instagram: <a href="https://www.instagram.com/steakhausgaucho" style="color:#222;text-decoration:none">@steakhausgaucho</a><br>Facebook: <a href="https://www.facebook.com/ArgentinischesSteakhausGaucho" style="color:#222;text-decoration:none">Argentinisches Steakhaus Gaucho</a></p>
 <p style="margin:0;line-height:1.6;color:#777;font-size:12px">UID-Nummer: ATU64560004</p>`;
 
-// Bestätigungsblock für die Mails: Knöpfe (mailto) und derselbe Text zum Kopieren, falls der Link am PC nicht aufgeht
+// Bestätigungsblock für die Mails: Knöpfe (mailto) öffnen die Antwort im eigenen Mailprogramm. Die Signatur kommt aus Outlook selbst, deshalb steht sie nicht im vorbereiteten Text. Darunter derselbe Text zum Kopieren, falls der Link nicht aufgeht
 const esc2 = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 export function bestaetigung(email, optionen) {
   const adresse = encodeURIComponent(email).replace(/%40/g, '@');
   const knopf = (text, betreff, body, farbe) => {
-    const href = `mailto:${adresse}?subject=${encodeURIComponent(betreff)}&amp;body=${encodeURIComponent(`${body}\n\n${SIGNATUR}`)}`;
+    const href = `mailto:${adresse}?subject=${encodeURIComponent(betreff)}&amp;body=${encodeURIComponent(body)}`;
     return `<table cellpadding="0" cellspacing="0" border="0" style="display:inline-block;margin:0 10px 10px 0"><tr><td bgcolor="${farbe}" style="background:${farbe};padding:12px 20px"><a href="${href}" style="color:#ffffff;text-decoration:none;font-weight:bold"><span style="color:#ffffff">${esc2(text)}</span></a></td></tr></table>`;
   };
   const knoepfe = optionen.map((o) => knopf(o.knopf, o.betreff, o.text, o.farbe)).join('');
