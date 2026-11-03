@@ -80,8 +80,3 @@ h2{letter-spacing:.005em}
 .signatur::before{content:"";position:absolute;top:0;left:0;width:56px;height:1px;background:var(--gold)}
 ::selection{background:var(--gold);color:var(--kohle)}
 html{scrollbar-color:var(--gold) var(--kohle)}
-
-/* Hero-Video über dem Foto, blendet nach dem Start ein */
-.hero-bild video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease;z-index:1}
-.hero-bild video.an{opacity:.42}
-.hero-bild::after{z-index:2}

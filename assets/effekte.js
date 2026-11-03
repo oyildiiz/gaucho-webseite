@@ -55,24 +55,3 @@
     k.addEventListener('mouseleave', function () { k.classList.remove('aktiv'); k.style.transform = ''; });
   });
 })();
-
-/* Hero-Video: lädt erst nach dem Seitenstart, nicht bei Sparmodus, schwacher Verbindung oder reduzierter Bewegung */
-(function () {
-  var box = document.querySelector('.hero-bild');
-  if (!box) return;
-  var c = navigator.connection || {};
-  if (c.saveData || /(^|-)2g$/.test(c.effectiveType || '')) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  function laden() {
-    var v = document.createElement('video');
-    v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
-    v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
-    v.preload = 'auto'; v.src = 'assets/video/hero.mp4';
-    v.addEventListener('error', function () { v.remove(); });
-    v.addEventListener('playing', function () { v.classList.add('an'); }, { once: true });
-    box.insertBefore(v, box.firstChild);
-    var p = v.play(); if (p && p.catch) p.catch(function () { v.remove(); });
-  }
-  if (document.readyState === 'complete') setTimeout(laden, 300);
-  else window.addEventListener('load', function () { setTimeout(laden, 300); });
-})();
