@@ -3,7 +3,7 @@
   "main": "worker/index.js",
   "compatibility_date": "2026-10-01",
   "observability": { "enabled": true },
-  "vars": { "TELEGRAM_CHAT_ID": "8621747796", "MAIL_FROM": "GAUCHO <bestellung@gaucho.at>", "MS_TENANT_ID": "ef1ff468-95d5-4600-aeb3-4157e6ec83b6", "MS_CLIENT_ID": "9ec6981d-aa6c-4d08-a7cc-41290582e6b6" },
+  "vars": { "TELEGRAM_CHAT_ID": "8621747796", "MAIL_FROM": "GAUCHO <bestellung@gaucho.at>" },
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
