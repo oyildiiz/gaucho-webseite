@@ -19,3 +19,12 @@ Statische Seite, erzeugt mit `python3 build/build.py` nach `public/` (Netlify ba
 ## Cloudflare (Worker mit Seiten)
 - Konfiguration: `wrangler.jsonc` (Seiten aus `public/`, Code in `worker/index.js`, nutzt die Logik aus `netlify/functions/lib/`). Build-Befehl `python3 build/build.py`, Deploy-Befehl `npx wrangler deploy`.
 - Laufzeit-Variablen in Cloudflare (Settings → Variables and Secrets): `RESEND_API_KEY` (Secret), optional `MAIL_FROM`, `MAIL_TO`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. Standard sind die eigenen Funktionen; mit der Build-Variable `GAUCHO_BACKEND=n8n` läuft es über n8n.
+
+## Bestätigung per Knopf (Reservierung / Bestellung)
+
+Die Mails an das Restaurant enthalten Knöpfe („Reservierung bestätigen“, „Kein Tisch frei“, „Bestellung bestätigen“, „Rückfrage an den Kunden“). Es gibt zwei Modi, der Worker wählt automatisch:
+
+- **Ohne Microsoft-Anbindung:** Der Knopf ist ein `mailto:`-Link, der die Antwort im eigenen Outlook öffnet (Text vorausgefüllt, Signatur kommt aus Outlook).
+- **Mit Microsoft-Anbindung** (Variablen `MS_TENANT_ID`, `MS_CLIENT_ID`, Secret `MS_CLIENT_SECRET`, optional `MS_SENDER`, Standard `info@gaucho.at`): Der Knopf öffnet `/api/bestaetigen?t=…` (Vorschau, noch nichts gesendet), ein zweiter Tipp sendet die Mail über Microsoft Graph aus dem Postfach `info@gaucho.at`. Sie liegt danach in „Gesendet“, mit der HTML-Signatur (`SIG_HTML` in `netlify/functions/lib/senden.mjs`, dunkelroter Name). Einrichtung: Entra App-Registrierung mit der Graph-Anwendungsberechtigung `Mail.Send` (Administratorzustimmung), geheimer Clientschlüssel als Cloudflare-Secret.
+
+Die Links sind mit HMAC signiert (Schlüssel `LINK_SECRET`, sonst `RESEND_API_KEY`) und 30 Tage gültig. Eine schon gesendete Bestätigung wird im Cloudflare-Cache gemerkt, ein zweites Senden verlangt eine Rückfrage. Texte der Bestätigungen stehen in `lib/reservierung.mjs` und `lib/bestellung.mjs`.
