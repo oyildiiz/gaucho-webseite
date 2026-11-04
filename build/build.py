@@ -135,6 +135,8 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <link rel="icon" type="image/png" href="assets/favicon.png?v={version('favicon.png')}">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v={version('apple-touch-icon.png')}">
 <link rel="preload" href="assets/fonts/CormorantGaramond-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/CormorantGaramond-500i.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Jost-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts.css?v={version('fonts.css')}">
 <link rel="stylesheet" href="assets/style.css?v={version('style.css')}">
 <link rel="stylesheet" href="assets/effekte.css?v={version('effekte.css')}">
@@ -509,6 +511,8 @@ def main():
 /assets/*.css
   Cache-Control: public, max-age=31536000, immutable
 /assets/*.js
+  Cache-Control: public, max-age=31536000, immutable
+/assets/fonts/*
   Cache-Control: public, max-age=31536000, immutable
 /assets/bilder/*
   Cache-Control: public, max-age=86400
