@@ -512,8 +512,6 @@ def main():
   Cache-Control: public, max-age=31536000, immutable
 /assets/*.js
   Cache-Control: public, max-age=31536000, immutable
-/assets/fonts/*
-  Cache-Control: public, max-age=31536000, immutable
 /assets/bilder/*
   Cache-Control: public, max-age=86400
 /assets/fonts/*
