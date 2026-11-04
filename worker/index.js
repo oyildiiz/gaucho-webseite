@@ -60,7 +60,8 @@ async function bestaetige(request, env) {
   }
   try { await sendeBestaetigung(d, env); } catch (err) {
     console.error(err.message);
-    return seite('Fehler', '<h1>Das hat nicht geklappt</h1><p>Die Mail konnte nicht gesendet werden. Bitte versuchen Sie es noch einmal oder antworten Sie dem Gast direkt.</p>', 500);
+    const grund = String(err.message || '').replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi, '…').slice(0, 260);
+    return seite('Fehler', `<h1>Das hat nicht geklappt</h1><p>Die Mail konnte nicht gesendet werden. Bitte versuchen Sie es noch einmal oder antworten Sie dem Gast direkt.</p><div class="box" style="font-size:12px;color:#9a8f82;word-break:break-word"><b>Technischer Hinweis:</b><br>${esc(grund)}</div>`, 500);
   }
   await merke(token);
   await sendeTelegram(`✅ <b>${esc(d.l || 'Bestätigung')}</b> gesendet an ${esc(d.e)}`, env);
