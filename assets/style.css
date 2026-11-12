@@ -411,7 +411,6 @@ main>.seitenkopf{background:transparent!important;border-bottom:0}
 /* Lesbarkeit: kleine Beschriftungen mindestens 14 px */
 .feld label,.menge label,.kontaktliste dt,.recht-liste dt,.zahlung legend,.zeiten-klein dt,.zeiten-leiste dt{font-size:.875rem;letter-spacing:.12em}
 .btn{font-size:.875rem;letter-spacing:.14em}
-.nav a{font-size:.875rem;letter-spacing:.12em}
 @media(min-width:1000px){.nav a{font-size:.875rem;letter-spacing:.08em}}
 .eyebrow,.tabs a,.cut-preis,.fakten span,.schild{font-size:.875rem}
 .gewicht-hinweis,.richtpreis small{font-size:.875rem}
