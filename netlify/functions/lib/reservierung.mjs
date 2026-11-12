@@ -35,9 +35,7 @@ export function pruefeReservierung(b = {}) {
   const kundenMail = { an: email, replyTo: 'info@gaucho.at', absender: 'GAUCHO Reservierung', subject: `Ihre Reservierungsanfrage für ${kurz} ist bei uns eingegangen`,
     html: `<div style="font-family:Arial,sans-serif;font-size:15px;color:#222;max-width:640px"><p>${esc(gruss)},</p><p>vielen Dank für Ihre Reservierungsanfrage im Argentinischen Steakhaus GAUCHO. Ihre Anfrage ist bei uns eingegangen. Wir prüfen sie und bestätigen Ihnen Ihren Tisch in Kürze per E-Mail. Ist kein Tisch mehr frei, melden wir uns bei Ihnen.</p>
   <table style="border-collapse:collapse">${zeile('Datum', esc(wann))}${zeile('Personen', personen)}${zeile('Name', esc(name))}${zeile('Telefon', esc(tel))}${b.msg ? zeile('Bemerkung', esc(b.msg).replace(/\n/g, '<br>')) : ''}</table>
-  <p style="margin-top:16px"><b>Wichtig:</b> Dies ist noch keine Tischbestätigung.</p>
-  <p>Änderungen oder Absage: einfach auf diese E-Mail antworten oder anrufen unter +43 676 9181402.</p>
-  <p>Argentinisches Steakhaus GAUCHO, Rheinstraße 89, 6972 Fußach</p>${SIG_HTML}</div>` };
+  <p style="margin-top:16px"><b>Wichtig:</b> Dies ist noch keine Tischbestätigung.</p>${SIG_HTML}</div>` };
   // Telegram (HTML): Kundeneingaben maskieren
   const nachricht = `🔔 <b>Neue Reservierung</b>\n<b>${esc(wann)}</b>\n<b>${personen} Person(en)</b>\n\n${esc(name)}\nTel: ${esc(tel)}\n${esc(email)}${b.msg ? '\n\nBemerkung: ' + esc(String(b.msg).slice(0, 300)) : ''}`;
   return { gueltig: true, spam: false, mail, kundenMail, nachricht };
