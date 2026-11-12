@@ -12,7 +12,9 @@ export async function sendeMail({ subject, html, replyTo, absender, an }, env = 
       from: von,
       to: [an || env.MAIL_TO || 'info@gaucho.at'],
       reply_to: replyTo,
-      subject, html
+      subject, html,
+      // Reine Textfassung: Mails nur mit HTML landen eher im Spam
+      text: html.replace(/<br\s*\/?>/gi, '\n').replace(/<\/(p|tr|h\d|div)>/gi, '\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/[ \t]+/g, ' ').replace(/\n\s+/g, '\n').trim()
     })
   });
   if (!r.ok) throw new Error('Mailversand fehlgeschlagen: HTTP ' + r.status + ' ' + (await r.text()).slice(0, 200));

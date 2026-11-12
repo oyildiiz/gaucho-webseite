@@ -32,7 +32,7 @@ export function pruefeReservierung(b = {}) {
   const html = `<div style="font-family:Arial,sans-serif;font-size:15px;color:#000"><table style="border-collapse:collapse">${zeile('Name', esc(name))}${zeile('E-Mail', `<a href="mailto:${esc(email)}">${esc(email)}</a>`)}${zeile('Telefon', esc(tel))}${zeile('Anzahl Personen', personen)}${zeile('Datum', kurz)}${b.msg ? zeile('Bemerkung', esc(b.msg).replace(/\n/g, '<br>')) : ''}</table>${knoepfe}</div>`;
   const mail = { subject: `${name} (${email}) – Reservierung ${wann} – ${personen} Pers.`, html, replyTo: email, absender: 'Reservierungsanfrage Gaucho' };
   // Eingangsbestätigung an den Gast (die eigentliche Tischbestätigung kommt von uns aus Outlook)
-  const kundenMail = { an: email, replyTo: 'info@gaucho.at', absender: 'GAUCHO Reservierung', subject: `Ihre Reservierungsanfrage für ${kurz} ist bei uns eingegangen`,
+  const kundenMail = { an: email, replyTo: 'info@gaucho.at', absender: 'Argentinisches Steakhaus GAUCHO', subject: `Ihre Reservierungsanfrage für ${kurz} ist bei uns eingegangen`,
     html: `<div style="font-family:Arial,sans-serif;font-size:15px;color:#222;max-width:640px"><p>${esc(gruss)},</p><p>vielen Dank für Ihre Reservierungsanfrage im Argentinischen Steakhaus GAUCHO. Ihre Anfrage ist bei uns eingegangen. Wir prüfen sie und bestätigen Ihnen Ihren Tisch in Kürze per E-Mail. Ist kein Tisch mehr frei, melden wir uns bei Ihnen.</p>
   <table style="border-collapse:collapse">${zeile('Datum', esc(wann))}${zeile('Personen', personen)}${zeile('Name', esc(name))}${zeile('Telefon', esc(tel))}${b.msg ? zeile('Bemerkung', esc(b.msg).replace(/\n/g, '<br>')) : ''}</table>
   <p style="margin-top:16px"><b>Wichtig:</b> Dies ist noch keine Tischbestätigung.</p>${SIG_HTML}</div>` };

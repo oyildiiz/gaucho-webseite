@@ -74,7 +74,7 @@ export function pruefeBestellung(b = {}) {
   const mail = { subject: `${name} (${email}) – Fleisch-Bestellung ${nr} – Abholung ${wann}`, html, replyTo: email, absender: 'Bestellung Gaucho' };
   // Eingangsbestätigung an den Kunden (keine Vertragsbestätigung: die kommt von uns aus Outlook)
   const kundenTabelle = zeilen.map(z => `<tr><td style="padding:6px 16px 6px 0;border-bottom:1px solid #eee"><b>${esc(z.produkt)}</b><br><span style="color:#666">${esc(z.menge)}</span></td><td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;white-space:nowrap">${esc(z.betrag)}</td></tr>`).join('');
-  const kundenMail = { an: email, replyTo: 'info@gaucho.at', absender: 'GAUCHO Fleisch-Shop', subject: `Ihre Bestellung ${nr} ist bei uns eingegangen`,
+  const kundenMail = { an: email, replyTo: 'info@gaucho.at', absender: 'Argentinisches Steakhaus GAUCHO', subject: `Ihre Bestellung ${nr} ist bei uns eingegangen`,
     html: `<div style="font-family:Arial,sans-serif;font-size:15px;color:#222;max-width:640px"><p>${esc(gruss)},</p><p>vielen Dank für Ihre Bestellung im Fleisch-Shop des Argentinischen Steakhauses GAUCHO. Ihre Bestellung <b>${nr}</b> ist bei uns eingegangen. Wir melden uns, sobald wir sie bestätigt haben, oder falls wir eine Rückfrage haben.</p>
   <p style="font-size:16px"><b>Abholung: ${esc(wann)}</b><br>Argentinisches Steakhaus GAUCHO, Rheinstraße 89, 6972 Fußach</p>
   <table style="border-collapse:collapse;width:100%">${kundenTabelle}<tr><td style="padding:10px 0"><b>Richtpreis gesamt</b></td><td style="padding:10px 0;text-align:right"><b>ca. ${euro(summe)}</b></td></tr></table>
