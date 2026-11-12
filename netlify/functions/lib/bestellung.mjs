@@ -33,7 +33,7 @@ export function pruefeBestellung(b = {}) {
   const tageVoraus = Math.round((tag - heute) / 86400000);
   if (tageVoraus < 0) return fehler('Abholtag liegt in der Vergangenheit');
   const min = +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5);
-  if (tageVoraus === 0 && min < jetztMin + 10) return fehler('Abholung heute frühestens in 15 Minuten möglich');
+  if (tageVoraus === 0 && min < jetztMin + 15) return fehler('Abholung heute frühestens in 15 Minuten möglich');
   // Silvester (31.12.) ist immer offen – fällt er auf einen Montag, gelten die Dienstagszeiten
   const wtag = tag.getUTCDay() === 1 && datum.slice(5) === '12-31' ? 2 : tag.getUTCDay();
   if (!(OEFFNUNG[wtag] || []).some(([v, bis]) => min >= v && min <= bis - 30)) return fehler('Abholzeit außerhalb der Öffnungszeiten');
@@ -59,7 +59,7 @@ export function pruefeBestellung(b = {}) {
   }
   summe = Math.round(summe * 100) / 100;
   const jetzt = new Date();
-  const nr = 'G-' + datum.slice(2, 4) + datum.slice(5, 7) + datum.slice(8, 10) + '-' + String(jetzt.getTime()).slice(-4);
+  const nr = 'G-' + datum.slice(2, 4) + datum.slice(5, 7) + datum.slice(8, 10) + '-' + String(Math.floor(Math.random() * 9000) + 1000);
   const wann = `${TAGE[tag.getUTCDay()]}, ${datum.slice(8, 10)}.${datum.slice(5, 7)}.${datum.slice(0, 4)} um ${zeit} Uhr`;
   const zahlart = 'Bei Abholung (bar/Karte)';
   const tabelle = zeilen.map(z => `<tr><td style="padding:8px 16px 8px 0;border-bottom:1px solid #eee"><b>${esc(z.produkt)}</b><br><span style="color:#666">${esc(z.menge)}</span></td><td style="padding:8px 16px 8px 0;border-bottom:1px solid #eee;color:#666">${esc(z.kilopreis)}</td><td style="padding:8px 0;border-bottom:1px solid #eee;text-align:right">${esc(z.betrag)}</td></tr>`).join('');
@@ -71,7 +71,7 @@ export function pruefeBestellung(b = {}) {
   ${b.msg ? `<p><b>Wünsche:</b><br>${esc(b.msg).replace(/\n/g, '<br>')}</p>` : ''}
   ${knoepfe}
   <p style="color:#666;font-size:12px">Mit „Antworten“ schreiben Sie direkt an den Kunden. Bestellung über gaucho-webseite (Fleisch-Shop).</p></div>`;
-  const mail = { subject: `${name} (${email}) – Fleisch-Bestellung ${nr} – Abholung ${wann}`, html, replyTo: email, absender: 'Bestellung Gaucho' };
+  const mail = { subject: `${name.slice(0, 40).replace(/https?:\/\/\S+|www\.\S+/gi, '')} – Fleisch-Bestellung ${nr} – Abholung ${wann}`, html, replyTo: email, absender: 'Bestellung Gaucho' };
   // Eingangsbestätigung an den Kunden (keine Vertragsbestätigung: die kommt von uns aus Outlook)
   const kundenTabelle = zeilen.map(z => `<tr><td style="padding:6px 16px 6px 0;border-bottom:1px solid #eee"><b>${esc(z.produkt)}</b><br><span style="color:#666">${esc(z.menge)}</span></td><td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;white-space:nowrap">${esc(z.betrag)}</td></tr>`).join('');
   const kundenMail = { an: email, replyTo: 'info@gaucho.at', absender: 'Argentinisches Steakhaus GAUCHO', subject: `Ihre Bestellung ${nr} ist bei uns eingegangen`,

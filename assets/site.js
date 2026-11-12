@@ -67,7 +67,7 @@ function datumsFeld(datum, zeit, plan, wort) {
 function sende(form, daten, ok, knopf) {
   var status = form.querySelector('.form-status');
   knopf.disabled = true; status.className = 'form-status'; status.textContent = 'Wird gesendet …';
-  return fetch(form.dataset.ziel, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(daten) })
+  return fetch(form.dataset.ziel, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.assign({ id: form.dataset.id || (form.dataset.id = (window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random())) }, daten)) })
     .then(function (r) { if (!r.ok && r.status !== 400) throw new Error('HTTP ' + r.status); return r.json().catch(function () { return {}; }); })
     .then(function (antwort) { if (antwort && antwort.ok === false) { var f = new Error(antwort.fehler || 'abgelehnt'); f.pruefen = !!antwort.fehler; throw f; } ok(antwort || {}); })
     .catch(function (f) {
