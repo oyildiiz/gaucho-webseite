@@ -68,17 +68,9 @@ export const SIG_HTML = `<p style="margin:0 0 18px;line-height:1.5">Mit freundli
 <p style="margin:0 0 12px;line-height:1.6;color:#222">Instagram: <a href="https://www.instagram.com/steakhausgaucho" style="color:#222;text-decoration:none">@steakhausgaucho</a><br>Facebook: <a href="https://www.facebook.com/ArgentinischesSteakhausGaucho" style="color:#222;text-decoration:none">Argentinisches Steakhaus Gaucho</a></p>
 <p style="margin:0;line-height:1.6;color:#777;font-size:12px">UID-Nummer: ATU64560004</p>`;
 
-// Bestätigungsblock für die Mails: Knöpfe (mailto) öffnen die Antwort im eigenen Mailprogramm. Die Signatur steht als einfacher Text im vorbereiteten Text (Outlook fügt sie bei vorbereiteten Mails nicht selbst an). Darunter derselbe Text zum Kopieren, falls der Link nicht aufgeht
+// Bestätigungsblock für die Mails: nur Texte zum Kopieren. In Outlook auf „Antworten“ klicken und den passenden Text einfügen
 const esc2 = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 export function bestaetigung(email, optionen) {
-  const adresse = encodeURIComponent(email).replace(/%40/g, '@');
-  const knopf = (text, betreff, body, farbe) => {
-    const href = `mailto:${adresse}?subject=${encodeURIComponent(betreff)}&amp;body=${encodeURIComponent(`${body}\n\n${SIGNATUR}`)}`;
-    return `<table cellpadding="0" cellspacing="0" border="0" style="display:inline-block;margin:0 10px 10px 0"><tr><td bgcolor="${farbe}" style="background:${farbe};padding:12px 20px"><a href="${href}" style="color:#ffffff;text-decoration:none;font-weight:bold"><span style="color:#ffffff">${esc2(text)}</span></a></td></tr></table>`;
-  };
-  const knoepfe = optionen.map((o) => knopf(o.knopf, o.betreff, o.text, o.farbe)).join('');
-  const kopie = optionen[0];
-  return `<p style="margin:18px 0 6px">${knoepfe}</p>
-<p style="color:#444;font-size:13px;margin:14px 0 4px"><b>Falls der Knopf nicht aufgeht:</b> Auf „Antworten“ klicken und diesen Text einfügen (Betreff: ${esc2(kopie.betreff)}):</p>
-<div style="border:1px solid #bbb;background:#f7f7f7;padding:12px 14px;font-size:14px;color:#000">${esc2(kopie.text).replace(/\n/g, '<br>')}<br><br>${SIG_HTML}</div>`;
+  return optionen.map((o) => `<p style="font-size:14px;margin:22px 0 6px;color:${o.farbe}"><b>${esc2(o.knopf)}</b> <span style="color:#444;font-weight:normal">(auf „Antworten“ klicken und einfügen):</span></p>
+<div style="border:1px solid #bbb;background:#f7f7f7;padding:12px 14px;font-size:14px;color:#000">${esc2(o.text).replace(/\n/g, '<br>')}<br><br>${SIG_HTML}</div>`).join('');
 }
