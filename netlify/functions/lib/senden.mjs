@@ -67,8 +67,8 @@ UID-Nummer: ATU64560004`;
 export const SIG_HTML = `<p style="margin:0 0 18px;line-height:1.5">Mit freundlichen Grüßen<br>Ihr Team vom Gaucho</p>
 <p style="margin:0 0 10px;padding:0 0 8px;border-bottom:2px solid #8f1d1d;display:inline-block"><b style="color:#8f1d1d;font-size:17px;letter-spacing:.3px">Argentinisches Steakhaus Gaucho</b></p>
 <p style="margin:0 0 12px;line-height:1.6;color:#222">Rheinstraße 89<br>6972 Fußach</p>
-<p style="margin:0 0 12px;line-height:1.6;color:#222">Tel.: <a href="tel:+43557873027" style="color:#222;text-decoration:none">+43 5578 73027</a><br>Mobil: <a href="tel:+436769181402" style="color:#222;text-decoration:none">+43 676 9181 402</a><br>E-Mail: <a href="mailto:info@gaucho.at" style="color:#222;text-decoration:none">info@gaucho.at</a><br>Web: <a href="https://www.gaucho.at" style="color:#8f1d1d;text-decoration:none">www.gaucho.at</a></p>
-<p style="margin:0 0 12px;line-height:1.6;color:#222">Instagram: <a href="https://www.instagram.com/steakhausgaucho" style="color:#222;text-decoration:none">@steakhausgaucho</a><br>Facebook: <a href="https://www.facebook.com/ArgentinischesSteakhausGaucho" style="color:#222;text-decoration:none">Argentinisches Steakhaus Gaucho</a></p>
+<p style="margin:0 0 12px;line-height:1.6;color:#222">Tel.: <a href="tel:+43557873027" style="color:#222;text-decoration:none">+43 5578 73027</a><br>Mobil: <a href="tel:+436769181402" style="color:#222;text-decoration:none">+43 676 9181 402</a><br>E-Mail: <a href="mailto:info@gaucho.at" style="color:#222;text-decoration:none">info@gaucho.at</a><br>Web: <a href="https://gaucho.at" style="color:#8f1d1d;text-decoration:none">www.gaucho.at</a></p>
+<p style="margin:0 0 12px;line-height:1.6;color:#222">Instagram: @steakhausgaucho<br>Facebook: Argentinisches Steakhaus Gaucho</p>
 <p style="margin:0;line-height:1.6;color:#777;font-size:12px">UID-Nummer: ATU64560004</p>`;
 
 // Bestätigungsblock für die Mails: nur Texte zum Kopieren. In Outlook auf „Antworten“ klicken und den passenden Text einfügen
