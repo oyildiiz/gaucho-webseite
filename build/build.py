@@ -426,7 +426,7 @@ def seite_fleisch(daten):
   </div>
   <p class="zahlung-info"><strong>Bezahlung:</strong> Sie zahlen bei der Abholung im Gaucho, bar oder mit Karte.</p>
   <div class="hp" aria-hidden="true"><label for="b-website">Webseite</label><input id="b-website" name="website" tabindex="-1" autocomplete="off"></div>
-  <label class="check"><input type="checkbox" id="b-ok" required> <span>Ich akzeptiere die <a href="agb.html">AGB</a> und bin einverstanden, dass meine Angaben zur Abwicklung der Bestellung verwendet werden (<a href="datenschutz.html">Datenschutz</a>). *</span></label>
+  <label class="check"><input type="checkbox" id="b-ok" required> <span>Ich akzeptiere die <a href="agb.html">AGB</a> und bin einverstanden, dass meine Angaben zur Abwicklung der Bestellung verwendet und dem Restaurant auch per Telegram-Benachrichtigung übermittelt werden (<a href="datenschutz.html">Datenschutz</a>). *</span></label>
   <button class="btn btn-voll" type="submit" data-bestellen>Zahlungspflichtig bestellen</button>
   <p class="form-status" role="status" aria-live="polite"></p>
  </form>
@@ -490,7 +490,7 @@ def seite_reservieren():
    <div class="feld voll"><label for="r-msg">Bemerkung (optional)</label><textarea id="r-msg" name="msg" rows="3"></textarea></div>
   </div>
   <div class="hp" aria-hidden="true"><label for="r-website">Webseite</label><input id="r-website" name="website" tabindex="-1" autocomplete="off"></div>
-  <label class="check"><input type="checkbox" id="r-ok" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Reservierung verwendet werden (<a href="datenschutz.html">Datenschutz</a>). *</span></label>
+  <label class="check"><input type="checkbox" id="r-ok" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Reservierung verwendet und dem Restaurant auch per Telegram-Benachrichtigung übermittelt werden (<a href="datenschutz.html">Datenschutz</a>). *</span></label>
   <button class="btn btn-voll" type="submit">Reservierung anfragen</button>
   <p class="form-status" role="status" aria-live="polite"></p>
  </form>

@@ -90,7 +90,7 @@ function sende(form, daten, ok, knopf) {
     if (!form.checkValidity()) { form.reportValidity(); return; }
     var d = {}; new FormData(form).forEach(function (v, k) { d[k] = String(v).trim(); });
     sende(form, d, function () {
-      form.innerHTML = '<div class="danke"><h3>Vielen Dank, ' + d.name.replace(/[<>&]/g, '') + '!</h3><p>Ihre Reservierungsanfrage für ' + d.personen + ' Person(en) am ' + new Date(d.datum + 'T12:00').toLocaleDateString('de-AT', { weekday: 'long', day: 'numeric', month: 'long' }) + ' um ' + d.zeit + ' Uhr ist bei uns eingegangen.</p><p>Wir bestätigen Ihre Reservierung per E-Mail. Ist kein Tisch mehr frei, melden wir uns telefonisch.</p></div>';
+      form.innerHTML = '<div class="danke"><h3>Vielen Dank, ' + d.name.replace(/[<>&]/g, '') + '!</h3><p>Ihre Reservierungsanfrage für ' + d.personen + ' Person(en) am ' + new Date(d.datum + 'T12:00').toLocaleDateString('de-AT', { weekday: 'long', day: 'numeric', month: 'long' }) + ' um ' + d.zeit + ' Uhr ist bei uns eingegangen.</p><p>Sie erhalten gleich eine Eingangsbestätigung per E-Mail. Ihren Tisch bestätigen wir Ihnen in Kürze, ist kein Tisch mehr frei, melden wir uns bei Ihnen.</p></div>';
     }, form.querySelector('button[type="submit"]'));
   });
 })();
