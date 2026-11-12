@@ -90,7 +90,7 @@ function sende(form, daten, ok, knopf) {
     if (!form.checkValidity()) { form.reportValidity(); return; }
     var d = {}; new FormData(form).forEach(function (v, k) { d[k] = String(v).trim(); });
     sende(form, d, function () {
-      form.innerHTML = '<div class="danke"><h3>Vielen Dank, ' + d.name.replace(/[<>&]/g, '') + '!</h3><p>Ihre Reservierungsanfrage für ' + d.personen + ' Person(en) am ' + new Date(d.datum + 'T12:00').toLocaleDateString('de-AT', { weekday: 'long', day: 'numeric', month: 'long' }) + ' um ' + d.zeit + ' Uhr ist bei uns eingegangen.</p><p>Sie erhalten gleich eine Eingangsbestätigung per E-Mail. Ihren Tisch bestätigen wir Ihnen in Kürze, ist kein Tisch mehr frei, melden wir uns bei Ihnen.</p></div>';
+      form.innerHTML = '<div class="danke"><h3>Vielen Dank, ' + d.name.replace(/[<>&]/g, '') + '!</h3><p>Ihre Reservierungsanfrage für ' + d.personen + ' Person(en) am ' + new Date(d.datum + 'T12:00').toLocaleDateString('de-AT', { weekday: 'long', day: 'numeric', month: 'long' }) + ' um ' + d.zeit + ' Uhr ist bei uns eingegangen.</p><p>Sie erhalten gleich eine Eingangsbestätigung per E-Mail. Ihren Tisch bestätigen wir Ihnen in Kürze, ist kein Tisch mehr frei, melden wir uns bei Ihnen.</p><p><strong>Bitte schauen Sie auch in Ihrem Spam-Ordner nach</strong> und markieren Sie unsere E-Mail als „Kein Spam“, damit Sie unsere Bestätigung sicher erhalten.</p></div>';
     }, form.querySelector('button[type="submit"]'));
   });
 })();
@@ -199,7 +199,7 @@ function sende(form, daten, ok, knopf) {
     sende(form, daten, function (a) {
       schreib([]); korbZeichnen();
       var wann = new Date(tag.value + 'T12:00').toLocaleDateString('de-AT', { weekday: 'long', day: 'numeric', month: 'long' });
-      form.innerHTML = '<div class="danke"><h3>¡Muchas gracias!</h3><p>Ihre Bestellung' + (a.nr ? ' <strong>' + a.nr + '</strong>' : '') + ' ist bei uns eingegangen.</p><p>Abholung: ' + wann + ', ' + daten.abholung.zeit + ' Uhr im Gaucho, Rheinstraße 89, Fußach. Bezahlung bei Abholung, bar oder mit Karte.</p><p>Bei Fragen melden wir uns bei Ihnen. Sie erreichen uns unter +43 676 9181402.</p></div>';
+      form.innerHTML = '<div class="danke"><h3>¡Muchas gracias!</h3><p>Ihre Bestellung' + (a.nr ? ' <strong>' + a.nr + '</strong>' : '') + ' ist bei uns eingegangen.</p><p>Abholung: ' + wann + ', ' + daten.abholung.zeit + ' Uhr im Gaucho, Rheinstraße 89, Fußach. Bezahlung bei Abholung, bar oder mit Karte.</p><p>Sie erhalten gleich eine Eingangsbestätigung per E-Mail. <strong>Bitte schauen Sie auch in Ihrem Spam-Ordner nach</strong> und markieren Sie unsere E-Mail als „Kein Spam“.</p><p>Bei Fragen melden wir uns bei Ihnen. Sie erreichen uns unter +43 676 9181402.</p></div>';
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, form.querySelector('[data-bestellen]'));
   });

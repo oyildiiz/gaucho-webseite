@@ -78,6 +78,7 @@ export function pruefeBestellung(b = {}) {
     html: `<div style="font-family:Arial,sans-serif;font-size:15px;color:#222;max-width:640px"><p>${esc(gruss)},</p><p>vielen Dank für Ihre Bestellung im Fleisch-Shop des Argentinischen Steakhauses GAUCHO. Ihre Bestellung <b>${nr}</b> ist bei uns eingegangen. Wir melden uns, sobald wir sie bestätigt haben, oder falls wir eine Rückfrage haben.</p>
   <p style="font-size:16px"><b>Abholung: ${esc(wann)}</b><br>Argentinisches Steakhaus GAUCHO, Rheinstraße 89, 6972 Fußach</p>
   <table style="border-collapse:collapse;width:100%">${kundenTabelle}<tr><td style="padding:10px 0"><b>Richtpreis gesamt</b></td><td style="padding:10px 0;text-align:right"><b>ca. ${euro(summe)}</b></td></tr></table>
+  <p>Tipp: Speichern Sie info@gaucho.at und bestellung@gaucho.at in Ihren Kontakten, damit unsere Bestätigung sicher in Ihrem Posteingang ankommt.</p>
   <p style="color:#555;font-size:13px">Alle Preise inklusive MwSt. Abgerechnet wird nach dem tatsächlichen Gewicht beim Zuschnitt. Bezahlung bei Abholung, bar oder mit Karte.</p>${SIG_HTML}</div>` };
   // Telegram (HTML): Kundeneingaben maskieren
   const nachricht = `🥩 <b>Neue Fleisch-Bestellung ${nr}</b>\n<b>Abholung: ${esc(wann)}</b>\n\n${zeilen.map(z => `${esc(z.produkt)}: ${esc(z.menge)}`).join('\n')}\nca. ${euro(summe)}\n\n${esc(name)}\nTel: ${esc(tel)}\n${esc(email)}${b.msg ? '\n\nWünsche: ' + esc(String(b.msg).slice(0, 300)) : ''}`;
