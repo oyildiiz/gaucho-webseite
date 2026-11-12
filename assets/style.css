@@ -408,3 +408,18 @@ main>.seitenkopf{background:transparent!important;border-bottom:0}
 /* Größere Tippflächen für kleine Links am Handy */
 .tabs a,.fuss a,.fuss-unten a,.kontaktliste a,.klein a,.hinweis a,.roh-hinweis a,.zeiten a{display:inline-block;padding:10px 6px;margin:-10px -6px}
 .fuss-unten nav a{padding:12px 6px}
+/* Lesbarkeit: kleine Beschriftungen mindestens 14 px */
+.feld label,.menge label,.kontaktliste dt,.recht-liste dt,.zahlung legend,.zeiten-klein dt,.zeiten-leiste dt{font-size:.875rem;letter-spacing:.12em}
+.btn{font-size:.875rem;letter-spacing:.14em}
+.nav a{font-size:.875rem;letter-spacing:.12em}
+@media(min-width:1000px){.nav a{font-size:.875rem;letter-spacing:.08em}}
+.eyebrow,.tabs a,.cut-preis,.fakten span,.schild{font-size:.875rem}
+.gewicht-hinweis,.richtpreis small{font-size:.875rem}
+.posten-weg{font-size:.9rem;padding:10px 0;min-height:44px}
+.check a{display:inline-block;padding:4px 0}
+/* Feste Warenkorb-Leiste im Shop */
+.korb-leiste{position:fixed!important;left:0;right:0;bottom:0;z-index:60!important;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px max(16px,env(safe-area-inset-left)) calc(14px + env(safe-area-inset-bottom));background:var(--rot);color:#fff;text-decoration:none;font-weight:500;box-shadow:0 -6px 24px rgba(0,0,0,.35);transform:translateY(0);transition:transform .3s}
+.korb-leiste[hidden]{display:flex;transform:translateY(110%);pointer-events:none}
+.korb-leiste .kl-los{white-space:nowrap;text-transform:uppercase;letter-spacing:.12em;font-size:.875rem}
+body.shop{padding-bottom:90px}
+.korb-leiste>span:first-child{font-size:.95rem}.korb-leiste strong{white-space:nowrap}

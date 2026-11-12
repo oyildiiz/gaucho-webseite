@@ -11,6 +11,11 @@ export function pruefeReservierung(b = {}) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(datum) || !/^\d{2}:\d{2}$/.test(zeit)) return fehler('Datum oder Uhrzeit fehlt');
   if (!(personen >= 1 && personen <= 200)) return fehler('Personenzahl ungültig');
   const tag = new Date(datum + 'T12:00:00Z');
+  // Wiener Ortszeit: kein Datum in der Vergangenheit, heute nur Uhrzeiten ab jetzt
+  const wien = {}; new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Vienna', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).forEach(t => { wien[t.type] = t.value; });
+  const heuteWien = `${wien.year}-${wien.month}-${wien.day}`;
+  if (datum < heuteWien) return fehler('Das Datum liegt in der Vergangenheit');
+  if (datum === heuteWien && +zeit.slice(0, 2) * 60 + +zeit.slice(3, 5) < +wien.hour * 60 + +wien.minute) return fehler('Die Uhrzeit liegt in der Vergangenheit');
   // Silvester (31.12.) ist immer offen – fällt er auf einen Montag, gelten die Dienstagszeiten
   const wtag = tag.getUTCDay() === 1 && datum.slice(5) === '12-31' ? 2 : tag.getUTCDay();
   if (wtag === 1) return fehler('Montag ist Ruhetag');

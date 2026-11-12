@@ -11,6 +11,7 @@ async function verarbeite(request, env, pruefe, mitNr) {
   if (e.spam) return antwort(200, { ok: true });
   if (!e.gueltig) return antwort(200, { ok: false, fehler: e.fehler });
   try { await sendeMail(e.mail, env); } catch (err) { console.error(err.message); return antwort(500, { ok: false, fehler: 'Senden fehlgeschlagen' }); }
+  if (e.kundenMail) { try { await sendeMail(e.kundenMail, env); } catch (err) { console.error('Kundenmail: ' + err.message); } }
   await sendeTelegram(e.nachricht, env);
   return antwort(200, mitNr ? { ok: true, nr: e.nr } : { ok: true });
 }

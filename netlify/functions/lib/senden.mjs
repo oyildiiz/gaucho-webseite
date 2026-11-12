@@ -1,5 +1,5 @@
 // Versand: Mail über Resend, Nachricht an Telegram. Zugangsdaten stehen nur in den Netlify-Umgebungsvariablen.
-export async function sendeMail({ subject, html, replyTo, absender }, env = process.env) {
+export async function sendeMail({ subject, html, replyTo, absender, an }, env = process.env) {
   if (!env.RESEND_API_KEY) throw new Error('RESEND_API_KEY fehlt');
   // Nur der Anzeigename wechselt (Bestellung / Reservierungsanfrage), die Adresse bleibt die bestätigte
   const basis = env.MAIL_FROM || 'GAUCHO Webseite <onboarding@resend.dev>';
@@ -10,7 +10,7 @@ export async function sendeMail({ subject, html, replyTo, absender }, env = proc
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: von,
-      to: [env.MAIL_TO || 'info@gaucho.at'],
+      to: [an || env.MAIL_TO || 'info@gaucho.at'],
       reply_to: replyTo,
       subject, html
     })
@@ -59,7 +59,7 @@ Facebook: Argentinisches Steakhaus Gaucho
 UID-Nummer: ATU64560004`;
 
 // HTML-Fassung: ruhig und untereinander, der Name in Rot
-const SIG_HTML = `<p style="margin:0 0 18px;line-height:1.5">Mit freundlichen Grüßen<br>Ihr Team vom Gaucho</p>
+export const SIG_HTML = `<p style="margin:0 0 18px;line-height:1.5">Mit freundlichen Grüßen<br>Ihr Team vom Gaucho</p>
 <p style="margin:0 0 10px;padding:0 0 8px;border-bottom:2px solid #8f1d1d;display:inline-block"><b style="color:#8f1d1d;font-size:17px;letter-spacing:.3px">Argentinisches Steakhaus Gaucho</b></p>
 <p style="margin:0 0 12px;line-height:1.6;color:#222">Rheinstraße 89<br>6972 Fußach</p>
 <p style="margin:0 0 12px;line-height:1.6;color:#222">Tel.: <a href="tel:+43557873027" style="color:#222;text-decoration:none">+43 5578 73027</a><br>Mobil: <a href="tel:+436769181402" style="color:#222;text-decoration:none">+43 676 9181 402</a><br>E-Mail: <a href="mailto:info@gaucho.at" style="color:#222;text-decoration:none">info@gaucho.at</a><br>Web: <a href="https://www.gaucho.at" style="color:#8f1d1d;text-decoration:none">www.gaucho.at</a></p>

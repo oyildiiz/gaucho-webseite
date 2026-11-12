@@ -1,3 +1,4 @@
+import re
 #!/usr/bin/env python3
 """Erzeugt die statische Webseite des Argentinischen Steakhauses GAUCHO nach public/."""
 import hashlib
@@ -103,9 +104,23 @@ def schema_json():
             {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "11:00", "closes": "14:00"},
             {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "17:00", "closes": "22:00"},
         ],
-        "acceptsReservations": "True", "hasMenu": SEITE + "/speisekarte.html",
+        "acceptsReservations": True, "hasMenu": SEITE + "/speisekarte",
+        "sameAs": ["https://www.instagram.com/steakhausgaucho", "https://www.facebook.com/ArgentinischesSteakhausGaucho"],
     }
     return '<script type="application/ld+json">' + _j.dumps(d, ensure_ascii=False) + "</script>"
+
+
+def sauber(datei):
+    """Adresse ohne .html (so liefert Cloudflare die Seiten aus)."""
+    return "" if datei == "index.html" else datei.removesuffix(".html")
+
+
+def pfade(html):
+    """Interne Links und Dateien mit absoluten Pfaden ohne .html, damit Seiten unter jeder Adresse richtig laden."""
+    html = re.sub(r'href="(index)\.html', 'href="/', html)
+    html = re.sub(r'href="([a-z0-9-]+)\.html', r'href="/\1', html)
+    html = re.sub(r'(?<=["\s,])assets/', '/assets/', html)
+    return html.replace('href="/"#', 'href="/#')
 
 
 def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
@@ -120,7 +135,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
 <title>{e(titel)}</title>
 <meta name="description" content="{e(beschreibung)}">
 <meta name="theme-color" content="#0f0c0b">
-<link rel="canonical" href="{SEITE}/{"" if datei == "index.html" else datei}">
+{'<meta name="robots" content="noindex">' if datei == "404.html" else f'<link rel="canonical" href="{SEITE}/{sauber(datei)}">'}
 <meta property="og:title" content="{e(titel)}">
 <meta property="og:description" content="{e(beschreibung)}">
 <meta property="og:type" content="website">
@@ -286,7 +301,7 @@ def seite_start(produkte):
   <div class="aktionen"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
  </div>
 </section>"""
-    return layout("index.html", "Argentinisches Steakhaus GAUCHO – Steaks in Fußach am Bodensee",
+    return layout("index.html", "Argentinisches Steakhaus GAUCHO | Steakhaus in Fußach, Vorarlberg",
                   "Argentinisches Steakhaus GAUCHO in Fußach, Vorarlberg: saftige Steaks vom Grill, original argentinische Küche und rohes Premium-Fleisch zum Mitnehmen. Online bestellen und abholen.",
                   inhalt, "index.html", "start")
 
@@ -345,9 +360,10 @@ def seite_fleisch(daten):
         figur = (f'<figure class="produkt-bild">{bild(p["bild"], f"{p["name"]} ({p["untertitel"]}) vom GAUCHO", "(min-width: 900px) 34vw, 100vw")}</figure>'
                  if p["bild"] else f'<figure class="produkt-bild ohne"><img src="assets/stier-hell.svg?v={version("stier-hell.svg")}" alt="" width="180" height="202"><span>{e(p["name"])}</span></figure>')
         varianten = ""
+        vorwahl = next((i for i, v in enumerate(p["varianten"]) if v["art"] == "steak"), 0)
         for i, v in enumerate(p["varianten"]):
             preis = f"{euro(v['preis_kg'])} <small>/ kg</small>" if v["preis_kg"] else "Preis auf Anfrage"
-            varianten += f"""<label class="variante"><input type="radio" name="v-{p['id']}" value="{v['id']}" {'checked' if i == 0 else ''}>
+            varianten += f"""<label class="variante"><input type="radio" name="v-{p['id']}" value="{v['id']}" {'checked' if i == vorwahl else ''}>
        <span class="v-kopf"><span class="v-name">{e(v['name'])}</span><span class="v-preis">{preis}</span></span><span class="v-info">{e(v['info'])}</span></label>"""
         ausverkauft = "" if p["verfuegbar"] else '<span class="schild">Derzeit ausverkauft</span>'
         karten += f"""<article class="produkt einblenden" id="{p['id']}" data-produkt="{p['id']}">
@@ -363,7 +379,22 @@ def seite_fleisch(daten):
   </div>
  </article>"""
     produkt_json = json.dumps(daten, ensure_ascii=False).replace("</", "<\\/")
-    inhalt = seitenkopf("Carnicería · Rohes Fleisch zum Mitnehmen", "Premium-Fleisch <em>aus Argentinien</em>",
+    # Google: Produkte mit Kilopreis (portioniert, sonst ganzes Stück)
+    schema_produkte = []
+    for p in produkte:
+        v = next((v for v in p["varianten"] if v["art"] == "steak" and v["preis_kg"]), None) or next((v for v in p["varianten"] if v["preis_kg"]), None)
+        if not v:
+            continue
+        schema_produkte.append({"@type": "Product", "name": f"{p['name']} ({p['untertitel']})", "description": p["text"],
+            "image": f"{SEITE}/assets/vorschau.jpg", "brand": {"@type": "Brand", "name": "GAUCHO"}, "countryOfOrigin": p["herkunft"],
+            "offers": {"@type": "Offer", "url": f"{SEITE}/fleisch#{p['id']}", "price": f"{v['preis_kg']:.2f}", "priceCurrency": "EUR",
+                       "availability": "https://schema.org/InStock" if p["verfuegbar"] else "https://schema.org/OutOfStock",
+                       "priceSpecification": {"@type": "UnitPriceSpecification", "price": f"{v['preis_kg']:.2f}", "priceCurrency": "EUR", "unitCode": "KGM",
+                                              "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "KGM"}},
+                       "availableDeliveryMethod": "https://schema.org/OnSitePickup"}})
+    schema_shop = '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "ItemList", "name": "Fleisch-Shop GAUCHO",
+        "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": x} for i, x in enumerate(schema_produkte)]}, ensure_ascii=False).replace("</", "<\\/") + "</script>"
+    inhalt = seitenkopf("Carnicería · Rohes Fleisch zum Mitnehmen", "Argentinisches Rindfleisch <em>kaufen in Fußach</em>",
                         "Bestellen Sie die Cuts aus unserer Küche roh für Ihren eigenen Grill. Wir schneiden frisch für Sie zu, Sie holen zur gewünschten Zeit bei uns ab und bezahlen vor Ort.", extra='<p class="roh-hinweis"><strong>BITTE BEACHTEN:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen, keine fertigen Speisen. <strong>Die Preise gelten nur für den Verkauf zum Mitnehmen, für das rohe Fleisch zum Selbermachen.</strong> Im Restaurant gelten andere Preise.</p>') + f"""
 <section class="abschnitt shop-ablauf"><div class="wrap drei">
  <div><span class="nr">1</span><h3>Auswählen</h3><p>Cut, Zuschnitt und Menge wählen.</p></div>
@@ -396,13 +427,15 @@ def seite_fleisch(daten):
   <p class="zahlung-info"><strong>Bezahlung:</strong> Sie zahlen bei der Abholung im Gaucho, bar oder mit Karte.</p>
   <div class="hp" aria-hidden="true"><label for="b-website">Webseite</label><input id="b-website" name="website" tabindex="-1" autocomplete="off"></div>
   <label class="check"><input type="checkbox" id="b-ok" required> <span>Ich akzeptiere die <a href="agb.html">AGB</a> und bin einverstanden, dass meine Angaben zur Abwicklung der Bestellung verwendet werden (<a href="datenschutz.html">Datenschutz</a>). *</span></label>
-  <button class="btn btn-voll" type="submit" data-bestellen>Verbindlich bestellen</button>
+  <button class="btn btn-voll" type="submit" data-bestellen>Zahlungspflichtig bestellen</button>
   <p class="form-status" role="status" aria-live="polite"></p>
  </form>
 </div></section>
-<script id="produktdaten" type="application/json">{produkt_json}</script>"""
-    return layout("fleisch.html", "Fleisch-Shop – argentinisches Premium-Fleisch zum Mitnehmen | GAUCHO",
-                  "Argentinisches Premium-Fleisch vom Steakhaus GAUCHO online bestellen und in Fußach abholen: Lomo, Bife Ancho, Rumpsteak, Churrasco und Lammkrone.",
+<a class="korb-leiste" href="#korb" data-korb-leiste hidden><span>Warenkorb (<span data-kl-n>0</span>) · <strong data-kl-summe></strong></span><span class="kl-los">Zur Abholung →</span></a>
+<script id="produktdaten" type="application/json">{produkt_json}</script>
+{schema_shop}"""
+    return layout("fleisch.html", "Argentinisches Rindfleisch kaufen in Vorarlberg | Fleisch-Shop GAUCHO Fußach",
+                  "Argentinisches Rindfleisch in Vorarlberg kaufen: Lomo, Bife Ancho, Rumpsteak und Churrasco vom Steakhaus GAUCHO online bestellen, frisch zugeschnitten in Fußach abholen.",
                   inhalt, "fleisch.html", "shop")
 
 
@@ -497,17 +530,14 @@ def main():
         "agb.html": rechtsseite("agb.html", "AGB Fleisch-Shop", (DATEN / "agb.html.inhalt").read_text(encoding="utf-8"), "Allgemeine Geschäftsbedingungen für Bestellungen im Fleisch-Shop des GAUCHO."),
     }
     for name, inhalt in seiten.items():
-        (OUT / name).write_text(inhalt, encoding="utf-8")
+        (OUT / name).write_text(pfade(inhalt), encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SEITE}/sitemap.xml\n", encoding="utf-8")
-    urls = ["", "speisekarte.html", "reservieren.html", "fleisch.html", "kontakt.html"]
+    urls = ["", "speisekarte", "reservieren", "fleisch", "kontakt"]
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{SEITE}/{u}</loc></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
     # Kopfzeilen für Cloudflare Pages (bei Netlify steht dasselbe in netlify.toml)
-    (OUT / "_headers").write_text("""/*.html
-  Cache-Control: max-age=0, must-revalidate
+    (OUT / "_headers").write_text("""/*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-/assets/*
-  Cache-Control: public, max-age=3600, must-revalidate
 /assets/*.css
   Cache-Control: public, max-age=31536000, immutable
 /assets/*.js
@@ -521,9 +551,9 @@ def main():
   Cache-Control: max-age=0, must-revalidate
   Access-Control-Allow-Origin: *
 """, encoding="utf-8")
-    (OUT / "404.html").write_text(layout("404.html", "Seite nicht gefunden – GAUCHO", "Seite nicht gefunden.",
+    (OUT / "404.html").write_text(pfade(layout("404.html", "Seite nicht gefunden – GAUCHO", "Seite nicht gefunden.",
                                          seitenkopf("404", "Diese Seite gibt es nicht", "Vielleicht finden Sie, was Sie suchen, auf der Startseite.") +
-                                         '<section class="abschnitt"><div class="wrap mitte"><a class="btn" href="index.html">Zur Startseite</a></div></section>'), encoding="utf-8")
+                                         '<section class="abschnitt"><div class="wrap mitte"><a class="btn" href="index.html">Zur Startseite</a></div></section>')), encoding="utf-8")
     print(f"{len(seiten) + 1} Seiten nach {OUT} geschrieben")
 
 

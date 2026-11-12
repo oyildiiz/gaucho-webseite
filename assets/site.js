@@ -68,9 +68,14 @@ function sende(form, daten, ok, knopf) {
   var status = form.querySelector('.form-status');
   knopf.disabled = true; status.className = 'form-status'; status.textContent = 'Wird gesendet …';
   return fetch(form.dataset.ziel, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(daten) })
-    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json().catch(function () { return {}; }); })
-    .then(function (antwort) { if (antwort && antwort.ok === false) throw new Error(antwort.fehler || 'abgelehnt'); ok(antwort || {}); })
-    .catch(function () { status.className = 'form-status fehler'; status.textContent = 'Das Senden hat leider nicht geklappt. Bitte versuchen Sie es erneut oder rufen Sie uns an: +43 676 9181402.'; })
+    .then(function (r) { if (!r.ok && r.status !== 400) throw new Error('HTTP ' + r.status); return r.json().catch(function () { return {}; }); })
+    .then(function (antwort) { if (antwort && antwort.ok === false) { var f = new Error(antwort.fehler || 'abgelehnt'); f.pruefen = !!antwort.fehler; throw f; } ok(antwort || {}); })
+    .catch(function (f) {
+      status.className = 'form-status fehler';
+      status.textContent = f && f.pruefen && f.message !== 'Senden fehlgeschlagen'
+        ? 'Bitte prüfen Sie Ihre Angaben: ' + f.message + '.'
+        : 'Das Senden hat leider nicht geklappt. Bitte versuchen Sie es erneut oder rufen Sie uns an: +43 676 9181402.';
+    })
     .finally(function () { knopf.disabled = false; });
 }
 
@@ -151,15 +156,20 @@ function sende(form, daten, ok, knopf) {
     zeichneMenge();
     karte.querySelector('[data-in-korb]').addEventListener('click', function () {
       var k = lies(); k.push(position()); schreib(k); korbZeichnen();
-      var b = this; b.textContent = 'Hinzugefügt ✓'; setTimeout(function () { b.textContent = 'In den Warenkorb'; }, 1600);
+      var b = this; b.textContent = 'Hinzugefügt ✓'; setTimeout(function () { b.textContent = 'In den Warenkorb'; }, 2500);
     });
   });
 
+  // Feste Leiste unten: sichtbar, sobald etwas im Korb liegt und der Korb nicht ohnehin im Bild ist
+  var leiste = document.querySelector('[data-korb-leiste]'), korbImBild = false;
+  function leisteZeigen() { if (leiste) leiste.hidden = !lies().length || korbImBild; }
+  var kasse = document.getElementById('korb');
+  if (kasse && 'IntersectionObserver' in window) new IntersectionObserver(function (e) { korbImBild = e[0].isIntersecting; leisteZeigen(); }).observe(kasse);
   var liste = document.querySelector('[data-korb-liste]'), summeBox = document.querySelector('[data-korb-summe]'), summe = document.querySelector('[data-summe]');
   function korbZeichnen() {
     var k = lies().filter(function (pos) { var v = P[pos.pid] && variante(pos.pid, pos.vid); return v && v.art === pos.art; });
     if (k.length !== lies().length) schreib(k);
-    if (!k.length) { liste.innerHTML = '<p class="leer">Ihr Warenkorb ist noch leer.</p>'; summeBox.hidden = true; return; }
+    if (!k.length) { liste.innerHTML = '<p class="leer">Ihr Warenkorb ist noch leer.</p>'; summeBox.hidden = true; leisteZeigen(); return; }
     var gesamt = 0, offen = false;
     liste.innerHTML = k.map(function (pos, i) {
       var p = P[pos.pid], v = variante(pos.pid, pos.vid), pr = preisVon(pos);
@@ -167,6 +177,8 @@ function sende(form, daten, ok, knopf) {
       return '<div class="posten"><span class="posten-name">' + p.name + ' · ' + v.name + '</span><span class="posten-preis">' + (pr === null ? 'auf Anfrage' : 'ca. ' + euro(pr)) + '</span><span class="posten-info">' + beschreibung(pos) + '</span><button class="posten-weg" type="button" data-weg="' + i + '">Entfernen</button></div>';
     }).join('');
     summeBox.hidden = false; summe.textContent = 'ca. ' + euro(gesamt) + (offen ? ' + Anfrage' : '');
+    if (leiste) { leiste.querySelector('[data-kl-n]').textContent = k.length; leiste.querySelector('[data-kl-summe]').textContent = 'ca. ' + euro(gesamt); }
+    leisteZeigen();
     liste.querySelectorAll('[data-weg]').forEach(function (b) { b.addEventListener('click', function () { var kk = lies(); kk.splice(+b.dataset.weg, 1); schreib(kk); korbZeichnen(); }); });
   }
   korbZeichnen();
