@@ -76,8 +76,8 @@
   const guestFactor = (a, g) => (a.occupancy && a.occupancy[g]) || 1;
 
   // Gesamtpreis: dieselbe Rechnung wie auf dem Server (_worker.js, quote)
-  // Vergleich = Booking.com mit Genius-Rabatt (10 % auf die Nächte, Reinigung ohne Rabatt),
-  // Direktpreis = 5 % darunter.
+  // Direktpreis = 5 % unter Booking.com mit Genius-Rabatt (10 % auf die Nächte, Reinigung ohne Rabatt).
+  // Angezeigte Ersparnis = gegenüber dem regulären Preis auf Booking.com.
   function quote(a, i, o, guests = state.guests) {
     const f = guestFactor(a, guests);
     let n = 0, nights = 0, fixed = 0, complete = !!a.days;
@@ -91,14 +91,15 @@
     }
     let compare, total;
     if (complete) {
+      // Vergleich = regulärer Preis auf Booking.com (ohne Genius)
+      compare = Math.round((nights + (a.bookingClean || 0)) * f);
       const genius = (nights * (a.geniusFactor || 1) + (a.bookingClean || 0)) * f;
-      compare = Math.round(genius);
       total = Math.round(genius * (a.directFactor || 1));
     } else {
       compare = Math.round(n * (a.price.compare || 0) * f);
       total = Math.round(fixed * f) + a.price.cleaning;
     }
-    // Ersparnis gegenüber dem Genius-Preis auf Booking.com, als Betrag
+    // Ersparnis gegenüber dem regulären Preis auf Booking.com, als Betrag
     return { n, sum: total, discount: 0, cleaning: 0, total, saving: Math.max(0, compare - total) };
   }
 
@@ -199,7 +200,7 @@
           ${a.amenities.map(([icon, label]) => `<li class="body-6"><i class="ph ph-${icon}" aria-hidden="true"></i> ${esc(label)}</li>`).join("")}
         </ul>
         <div class="apt-buy">
-          <div class="apt-price"><span class="heading-5">ab ${money.format(a.price.night)}${a.price.compare > a.price.night ? ` <s class="body-6 muted" aria-label="statt ${money.format(a.price.compare)} auf Booking.com mit Genius-Rabatt">${money.format(a.price.compare)}</s>` : ""}</span><span class="caption-2 muted">pro Nacht für 2 Gäste, Endreinigung inklusive, buchbar ab ${nightsLabel(a.minNights)}</span>${a.price.compare > a.price.night ? `<span class="caption-1 save-text">Du sparst ${money.format(a.price.compare - a.price.night)} pro Nacht gegenüber Booking.com, auch mit Genius-Rabatt</span>` : ""}</div>
+          <div class="apt-price"><span class="heading-5">ab ${money.format(a.price.night)}${a.price.compare > a.price.night ? ` <s class="body-6 muted" aria-label="statt ${money.format(a.price.compare)} auf Booking.com">${money.format(a.price.compare)}</s>` : ""}</span><span class="caption-2 muted">pro Nacht für 2 Gäste, Endreinigung inklusive, buchbar ab ${nightsLabel(a.minNights)}</span>${a.price.compare > a.price.night ? `<span class="caption-1 save-text">Du sparst ${money.format(a.price.compare - a.price.night)} pro Nacht gegenüber dem regulären Preis auf Booking.com</span>` : ""}</div>
           <button class="btn btn-primary btn-lg" type="button" data-book="${a.id}">Termine wählen</button>
         </div>
       </div>
@@ -295,7 +296,7 @@
       <div class="receipt-row body-5 is-gone"><span>Servicegebühr der Plattform</span><span>entfällt</span></div>
       <hr>
       <div class="receipt-row body-1"><span>Gesamt</span><span>${money.format(q.total)}</span></div>
-      ${q.saving ? `<p class="save-note caption-1"><i class="ph ph-tag" aria-hidden="true"></i> Du sparst ${money.format(q.saving)} gegenüber Booking.com, auch mit Genius-Rabatt</p>` : ""}`;
+      ${q.saving ? `<p class="save-note caption-1"><i class="ph ph-tag" aria-hidden="true"></i> Du sparst ${money.format(q.saving)} gegenüber dem regulären Preis auf Booking.com</p>` : ""}`;
   }
 
 
@@ -497,7 +498,7 @@
         <div class="sum-row body-6"><span>Gebühren für die Zahlung</span><span>inklusive</span></div>
         <hr>
         <div class="sum-row is-total"><span class="body-1">Gesamt</span><span class="heading-5">${money.format(q.total)}</span></div>
-        ${q.saving ? `<p class="save-note caption-1"><i class="ph ph-tag" aria-hidden="true"></i> Du sparst ${money.format(q.saving)} gegenüber Booking.com, auch mit Genius-Rabatt</p>` : ""}
+        ${q.saving ? `<p class="save-note caption-1"><i class="ph ph-tag" aria-hidden="true"></i> Du sparst ${money.format(q.saving)} gegenüber dem regulären Preis auf Booking.com</p>` : ""}
       </div>` : `<p class="sum-empty body-6">Wähle Anreise und Abreise im Kalender. Du siehst dann sofort den Endpreis.</p>`}
       <p class="sum-hint caption-2" role="alert">${esc(state.hint)}</p>
       <div class="sum-cta">

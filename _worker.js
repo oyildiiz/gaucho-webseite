@@ -150,7 +150,8 @@ function quote(aptKey, cal, checkin, checkout, guests) {
     nights++; sum += x[0];
   }
   const genius = (sum * GENIUS_FACTOR + a.bookingClean) * f;
-  return { nights, compare: Math.round(genius), total: Math.round(genius * DIRECT_FACTOR) };
+  // compare = regulärer Preis auf Booking.com (für die Anzeige der Ersparnis)
+  return { nights, compare: Math.round((sum + a.bookingClean) * f), total: Math.round(genius * DIRECT_FACTOR) };
 }
 
 function rangeFree(cal, holds, aptKey, checkin, checkout, exceptSession) {

@@ -89,7 +89,7 @@ window.SITE = {
       // compare = Preis pro Nacht auf Booking.com (Stand 12. bis 14. Januar 2027, 2 Gäste)
       // night = 5 % darunter, plus rund 2 % für die Gebühren der Zahlung.
       // Gilt nur für die Vorschau, online zählt _worker.js.
-      price: { night: 150, weekend: 150, cleaning: 0, compare: 158 },
+      price: { night: 150, weekend: 150, cleaning: 0, compare: 172 },
       minNights: 1,
       photos: [
         { src: P.wohnenDach, alt: "Wohnzimmer unter dem Holzdach mit Sofa" },
@@ -125,7 +125,7 @@ window.SITE = {
         ["wifi-high", "Kostenloses WLAN"],
         ["car", "Kostenloser Parkplatz am Haus"],
       ],
-      price: { night: 133, weekend: 133, cleaning: 0, compare: 140 },
+      price: { night: 133, weekend: 133, cleaning: 0, compare: 152 },
       minNights: 1,
       photos: [
         { src: P.schlafenBalkon, alt: "Schlafzimmer mit Balkontür" },
