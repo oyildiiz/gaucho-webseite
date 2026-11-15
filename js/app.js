@@ -402,6 +402,7 @@
     side.hidden = state.step === 3;
     $("#pane-3").hidden = state.step !== 3;
     if (state.step === 1) { renderTabs(); renderCal(); }
+    $("#bk-bar").hidden = state.step === 3;
     if (state.step === 3) renderDone(); else renderSide();
     $("#bk-body").scrollTop = 0;
   }
@@ -505,7 +506,23 @@
         <button type="button" class="btn btn-primary btn-lg" id="bk-next" ${q && !api.down ? "" : "disabled"}>${state.step === 1 ? "Weiter zu deinen Daten" : "Zahlungspflichtig buchen"}</button>
         <p class="caption-5">${api.down ? `Die Buchung ist gerade nicht erreichbar. ${esc(contactLine)}` : state.step === 2 ? `Kostenlos stornierbar bis 7 Tage vor der Anreise. Mit der Buchung akzeptierst du unsere <a href="rechtliches.html#bedingungen" target="_blank" rel="noopener">Buchungsbedingungen</a>.` : "Im Preis ist alles enthalten, auch die Gebühren für die Zahlung. Du zahlst sicher mit Karte, Apple Pay, PayPal oder Klarna."}</p>
       </div>`;
+    renderBar(q);
     if (focusSel) { const el = $(focusSel, side); if (el && !el.disabled) el.focus(); }
+  }
+
+  // Leiste unten auf dem Handy: Termine und Preis bleiben immer sichtbar
+  function renderBar(q) {
+    const bar = $("#bk-bar");
+    bar.hidden = state.step === 3;
+    if (bar.hidden) return;
+    const range = state.in && state.out ? `${fmtDay.format(state.in)} – ${fmtDay.format(state.out)}` : state.in ? `${fmtDay.format(state.in)} – Abreise wählen` : "Anreise und Abreise wählen";
+    const sub = q ? `${nightsLabel(q.n)} · ${guestsLabel(state.guests)} · ${esc(state.apt.name)}` : esc(state.apt.name);
+    bar.innerHTML = `
+      <button type="button" class="bar-info" data-bar-sum aria-label="Zusammenfassung anzeigen">
+        <span class="bar-dates"><span class="body-5">${range}</span><span class="caption-2 muted">${sub}</span></span>
+        ${q ? `<span class="bar-price"><span class="heading-5">${money.format(q.total)}</span>${q.saving ? `<span class="caption-2"><s>${money.format(q.total + q.saving)}</s> <span class="bar-save">${money.format(q.saving)} gespart</span></span>` : ""}</span>` : ""}
+      </button>
+      <button type="button" class="btn btn-primary btn-lg" data-bar-next ${q && !api.down ? "" : "disabled"}>${state.step === 1 ? "Weiter zu deinen Daten" : "Zahlungspflichtig buchen"}</button>`;
   }
 
   /* ---------- Formular ---------- */
@@ -513,7 +530,7 @@
     first: (v) => (v ? "" : "Bitte gib deinen Vornamen ein."),
     last: (v) => (v ? "" : "Bitte gib deinen Nachnamen ein."),
     email: (v) => (!v ? "Bitte gib deine Mailadresse ein." : /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Diese Mailadresse sieht unvollständig aus."),
-    phone: (v) => (!v || /^[+\d][\d\s/()]{5,}$/.test(v) ? "" : "Bitte nur Ziffern, Leerzeichen und ein Plus am Anfang."),
+    phone: (v) => (!v ? "Bitte gib deine Telefonnummer ein, damit wir dich bei der Anreise erreichen." : /^[+\d][\d\s/()-]{5,}$/.test(v) ? "" : "Bitte nur Ziffern, Leerzeichen und ein Plus am Anfang."),
     consent: (_, el) => (el.checked ? "" : "Bitte stimme der Verarbeitung deiner Angaben zu."),
   };
   function validateField(el) {
@@ -550,6 +567,8 @@
     const btn = $("#bk-next");
     btn.classList.add("is-loading");
     btn.textContent = "Einen Moment …";
+    const barBtn = $("[data-bar-next]");
+    if (barBtn) { barBtn.classList.add("is-loading"); barBtn.textContent = "Einen Moment …"; }
     if (api.online) {
       try {
         const res = await fetch("/api/checkout", {
@@ -653,6 +672,10 @@
     months.addEventListener("focusin", (e) => { const d = e.target.closest(".day"); preview(d ? d.dataset.k : ""); });
     months.addEventListener("mouseleave", () => preview(""));
 
+    $("#bk-bar").addEventListener("click", (e) => {
+      if (e.target.closest("[data-bar-next]")) { const b = $("#bk-next"); if (b && !b.disabled) b.click(); return; }
+      if (e.target.closest("[data-bar-sum]")) side.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    });
     side.addEventListener("click", (e) => {
       const g = e.target.closest("[data-g]");
       if (g) {

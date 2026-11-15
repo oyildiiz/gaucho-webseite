@@ -208,7 +208,8 @@ async function checkout(req, env) {
   const email = String(g.email || "").trim();
   if (!a || !isDate(b.checkin) || !isDate(b.checkout) || b.checkin >= b.checkout || !b.consent
     || !Number.isInteger(guests) || guests < 1 || guests > a.maxGuests
-    || !String(g.first || "").trim() || !String(g.last || "").trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    || !String(g.first || "").trim() || !String(g.last || "").trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
+    || String(g.phone || "").replace(/\D/g, "").length < 6) {
     return json({ error: "Ungültige Angaben" }, 400);
   }
   const today = todayVienna();
