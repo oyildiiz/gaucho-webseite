@@ -436,12 +436,15 @@ dialog.booking::backdrop { background: rgba(0, 0, 0, 0.72); animation: fade 300m
 .fld { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .fld--full { grid-column: 1 / -1; }
 .fld .opt { color: var(--faint); margin-left: 4px; }
-.fld input, .fld textarea {
+.fld input, .fld textarea, .fld select {
   width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--s2);
   outline: none; resize: vertical; transition: border-color 300ms var(--ease), background-color 300ms var(--ease);
 }
-.fld input:hover, .fld textarea:hover { background: var(--s3); }
-.fld input:focus, .fld textarea:focus { border-color: var(--accent-text); }
+.fld input:hover, .fld textarea:hover, .fld select:hover { background-color: var(--s3); }
+.fld input:focus, .fld textarea:focus, .fld select:focus { border-color: var(--accent-text); }
+.fld select { appearance: none; cursor: pointer; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27 viewBox=%270 0 256 256%27%3E%3Cpath fill=%27%23a8a49c%27 d=%27M213.7 101.7l-80 80a8 8 0 0 1-11.4 0l-80-80a8 8 0 0 1 11.4-11.4L128 164.7l74.3-74.4a8 8 0 0 1 11.4 11.4z%27/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+.fld select option { background: var(--s2); color: var(--text); }
+.fld .hint { color: var(--faint); }
 .fld textarea::placeholder { color: var(--faint); }
 .is-invalid input, .is-invalid textarea { border-color: var(--danger); }
 .err { color: var(--danger); min-height: 0; }

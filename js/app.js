@@ -562,7 +562,7 @@
     const payload = {
       ref, apartment: a.name, checkin: key(state.in), checkout: key(state.out), nights: q.n, guests: state.guests,
       total: q.total, currency: S.currency,
-      guest: { first: data.first.trim(), last: data.last.trim(), email: data.email.trim(), phone: (data.phone || "").trim(), note: (data.note || "").trim() },
+      guest: { first: data.first.trim(), last: data.last.trim(), email: data.email.trim(), phone: (data.phone || "").trim(), arrival: data.arrival || "", note: (data.note || "").trim() },
     };
     const btn = $("#bk-next");
     btn.classList.add("is-loading");

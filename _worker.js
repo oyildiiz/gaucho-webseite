@@ -228,7 +228,7 @@ async function checkout(req, env) {
   const meta = {
     site: "gauchohome", ref, apt: b.apt, checkin: b.checkin, checkout: b.checkout, guests: String(guests),
     nights: String(q.nights), total: String(q.total), compare: String(q.compare),
-    first: clip(g.first, 80), last: clip(g.last, 80), email: clip(email, 200), phone: clip(g.phone, 40), note: clip(g.note, 480),
+    first: clip(g.first, 80), last: clip(g.last, 80), email: clip(email, 200), phone: clip(g.phone, 40), arrival: clip(g.arrival, 40), note: clip(g.note, 440),
   };
   const fmt = (s) => parse(s).toLocaleDateString("de-AT", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
   const s = await stripe(env, "checkout/sessions", {
@@ -300,7 +300,7 @@ async function sendMails(env, m, a) {
   const fmt = (s) => parse(s).toLocaleDateString("de-AT", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
   const rows = [
     ["Vorgangsnummer", m.ref], ["Apartment", a.name], ["Anreise", fmt(m.checkin)], ["Abreise", fmt(m.checkout)],
-    ["Nächte", m.nights], ["Gäste", m.guests], ["Bezahlt", euro(Number(m.total))],
+    ["Nächte", m.nights], ["Gäste", m.guests], ["Ankunft ca.", m.arrival || "noch offen"], ["Bezahlt", euro(Number(m.total))],
   ];
   const table = `<table style="border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="padding:4px 16px 4px 0;color:#666">${esc(k)}</td><td style="padding:4px 0"><b>${esc(v)}</b></td></tr>`).join("")}</table>`;
   const send = (body) => fetch("https://api.resend.com/emails", {
