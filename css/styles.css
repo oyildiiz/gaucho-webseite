@@ -467,12 +467,13 @@ dialog.booking::backdrop { background: rgba(0, 0, 0, 0.72); animation: fade 300m
   .bk-main { padding: 8px 16px 24px; }
   .bk-side { position: static; border-radius: 0; padding: 16px 16px 0; }
   .sum-cta { padding: 4px 0 24px; }
-  .sum-cta .btn { display: none; }
-  .bk-bar:not([hidden]) { display: flex; }
   .cal-months { grid-template-columns: minmax(0, 1fr); }
   .cal-month + .cal-month { display: none; }
   .done-card { grid-template-columns: 1fr; width: 100%; }
 }
+/* Leiste unten im Buchungsfenster: auf allen Geräten Termine, Preis und Weiter */
+.sum-cta .btn { display: none; }
+.bk-bar:not([hidden]) { display: flex; }
 .bk-bar { display: none; flex: none; flex-direction: column; gap: 12px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: var(--s2); border-top: 1px solid var(--line); }
 .bar-info { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left; color: inherit; background: none; border: 0; padding: 0; font: inherit; cursor: pointer; }
 .bar-dates { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
@@ -481,6 +482,12 @@ dialog.booking::backdrop { background: rgba(0, 0, 0, 0.72); animation: fade 300m
 .bar-price s { color: var(--muted); }
 .bar-save { color: var(--accent-text); }
 .bk-bar .btn { width: 100%; }
+@media (min-width: 900px) {
+  .bk-bar { flex-direction: row; align-items: center; gap: 32px; padding: 16px 24px; }
+  .bar-info { flex: 1; justify-content: flex-start; gap: 32px; }
+  .bar-price { flex-direction: row; align-items: baseline; gap: 12px; margin-left: auto; }
+  .bk-bar .btn { width: auto; min-width: 300px; }
+}
 @media (max-width: 479px) { .form-grid { grid-template-columns: 1fr; } .bk-steps { gap: 12px; } }
 
 /* ---------- Vorschauhinweis ---------- */
