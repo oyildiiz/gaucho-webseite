@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gaucho Home · Apartments in Fußach am Bodensee direkt buchen</title>
+  <meta name="description" content="Zwei moderne Apartments in Fußach am Bodensee, direkt beim Gastgeber gebucht. Kostenlose Parkplätze, Balkon, Steakhaus nebenan und sofort sichtbarer Endpreis.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gaucho Home · Apartments in Fußach am Bodensee">
+  <meta property="og:description" content="Termine wählen, Endpreis sehen, sofort fest buchen. Ohne Umweg über eine Plattform.">
+  <meta property="og:image" content="assets/fotos/722243527.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#131209">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip button-sm" href="#inhalt">Zum Inhalt springen</a>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="Zur Startseite">
+      <img class="brand-logo" src="assets/logo-hell.svg" alt="Gaucho Home" width="105" height="36">
+    </a>
+    <nav class="nav-links" aria-label="Hauptnavigation">
+      <a class="title-4" href="#wohnungen">Apartments</a>
+      <a class="title-4" href="#lage">Lage</a>
+      <a class="title-4" href="#vorteile">Vorteile</a>
+      <a class="title-4" href="#fragen">Fragen</a>
+    </nav>
+    <button class="btn btn-primary btn-sm nav-cta" type="button" data-book>Jetzt buchen</button>
+    <button class="menu-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </header>
+
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav aria-label="Mobile Navigation">
+      <a class="heading-4" style="--i:0" href="#wohnungen">Apartments</a>
+      <a class="heading-4" style="--i:1" href="#lage">Lage</a>
+      <a class="heading-4" style="--i:2" href="#vorteile">Vorteile</a>
+      <a class="heading-4" style="--i:3" href="#fragen">Fragen</a>
+      <button class="btn btn-primary btn-lg" style="--i:4" type="button" data-book>Verfügbarkeit prüfen</button>
+    </nav>
+  </div>
+
+  <main id="inhalt">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="hero-bg" aria-hidden="true"><img id="hero-img" alt=""></div>
+      <div class="container hero-inner">
+        <p class="eyebrow caption-3 rise" style="--d:0"><span class="dot"></span> Fußach am Bodensee · 2 Apartments, bald 3</p>
+        <h1 class="heading-1 hero-title rise" style="--d:1">Dein Zuhause am Bodensee.<br>Direkt beim Gastgeber.</h1>
+        <p class="body-3 hero-sub rise" style="--d:2">Eine Maisonette und ein Apartment im Rheindelta, bald kommt ein drittes dazu. Ruhig gelegen, mit Balkon, kostenlosem Parkplatz und unserem Steakhaus gleich nebenan. Du buchst ohne Umweg über eine Plattform.</p>
+
+        <form class="searchbar rise" style="--d:3" id="searchbar" aria-label="Verfügbarkeit prüfen">
+          <label class="field">
+            <span class="caption-4">Wohnung</span>
+            <select class="body-2" id="sb-apt" aria-label="Wohnung wählen"></select>
+          </label>
+          <button class="field field-btn" type="button" id="sb-dates">
+            <span class="caption-4">Reisedaten</span>
+            <span class="body-2" id="sb-dates-value">Termine wählen</span>
+          </button>
+          <label class="field">
+            <span class="caption-4">Gäste</span>
+            <select class="body-2" id="sb-guests" aria-label="Anzahl Gäste"></select>
+          </label>
+          <button class="btn btn-primary btn-lg" type="submit">Verfügbarkeit prüfen <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        </form>
+
+        <ul class="proof rise" style="--d:4">
+          <li class="caption-1"><i class="ph ph-tag" aria-hidden="true"></i> Keine Plattformgebühr</li>
+          <li class="caption-1"><i class="ph-fill ph-star" aria-hidden="true"></i> <span id="proof-rating"></span></li>
+          <li class="caption-1"><i class="ph ph-shield-check" aria-hidden="true"></i> Sicher zahlen mit Karte, Apple Pay, PayPal oder Klarna</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Leitsatz -->
+    <section class="tagline" aria-label="Leitsatz">
+      <div class="container">
+        <p class="heading-2 tagline-text" id="tagline">Zwischen Rhein und Bodensee. Ohne Umweg über eine Plattform. Mit Gastgebern, die nebenan am Grill stehen und wirklich erreichbar sind.</p>
+      </div>
+    </section>
+
+    <!-- Apartments -->
+    <section class="section" id="wohnungen">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow caption-3">Die Apartments</p>
+          <h2 class="heading-2">Zwei Wohnungen zur Wahl</h2>
+          <p class="body-3 muted">Beide sind modern renoviert und komplett ausgestattet. Jede hat ihren eigenen Kalender. Du siehst sofort, was frei ist und was dein Aufenthalt kostet.</p>
+        </header>
+        <div class="apt-list" id="apt-list"></div>
+      </div>
+    </section>
+
+    <!-- Lage -->
+    <section class="section" id="lage">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow caption-3">Die Lage</p>
+          <h2 class="heading-2">Im Rheindelta, direkt am Rheindamm</h2>
+          <p class="body-3 muted">Fußach liegt in Vorarlberg zwischen Rhein und Bodensee. Von hier bist du schnell in jeder Ecke des Dreiländerecks: in Bregenz, auf der Insel Lindau in Deutschland und in der Schweiz.</p>
+        </header>
+        <div class="place">
+          <div class="place-photo" data-reveal>
+            <img id="place-img" alt="" loading="lazy">
+            <a class="chip caption-1" id="place-addr" target="_blank" rel="noopener"><i class="ph ph-map-pin" aria-hidden="true"></i> <span></span> <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+          </div>
+          <div class="place-list" id="place-list"></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Vorteile -->
+    <section class="section" id="vorteile">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow caption-3">Warum direkt</p>
+          <h2 class="heading-2">Gleiches Apartment, besserer Weg</h2>
+          <p class="body-3 muted">Wer direkt bucht, spart sich die Gebühr der Plattform und spricht direkt mit uns, den Gastgebern.</p>
+        </header>
+        <div class="bento">
+          <article class="card card--wide" data-reveal>
+            <div class="card-copy">
+              <span class="icon-tile"><i class="ph ph-tag" aria-hidden="true"></i></span>
+              <h3 class="heading-6">Der Preis im Kalender ist der Endpreis</h3>
+              <p class="body-6 muted">Ein Preis pro Nacht, in dem alles steckt: Endreinigung und die Gebühren für die Zahlung. Und weil keine Plattform mitverdient, zahlst du bei uns weniger als auf Booking.com.</p>
+            </div>
+            <div class="receipt" aria-label="Beispiel einer Preisaufstellung" id="receipt"></div>
+          </article>
+          <article class="card" data-reveal style="--d:1">
+            <span class="icon-tile"><i class="ph ph-chat-circle-dots" aria-hidden="true"></i></span>
+            <h3 class="heading-6">Direkter Draht</h3>
+            <p class="body-6 muted">Du schreibst mit uns, nicht mit einem Kundendienst. Wir sind meistens gleich nebenan im Steakhaus und antworten schnell.</p>
+          </article>
+          <article class="card" data-reveal>
+            <span class="icon-tile"><i class="ph ph-calendar-check" aria-hidden="true"></i></span>
+            <h3 class="heading-6">Flexibel bleiben</h3>
+            <p class="body-6 muted">Bis 7 Tage vor der Anreise stornierst du kostenlos. Pläne ändern sich, das wissen wir.</p>
+          </article>
+          <article class="card card--wide" data-reveal style="--d:1">
+            <div class="card-copy">
+              <span class="icon-tile"><i class="ph ph-lock-simple" aria-hidden="true"></i></span>
+              <h3 class="heading-6">Gebucht ist gebucht</h3>
+              <p class="body-6 muted">Du zahlst sicher beim Buchen, mit Karte, Apple Pay, PayPal oder Klarna. Damit ist der Termin sofort fest für dich reserviert.</p>
+            </div>
+            <ol class="mini-steps">
+              <li><span class="caption-3">1</span><span class="body-5">Termin gewählt</span><i class="ph ph-check" aria-hidden="true"></i></li>
+              <li><span class="caption-3">2</span><span class="body-5">Sicher bezahlt</span><i class="ph ph-check" aria-hidden="true"></i></li>
+              <li class="is-next"><span class="caption-3">3</span><span class="body-5">Bestätigung per Mail</span><i class="ph ph-envelope-simple" aria-hidden="true"></i></li>
+            </ol>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ablauf -->
+    <section class="section" id="ablauf">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow caption-3">So funktioniert es</p>
+          <h2 class="heading-2">In drei Schritten gebucht</h2>
+        </header>
+        <ol class="steps">
+          <li class="step" data-reveal>
+            <span class="heading-3 step-num">01</span>
+            <h3 class="heading-6">Termine wählen</h3>
+            <p class="body-6 muted">Öffne den Kalender deines Apartments, wähle Anreise und Abreise und sieh sofort den Endpreis.</p>
+          </li>
+          <li class="step" data-reveal style="--d:1">
+            <span class="heading-3 step-num">02</span>
+            <h3 class="heading-6">Daten eingeben</h3>
+            <p class="body-6 muted">Name und Mailadresse genügen. Sonderwünsche schreibst du einfach dazu.</p>
+          </li>
+          <li class="step" data-reveal style="--d:2">
+            <span class="heading-3 step-num">03</span>
+            <h3 class="heading-6">Bezahlen und fertig</h3>
+            <p class="body-6 muted">Du zahlst mit Karte, Apple Pay, PayPal oder Klarna. Der Termin ist sofort fest gebucht und die Bestätigung kommt per Mail.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Bewertungen -->
+    <section class="section" id="stimmen">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow caption-3">Bewertungen</p>
+          <h2 class="heading-2">Was Gäste sagen</h2>
+        </header>
+        <div class="rating" id="rating"></div>
+      </div>
+    </section>
+
+    <!-- Fragen -->
+    <section class="section" id="fragen">
+      <div class="container faq-wrap">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow caption-3">Häufige Fragen</p>
+          <h2 class="heading-2">Gut zu wissen</h2>
+          <p class="body-3 muted">Noch etwas offen? Schreib uns, wir antworten persönlich.</p>
+        </header>
+        <div class="faq" id="faq-list"></div>
+      </div>
+    </section>
+
+    <!-- Abschluss -->
+    <section class="section section--cta">
+      <div class="container">
+        <div class="cta" data-reveal>
+          <div class="cta-bg" aria-hidden="true"><img id="cta-img" alt="" loading="lazy"></div>
+          <div class="cta-inner">
+            <h2 class="heading-2">Sieh nach, ob deine Termine frei sind</h2>
+            <p class="body-3">Ein Blick in den Kalender dauert zehn Sekunden, der Endpreis steht sofort da.</p>
+            <button class="btn btn-primary btn-lg" type="button" data-book>Verfügbarkeit prüfen <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top" aria-label="Zur Startseite">
+          <img class="brand-logo" src="assets/logo-hell.svg" alt="Gaucho Home" width="105" height="36">
+        </a>
+        <p class="body-6 muted">Apartments in Fußach am Bodensee, direkt beim Gastgeber gebucht.</p>
+      </div>
+      <nav class="footer-col" aria-label="Seite">
+        <p class="caption-3 muted">Seite</p>
+        <a class="body-6" href="#wohnungen">Apartments</a>
+        <a class="body-6" href="#lage">Lage</a>
+        <a class="body-6" href="#fragen">Fragen</a>
+      </nav>
+      <div class="footer-col">
+        <p class="caption-3 muted">Kontakt</p>
+        <span class="body-6" id="contact-address"></span>
+        <span class="body-6" id="contact-email"></span>
+        <span class="body-6" id="contact-phone"></span>
+      </div>
+      <nav class="footer-col" aria-label="Rechtliches">
+        <p class="caption-3 muted">Rechtliches</p>
+        <a class="body-6" href="rechtliches.html#impressum">Impressum</a>
+        <a class="body-6" href="rechtliches.html#datenschutz">Datenschutz</a>
+        <a class="body-6" href="rechtliches.html#bedingungen">Buchungsbedingungen</a>
+      </nav>
+    </div>
+    <div class="container footer-base">
+      <p class="caption-5 muted">© <span id="year"></span> <span data-brand>Gaucho Home</span>. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+
+  <!-- Buchung -->
+  <dialog class="booking" id="booking" aria-labelledby="bk-title">
+    <header class="bk-head">
+      <div>
+        <h2 class="title-2" id="bk-title">Aufenthalt buchen</h2>
+        <ol class="bk-steps caption-4" id="bk-steps">
+          <li data-s="1">Termine</li>
+          <li data-s="2">Deine Daten</li>
+          <li data-s="3">Zahlung und Bestätigung</li>
+        </ol>
+      </div>
+      <button class="icon-btn" type="button" id="bk-close" aria-label="Buchung schließen"><i class="ph ph-x" aria-hidden="true"></i></button>
+    </header>
+
+    <div class="bk-body" id="bk-body">
+      <div class="bk-main">
+        <!-- Schritt 1 -->
+        <div class="bk-pane" id="pane-1">
+          <div class="seg" id="bk-apts" role="group" aria-label="Wohnung"></div>
+          <div class="cal" id="cal">
+            <div class="cal-nav">
+              <button class="icon-btn" type="button" id="cal-prev" aria-label="Vorheriger Monat"><i class="ph ph-caret-left" aria-hidden="true"></i></button>
+              <button class="icon-btn" type="button" id="cal-next" aria-label="Nächster Monat"><i class="ph ph-caret-right" aria-hidden="true"></i></button>
+            </div>
+            <div class="cal-months" id="cal-months"></div>
+            <ul class="cal-legend caption-2">
+              <li><span class="lg lg-free"></span> Frei</li>
+              <li><span class="lg lg-booked"></span> Belegt</li>
+              <li><span class="lg lg-sel"></span> Deine Auswahl</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Schritt 2 -->
+        <form class="bk-pane" id="pane-2" novalidate hidden>
+          <button class="link-btn button-sm" type="button" id="bk-back"><i class="ph ph-arrow-left" aria-hidden="true"></i> Termine ändern</button>
+          <h3 class="heading-5">Wer reist an?</h3>
+          <div class="form-grid">
+            <label class="fld"><span class="caption-1">Vorname</span><input class="body-3" name="first" autocomplete="given-name" required><small class="caption-2 err"></small></label>
+            <label class="fld"><span class="caption-1">Nachname</span><input class="body-3" name="last" autocomplete="family-name" required><small class="caption-2 err"></small></label>
+            <label class="fld"><span class="caption-1">Mailadresse</span><input class="body-3" name="email" type="email" autocomplete="email" inputmode="email" required><small class="caption-2 err"></small></label>
+            <label class="fld"><span class="caption-1">Telefon <em class="opt">optional</em></span><input class="body-3" name="phone" type="tel" autocomplete="tel"><small class="caption-2 err"></small></label>
+            <label class="fld fld--full"><span class="caption-1">Nachricht an uns <em class="opt">optional</em></span><textarea class="body-3" name="note" rows="3" placeholder="Ankunftszeit, Fragen zum Apartment, besondere Wünsche"></textarea><small class="caption-2 err"></small></label>
+            <label class="check fld--full"><input type="checkbox" name="consent" required><span class="caption-2">Ich bin einverstanden, dass meine Angaben zur Abwicklung der Buchung verwendet werden. Mehr dazu im <a href="rechtliches.html#datenschutz" target="_blank" rel="noopener">Datenschutz</a>.</span><small class="caption-2 err"></small></label>
+          </div>
+        </form>
+      </div>
+
+      <aside class="bk-side" id="bk-side" aria-label="Zusammenfassung"></aside>
+
+      <!-- Schritt 3 -->
+      <div class="bk-done" id="pane-3" hidden></div>
+    </div>
+  </dialog>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Fotos">
+    <button class="icon-btn lb-close" type="button" id="lb-close" aria-label="Fotos schließen"><i class="ph ph-x" aria-hidden="true"></i></button>
+    <button class="icon-btn lb-prev" type="button" id="lb-prev" aria-label="Vorheriges Foto"><i class="ph ph-caret-left" aria-hidden="true"></i></button>
+    <figure><img id="lb-img" alt=""><figcaption class="caption-1" id="lb-cap"></figcaption></figure>
+    <button class="icon-btn lb-next" type="button" id="lb-next" aria-label="Nächstes Foto"><i class="ph ph-caret-right" aria-hidden="true"></i></button>
+  </dialog>
+
+  <div class="preview-pill caption-4" id="preview-pill" hidden></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
