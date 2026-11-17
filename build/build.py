@@ -187,7 +187,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
  </div>
  <div class="wrap fuss-unten">
   <span>© {e(FIRMA['name'])}</span>
-  <nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB Fleisch-Shop</a></nav>
+  <nav aria-label="Rechtliches"><a href="steak-kaufen.html">Steak kaufen in Vorarlberg</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB Fleisch-Shop</a></nav>
  </div>
 </footer>
 <script src="assets/site.js?v={version('site.js')}" defer></script>
@@ -289,7 +289,7 @@ def seite_start(produkte):
  <div class="wrap">
   <div class="abschnitt-kopf einblenden">
    <div><p class="eyebrow">Fleisch-Shop</p><h2>Unsere <em>Cuts</em></h2></div>
-   <p>Das sind die Cuts, die bei uns auf den Grill kommen. Sie gibt es auch <strong>roh</strong> zum Mitnehmen, frisch für Sie zugeschnitten.</p>
+   <p>Das sind die Cuts, die bei uns auf den Grill kommen. Sie gibt es auch <strong>roh</strong> zum Mitnehmen, frisch für Sie zugeschnitten. <a href="steak-kaufen.html">Steak kaufen in Vorarlberg</a></p>
   </div>
   <div class="cuts einblenden">{karten}</div>
   <div class="mitte einblenden"><a class="btn" href="fleisch.html">Zum Fleisch-Shop</a></div>
@@ -447,6 +447,70 @@ def seite_fleisch(daten):
                   inhalt, "fleisch.html", "shop")
 
 
+def seite_steak_kaufen(produkte):
+    """Landingpage für Suchen wie „Steak kaufen Vorarlberg“ und „Fleisch kaufen“."""
+    karten, zeilen = "", ""
+    tipps = {
+        "lomo": "Kurz und heiß angrillen, dann bei indirekter Hitze ziehen lassen. Medium rare bei etwa 54 °C Kerntemperatur.",
+        "bife-ancho": "Der Fettkern braucht etwas mehr Hitze: kräftig grillen, bis der Fettrand knusprig ist. Medium bei etwa 57 °C.",
+        "bife": "Den Fettrand einschneiden, scharf angrillen und kurz ruhen lassen. Ideal medium rare bis medium.",
+        "churrasco": "Dünner geschnitten und schnell gegart: wenige Minuten pro Seite bei starker Hitze.",
+    }
+    for x in [y for y in produkte if y["bild"] and y["id"] in tipps]:
+        v = min((v for v in x["varianten"] if v["preis_kg"]), key=lambda v: v["preis_kg"])
+        karten += f"""<a class="cut" href="fleisch.html#{x['id']}">
+   <figure>{bild(x['bild'], f"{x['name']} ({x['untertitel']}) roh, argentinisches Rindfleisch zum Kaufen beim GAUCHO in Fußach", '(min-width: 900px) 22vw, 50vw')}</figure>
+   <span class="cut-name">{e(x['name'])}</span><span class="cut-sub">{e(x['untertitel'])}</span>
+   <span class="cut-preis">ab {euro(v['preis_kg'])} / kg</span>
+  </a>"""
+        zeilen += f"<li><strong>{e(x['name'])} ({e(x['untertitel'])}):</strong> {e(tipps[x['id']])}</li>"
+    inhalt = seitenkopf("Carnicería · Vorarlberg", "Steak kaufen <em>in Vorarlberg</em>",
+                        "Argentinisches Rindfleisch in Steakhaus-Qualität für Ihren Grill zuhause: online bestellen, frisch für Sie zugeschnitten und beim GAUCHO in Fußach abholen.") + f"""
+<section class="abschnitt"><div class="wrap">
+ <div class="abschnitt-kopf einblenden">
+  <div><p class="eyebrow">Unsere Steaks</p><h2>Argentinisches Rindfleisch <em>kaufen</em></h2></div>
+  <p>Wir verkaufen genau das Fleisch, das wir seit 2008 in unserem Steakhaus grillen. Sie wählen Cut, Gewicht und Abholzeit, wir schneiden frisch zu. Preise pro Kilo inklusive MwSt.</p>
+ </div>
+ <div class="cuts einblenden">{karten}</div>
+ <div class="mitte einblenden"><a class="btn btn-gross" href="fleisch.html">Jetzt Steak bestellen</a></div>
+</div></section>
+
+<section class="abschnitt dunkler"><div class="wrap zwei">
+ <div class="einblenden">
+  <h2>Warum Steak <em>vom Gaucho?</em></h2>
+  <ul class="anfahrt">
+   <li><strong>Steakhaus-Qualität:</strong> dasselbe argentinische Rindfleisch wie in unserem Restaurant.</li>
+   <li><strong>Frisch zugeschnitten:</strong> Gewicht pro Steak frei wählbar in 100-g-Schritten, ganze Stücke auf Wunsch.</li>
+   <li><strong>Schnell abholbereit:</strong> schon 15 Minuten nach der Bestellung, auch am selben Tag.</li>
+   <li><strong>Einfach bezahlen:</strong> bar oder mit Karte bei der Abholung, keine Vorauszahlung.</li>
+  </ul>
+ </div>
+ <div class="einblenden">
+  <h2>So einfach <em>geht's</em></h2>
+  <ol class="anfahrt">
+   <li><strong>Auswählen:</strong> Cut, Zuschnitt und Menge im <a href="fleisch.html">Fleisch-Shop</a> wählen.</li>
+   <li><strong>Abholzeit wählen:</strong> Dienstag bis Freitag 15 bis 21 Uhr, am Wochenende 12 bis 14 und 16 bis 21 Uhr.</li>
+   <li><strong>Abholen:</strong> im GAUCHO, Rheinstraße 89, 6972 Fußach.</li>
+  </ol>
+ </div>
+</div></section>
+
+<section class="abschnitt"><div class="wrap schmal einblenden">
+ <h2>Grilltipps <em>für Ihr Steak</em></h2>
+ <ul class="anfahrt">{zeilen}</ul>
+ <p>Tipp: Nehmen Sie das Fleisch etwa 30 Minuten vor dem Grillen aus dem Kühlschrank und lassen Sie es nach dem Grillen einige Minuten ruhen.</p>
+</div></section>
+
+<section class="abschnitt dunkler"><div class="wrap schmal einblenden">
+ <h2>Fleisch kaufen <em>rund um den Bodensee</em></h2>
+ <p>Unser Fleisch-Shop liegt in Fußach, direkt neben Höchst, Gaißau und Lustenau. Viele unserer Kundinnen und Kunden kommen aus Hard, Bregenz, Dornbirn und Lauterach, aber auch aus der Schweiz, aus St. Margrethen, Au und Widnau. Ob für den Grillabend, ein Festessen an Weihnachten oder Silvester oder als besonderes Geschenk: Bei uns bekommen Sie Steak in Restaurantqualität zum Mitnehmen.</p>
+ <div class="aktionen"><a class="btn" href="fleisch.html">Zum Fleisch-Shop</a><a class="btn btn-hohl" href="kontakt.html">Anfahrt</a></div>
+</div></section>"""
+    return layout("steak-kaufen.html", "Steak kaufen in Vorarlberg | Rindfleisch | GAUCHO Fußach",
+                  "Steak und argentinisches Rindfleisch in Vorarlberg kaufen: Filet, Entrecôte und Rumpsteak online bestellen und frisch zugeschnitten in Fußach abholen.",
+                  inhalt, "")
+
+
 def seite_kontakt():
     inhalt = seitenkopf("Contacto", "Kontakt <em>&amp; Anfahrt</em>",
                         "Wir sind in Fußach, im Dreiländereck am Bodensee, und freuen uns auf Ihren Besuch.") + f"""
@@ -539,6 +603,7 @@ def main():
         "index.html": seite_start(produkte["produkte"]),
         "speisekarte.html": seite_speisekarte(karte),
         "fleisch.html": seite_fleisch(produkte),
+        "steak-kaufen.html": seite_steak_kaufen(produkte["produkte"]),
         "reservieren.html": seite_reservieren(),
         "kontakt.html": seite_kontakt(),
         "impressum.html": rechtsseite("impressum.html", "Impressum", (DATEN / "impressum.html.inhalt").read_text(encoding="utf-8"), "Impressum des Argentinischen Steakhauses GAUCHO."),
@@ -548,7 +613,7 @@ def main():
     for name, inhalt in seiten.items():
         (OUT / name).write_text(pfade(inhalt), encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SEITE}/sitemap.xml\n", encoding="utf-8")
-    urls = ["", "speisekarte", "reservieren", "fleisch", "kontakt"]
+    urls = ["", "speisekarte", "reservieren", "fleisch", "steak-kaufen", "kontakt"]
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{SEITE}/{u}</loc><lastmod>{__import__('datetime').date.today().isoformat()}</lastmod></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
     # Kopfzeilen für Cloudflare Pages (bei Netlify steht dasselbe in netlify.toml)
     (OUT / "_headers").write_text("""/*
