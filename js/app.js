@@ -161,7 +161,9 @@
       const p = a.photos[0];
       return `
       <article class="soon" data-reveal id="apt-${a.id}">
-        <div class="soon-media"><img src="${img(p.src, 900)}" alt="${esc(p.alt)}" loading="lazy"><span class="chip caption-3">Kommt bald</span></div>
+        ${a.rooms ? `<div class="soon-media soon-rooms"><span class="chip caption-3">Kommt bald</span>
+          <ul>${a.rooms.map(([icon, label]) => `<li><i class="ph ph-${icon}" aria-hidden="true"></i><span class="body-2">${esc(label)}</span></li>`).join("")}</ul></div>`
+        : `<div class="soon-media"><img src="${img(p.src, 900)}" alt="${esc(p.alt)}" loading="lazy"><span class="chip caption-3">Kommt bald</span></div>`}
         <div class="soon-body">
           <p class="caption-1 muted">${esc(a.label)}</p>
           <h3 class="heading-3">${esc(a.name)}</h3>

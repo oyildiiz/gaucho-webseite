@@ -142,9 +142,11 @@ window.SITE = {
       id: "apartment-drei",
       status: "soon",
       label: "Wohnung 03",
-      name: "Das dritte Apartment",
+      name: "Die Zweizimmerwohnung",
       tagline: "Kommt bald",
-      text: "Im Haus entsteht gerade ein weiteres Apartment. Schreib uns kurz, dann geben wir dir Bescheid, sobald es buchbar ist.",
+      text: "Im Haus entsteht gerade eine Zweizimmerwohnung mit eigenem Schlafzimmer, Wohnzimmer, Küche und Bad mit WC. Schreib uns kurz, dann geben wir dir Bescheid, sobald sie buchbar ist.",
+      // Zimmer statt Foto, solange es noch keine Bilder gibt. Mit Fotos: rooms löschen, photos anpassen.
+      rooms: [["bed", "Schlafzimmer"], ["couch", "Wohnzimmer"], ["cooking-pot", "Küche"], ["bathtub", "Bad mit WC"]],
       photos: [{ src: P.treppe, alt: "Treppenaufgang im Haus mit Holzstufen" }],
     },
   ],

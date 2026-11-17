@@ -924,3 +924,9 @@ dialog.lightbox { color: #ffffff; }
   .place-item .icon-tile { grid-row: span 2; }
   .place-item > p { grid-column: 2; }
 }
+
+/* ---------- Dritte Wohnung: Zimmer statt Foto ---------- */
+.soon-rooms { display: flex; flex-direction: column; justify-content: flex-end; padding: 72px 24px 24px; background: var(--ink); color: var(--on-ink); min-height: 300px; }
+.soon-rooms ul { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.soon-rooms li { display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 14px; background: rgba(241, 242, 238, 0.09); }
+.soon-rooms i { font-size: 28px; color: var(--wood); }
