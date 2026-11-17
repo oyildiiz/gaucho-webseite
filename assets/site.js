@@ -79,6 +79,20 @@ function sende(form, daten, ok, knopf) {
     .finally(function () { knopf.disabled = false; });
 }
 
+// Händler- und Gastro-Anfrage
+(function () {
+  var form = document.getElementById('anfrage');
+  if (!form) return;
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var d = {}; new FormData(form).forEach(function (v, k) { d[k] = String(v).trim(); });
+    sende(form, d, function () {
+      form.innerHTML = '<div class="danke"><h3>Vielen Dank, ' + d.name.replace(/[<>&]/g, '') + '!</h3><p>Ihre Anfrage für ' + d.betrieb.replace(/[<>&]/g, '') + ' ist bei uns eingegangen. Wir melden uns in Kürze persönlich bei Ihnen.</p></div>';
+    }, form.querySelector('button[type="submit"]'));
+  });
+})();
+
 // Reservierung
 (function () {
   var form = document.getElementById('reservierung');

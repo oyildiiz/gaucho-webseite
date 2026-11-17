@@ -1,6 +1,7 @@
 // Cloudflare Worker: /api/bestellung und /api/reservierung, alles andere liefert Cloudflare als fertige Seite aus (public/)
 import { pruefeBestellung } from '../netlify/functions/lib/bestellung.mjs';
 import { pruefeReservierung } from '../netlify/functions/lib/reservierung.mjs';
+import { pruefeAnfrage } from '../netlify/functions/lib/anfrage.mjs';
 import { sendeMail, sendeTelegram, antwort } from '../netlify/functions/lib/senden.mjs';
 
 async function verarbeite(request, env, pruefe, mitNr, ctx) {
@@ -26,6 +27,7 @@ export default {
   async fetch(request, env, ctx) {
     const pfad = new URL(request.url).pathname;
     if (pfad === '/api/bestellung') return verarbeite(request, env, pruefeBestellung, true, ctx);
+    if (pfad === '/api/anfrage') return verarbeite(request, env, pruefeAnfrage, false, ctx);
     if (pfad === '/api/reservierung') return verarbeite(request, env, pruefeReservierung, false, ctx);
     return env.ASSETS.fetch(request);
   }

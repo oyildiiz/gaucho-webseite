@@ -187,7 +187,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
  </div>
  <div class="wrap fuss-unten">
   <span>© {e(FIRMA['name'])}</span>
-  <nav aria-label="Rechtliches"><a href="steak-kaufen.html">Steak kaufen in Vorarlberg</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB Fleisch-Shop</a></nav>
+  <nav aria-label="Rechtliches"><a href="steak-kaufen.html">Steak kaufen in Vorarlberg</a><a href="gastronomie.html">Für Gastronomie &amp; Handel</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB Fleisch-Shop</a></nav>
  </div>
 </footer>
 <script src="assets/site.js?v={version('site.js')}" defer></script>
@@ -406,6 +406,7 @@ def seite_fleisch(daten):
 </section>
 <section class="abschnitt produkte"><div class="wrap">{karten}
  <p class="hinweis">{e(daten['hinweis'])}</p>
+ <p class="hinweis">Sie führen ein Restaurant, Hotel oder einen Handel? <a href="gastronomie.html">Hier geht's zu unserem Angebot für Gastronomie und Händler.</a></p>
 </div></section>
 
 <section class="abschnitt fragen"><div class="wrap schmal einblenden">
@@ -511,6 +512,56 @@ def seite_steak_kaufen(produkte):
                   inhalt, "")
 
 
+def seite_gastronomie(produkte):
+    """Seite für Restaurants und Händler, die Fleisch beim GAUCHO beziehen möchten."""
+    cuts = "".join(f"<li><strong>{e(x['name'])}</strong> ({e(x['untertitel'])})</li>" for x in produkte if x["verfuegbar"])
+    inhalt = seitenkopf("Mayorista · Gastronomie & Handel", "Rindfleisch für <em>Gastronomie</em>",
+                        "Argentinisches Rindfleisch für Restaurants, Hotels, Caterer und Händler in Vorarlberg und der Ostschweiz. Melden Sie sich, wir machen Ihnen ein Angebot.") + f"""
+<section class="abschnitt"><div class="wrap zwei">
+ <div class="einblenden">
+  <h2>Ihr Lieferant für <em>argentinisches Rind</em></h2>
+  <p>Seit 2008 grillen wir in unserem Steakhaus argentinisches Rindfleisch. Dieselbe Qualität liefern wir auch an andere Restaurants und Betriebe in der Region, ob als ganzes Stück oder küchenfertig portioniert.</p>
+  <ul class="anfahrt">
+   <li><strong>Gleichbleibende Qualität:</strong> das Fleisch, mit dem wir selbst arbeiten.</li>
+   <li><strong>Zuschnitt nach Wunsch:</strong> am Stück oder portioniert in Ihrer Grammatur.</li>
+   <li><strong>Persönlich und regional:</strong> direkter Ansprechpartner in Fußach, kurze Wege.</li>
+   <li><strong>Konditionen auf Anfrage:</strong> Preise und Mengen besprechen wir persönlich mit Ihnen.</li>
+  </ul>
+ </div>
+ <div class="einblenden">
+  <h2>Unser <em>Sortiment</em></h2>
+  <ul class="anfahrt">{cuts}</ul>
+  <p class="hinweis links">Weitere Cuts und größere Mengen auf Anfrage.</p>
+ </div>
+</div></section>
+
+<section class="abschnitt dunkler" id="anfrage-formular"><div class="wrap zwei">
+ <div class="einblenden"><p class="eyebrow">Contacto</p><h2>Jetzt <em>anfragen</em></h2>
+  <p>Erzählen Sie uns kurz von Ihrem Betrieb und Ihrem Bedarf. Wir melden uns persönlich mit einem Angebot.</p>
+  <p>Lieber telefonisch? <a href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></p>
+ </div>
+ <form class="reservierung einblenden" id="anfrage" data-ziel="/api/anfrage" novalidate>
+  <div class="felder">
+   <div class="feld voll"><label for="a-betrieb">Name des Betriebs *</label><input id="a-betrieb" name="betrieb" autocomplete="organization" required></div>
+   <div class="feld"><label for="a-art">Art des Betriebs</label><select id="a-art" name="art"><option value="">Bitte wählen</option><option>Restaurant</option><option>Hotel</option><option>Catering</option><option>Metzgerei / Handel</option><option>Sonstiges</option></select></div>
+   <div class="feld"><label for="a-ort">Ort</label><input id="a-ort" name="ort" autocomplete="address-level2"></div>
+   <div class="feld"><label for="a-name">Ansprechpartner *</label><input id="a-name" name="name" autocomplete="name" required></div>
+   <div class="feld"><label for="a-tel">Telefon *</label><input id="a-tel" name="tel" type="tel" autocomplete="tel" required></div>
+   <div class="feld voll"><label for="a-email">E-Mail *</label><input id="a-email" name="email" type="email" autocomplete="email" required></div>
+   <div class="feld voll"><label for="a-menge">Interesse und ungefähre Mengen</label><textarea id="a-menge" name="menge" rows="3" placeholder="z. B. Rinderfilet, ca. 10 kg pro Woche"></textarea></div>
+   <div class="feld voll"><label for="a-msg">Nachricht (optional)</label><textarea id="a-msg" name="msg" rows="3"></textarea></div>
+  </div>
+  <div class="hp" aria-hidden="true"><label for="a-website">Webseite</label><input id="a-website" name="website" tabindex="-1" autocomplete="off"></div>
+  <label class="check"><input type="checkbox" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden (<a href="datenschutz.html">Datenschutz</a>). *</span></label>
+  <button class="btn btn-voll" type="submit">Anfrage senden</button>
+  <p class="form-status" role="status" aria-live="polite"></p>
+ </form>
+</div></section>"""
+    return layout("gastronomie.html", "Rindfleisch für Gastronomie in Vorarlberg | GAUCHO Fußach",
+                  "Argentinisches Rindfleisch für Restaurants, Hotels, Caterer und Händler in Vorarlberg: Filet, Entrecôte, Rumpsteak. Jetzt Angebot vom GAUCHO in Fußach anfragen.",
+                  inhalt, "")
+
+
 def seite_kontakt():
     inhalt = seitenkopf("Contacto", "Kontakt <em>&amp; Anfahrt</em>",
                         "Wir sind in Fußach, im Dreiländereck am Bodensee, und freuen uns auf Ihren Besuch.") + f"""
@@ -604,6 +655,7 @@ def main():
         "speisekarte.html": seite_speisekarte(karte),
         "fleisch.html": seite_fleisch(produkte),
         "steak-kaufen.html": seite_steak_kaufen(produkte["produkte"]),
+        "gastronomie.html": seite_gastronomie(produkte["produkte"]),
         "reservieren.html": seite_reservieren(),
         "kontakt.html": seite_kontakt(),
         "impressum.html": rechtsseite("impressum.html", "Impressum", (DATEN / "impressum.html.inhalt").read_text(encoding="utf-8"), "Impressum des Argentinischen Steakhauses GAUCHO."),
@@ -613,7 +665,7 @@ def main():
     for name, inhalt in seiten.items():
         (OUT / name).write_text(pfade(inhalt), encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SEITE}/sitemap.xml\n", encoding="utf-8")
-    urls = ["", "speisekarte", "reservieren", "fleisch", "steak-kaufen", "kontakt"]
+    urls = ["", "speisekarte", "reservieren", "fleisch", "steak-kaufen", "gastronomie", "kontakt"]
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{SEITE}/{u}</loc><lastmod>{__import__('datetime').date.today().isoformat()}</lastmod></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
     # Kopfzeilen für Cloudflare Pages (bei Netlify steht dasselbe in netlify.toml)
     (OUT / "_headers").write_text("""/*
