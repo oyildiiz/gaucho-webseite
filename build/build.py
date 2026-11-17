@@ -396,8 +396,8 @@ def seite_fleisch(daten):
                        "availableDeliveryMethod": "https://schema.org/OnSitePickup"}})
     schema_shop = '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "ItemList", "name": "Fleisch-Shop GAUCHO",
         "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": x} for i, x in enumerate(schema_produkte)]}, ensure_ascii=False).replace("</", "<\\/") + "</script>"
-    inhalt = seitenkopf("Carnicería · Rohes Fleisch zum Mitnehmen", "Argentinisches Rindfleisch <em>kaufen in Fußach</em>",
-                        "Bestellen Sie die Cuts aus unserer Küche roh für Ihren eigenen Grill. Wir schneiden frisch für Sie zu, Sie holen zur gewünschten Zeit bei uns ab und bezahlen vor Ort.", extra='<p class="roh-hinweis"><strong>BITTE BEACHTEN:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen, keine fertigen Speisen. <strong>Die Preise gelten nur für den Verkauf zum Mitnehmen, für das rohe Fleisch zum Selbermachen.</strong> Im Restaurant gelten andere Preise.</p>') + f"""
+    inhalt = seitenkopf("Carnicería · Rohes Fleisch zum Mitnehmen", "Argentinisches Rindfleisch <em>kaufen in Vorarlberg</em>",
+                        "Rindfleisch aus Argentinien, direkt vom Steakhaus in Fußach: Bestellen Sie die Cuts aus unserer Küche roh für Ihren eigenen Grill. Wir schneiden frisch für Sie zu, Sie holen zur gewünschten Zeit bei uns ab und bezahlen vor Ort.", extra='<p class="roh-hinweis"><strong>BITTE BEACHTEN:</strong> Im Fleisch-Shop verkaufen wir <strong>rohes, unzubereitetes Fleisch</strong> zum Mitnehmen und Selbstgrillen, keine fertigen Speisen. <strong>Die Preise gelten nur für den Verkauf zum Mitnehmen, für das rohe Fleisch zum Selbermachen.</strong> Im Restaurant gelten andere Preise.</p>') + f"""
 <section class="abschnitt shop-ablauf"><div class="wrap drei">
  <div><span class="nr">1</span><h3>Auswählen</h3><p>Cut, Zuschnitt und Menge wählen.</p></div>
  <div><span class="nr">2</span><h3>Abholzeit wählen</h3><p>Dienstag bis Freitag von 15 bis 21 Uhr, am Wochenende von 12 bis 14 Uhr und von 16 bis 21 Uhr. Auch kurzfristig möglich: schon 15 Minuten nach der Bestellung ist alles abholbereit.</p></div>
@@ -442,8 +442,8 @@ def seite_fleisch(daten):
 <a class="korb-leiste" href="#korb" data-korb-leiste hidden><span>Warenkorb (<span data-kl-n>0</span>) · <strong data-kl-summe></strong></span><span class="kl-los">Zur Abholung →</span></a>
 <script id="produktdaten" type="application/json">{produkt_json}</script>
 {schema_shop}"""
-    return layout("fleisch.html", "Argentinisches Rindfleisch kaufen | GAUCHO Fußach, Vorarlberg",
-                  "Argentinisches Rindfleisch in Vorarlberg kaufen: Filet, Entrecôte und Rumpsteak online bestellen und frisch zugeschnitten beim GAUCHO in Fußach abholen.",
+    return layout("fleisch.html", "Rindfleisch kaufen in Vorarlberg | Argentinisch | GAUCHO Fußach",
+                  "Rindfleisch in Vorarlberg kaufen: argentinisches Filet, Entrecôte und Rumpsteak online bestellen und frisch zugeschnitten beim GAUCHO in Fußach abholen.",
                   inhalt, "fleisch.html", "shop")
 
 
@@ -502,7 +502,7 @@ def seite_steak_kaufen(produkte):
 </div></section>
 
 <section class="abschnitt dunkler"><div class="wrap schmal einblenden">
- <h2>Fleisch kaufen <em>rund um den Bodensee</em></h2>
+ <h2>Rindfleisch kaufen <em>in Vorarlberg</em></h2>
  <p>Unser Fleisch-Shop liegt in Fußach, direkt neben Höchst, Gaißau und Lustenau. Viele unserer Kundinnen und Kunden kommen aus Hard, Bregenz, Dornbirn und Lauterach, aber auch aus der Schweiz, aus St. Margrethen, Au und Widnau. Ob für den Grillabend, ein Festessen an Weihnachten oder Silvester oder als besonderes Geschenk: Bei uns bekommen Sie Steak in Restaurantqualität zum Mitnehmen.</p>
  <div class="aktionen"><a class="btn" href="fleisch.html">Zum Fleisch-Shop</a><a class="btn btn-hohl" href="kontakt.html">Anfahrt</a></div>
 </div></section>"""
