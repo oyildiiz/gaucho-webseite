@@ -12,6 +12,10 @@ Statische Seite + Server (`_worker.js`) auf Cloudflare Pages, Projekt `gauchohom
 
 Veröffentlichen:
 ```
-python3 build.py
-npx wrangler pages deploy dist --project-name gauchohome --branch main
+python3 deploy.py --live
 ```
+`deploy.py` bündelt geänderte und neue Dateien in den Server, weil aus der Claude-Umgebung keine neuen Dateien
+in den Cloudflare-Dateispeicher geladen werden können (Erklärung steht oben in der Datei).
+
+Gestaltung: helles Papier, Tannengrün als Tinte, Ochsenblut als Akzent. Überschriften in Bricolage Grotesque,
+Text in Instrument Sans. Schriften und Symbole liegen in `assets/` (keine Verbindung zu Google oder unpkg).

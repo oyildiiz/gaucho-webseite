@@ -3,7 +3,7 @@
 import json, os, shutil
 root = os.path.dirname(os.path.abspath(__file__)); dist = os.path.join(root, "dist")
 shutil.rmtree(dist, ignore_errors=True)
-shutil.copytree(root, dist, ignore=shutil.ignore_patterns("dist", ".git", "README.md", "build.py", "daten-preise.json", ".assetsignore", "node_modules"))
+shutil.copytree(root, dist, ignore=shutil.ignore_patterns("dist", ".git", "README.md", "build.py", "daten-preise.json", ".assetsignore", "node_modules", "deploy.py", "cloudflare-manifest.json", "dist-worker.js", ".gitignore"))
 w = open(os.path.join(root, "_worker.js")).read().replace("__PREISE__", open(os.path.join(root, "daten-preise.json")).read())
 open(os.path.join(dist, "_worker.js"), "w").write(w)
 print("dist/ fertig")

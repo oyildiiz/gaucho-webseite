@@ -738,6 +738,11 @@
     if (!dlg.open) document.documentElement.classList.remove("is-locked");
   }
   function initNav() {
+    // Leiste oben: über dem Foto durchsichtig, beim Scrollen dunkel
+    const navEl = $("#nav") || $(".nav");
+    const onNavScroll = () => navEl.classList.toggle("is-scrolled", window.scrollY > 24);
+    window.addEventListener("scroll", onNavScroll, { passive: true });
+    onNavScroll();
     toggle.addEventListener("click", () => {
       if (menu.classList.contains("is-open")) return closeMenu();
       menu.classList.add("is-open");

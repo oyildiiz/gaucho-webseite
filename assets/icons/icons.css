@@ -1,0 +1,279 @@
+/* Phosphor Icons (MIT), nur die verwendeten Symbole */
+@font-face { font-family: "Phosphor"; src: url("regular/Phosphor.woff2") format("woff2"); font-weight: normal; font-style: normal; font-display: block; }
+.ph {
+  
+  font-family: "Phosphor" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ph.ph-arrow-left:before {
+  content: "\e058";
+}
+.ph.ph-arrow-up-right:before {
+  content: "\e092";
+}
+.ph.ph-arrows-out:before {
+  content: "\e0a2";
+}
+.ph.ph-bathtub:before {
+  content: "\e81e";
+}
+.ph.ph-bed:before {
+  content: "\e0cc";
+}
+.ph.ph-bicycle:before {
+  content: "\e0d6";
+}
+.ph.ph-boat:before {
+  content: "\e786";
+}
+.ph.ph-calendar-check:before {
+  content: "\e712";
+}
+.ph.ph-car:before {
+  content: "\e112";
+}
+.ph.ph-caret-left:before {
+  content: "\e138";
+}
+.ph.ph-caret-right:before {
+  content: "\e13a";
+}
+.ph.ph-chat-circle-dots:before {
+  content: "\e16c";
+}
+.ph.ph-check:before {
+  content: "\e182";
+}
+.ph.ph-coffee:before {
+  content: "\e1c2";
+}
+.ph.ph-cooking-pot:before {
+  content: "\e764";
+}
+.ph.ph-couch:before {
+  content: "\e7f6";
+}
+.ph.ph-envelope-simple:before {
+  content: "\e218";
+}
+.ph.ph-fork-knife:before {
+  content: "\e262";
+}
+.ph.ph-images:before {
+  content: "\e836";
+}
+.ph.ph-info:before {
+  content: "\e2ce";
+}
+.ph.ph-lock-simple:before {
+  content: "\e308";
+}
+.ph.ph-map-pin:before {
+  content: "\e316";
+}
+.ph.ph-mask-happy:before {
+  content: "\e9f4";
+}
+.ph.ph-minus:before {
+  content: "\e32a";
+}
+.ph.ph-mountains:before {
+  content: "\e7ae";
+}
+.ph.ph-pencil-simple:before {
+  content: "\e3b4";
+}
+.ph.ph-plus:before {
+  content: "\e3d4";
+}
+.ph.ph-ruler:before {
+  content: "\e6b8";
+}
+.ph.ph-shield-check:before {
+  content: "\e40c";
+}
+.ph.ph-star:before {
+  content: "\e46a";
+}
+.ph.ph-sun:before {
+  content: "\e472";
+}
+.ph.ph-tag:before {
+  content: "\e478";
+}
+.ph.ph-television-simple:before {
+  content: "\eae6";
+}
+.ph.ph-users:before {
+  content: "\e4d6";
+}
+.ph.ph-washing-machine:before {
+  content: "\ede8";
+}
+.ph.ph-waves:before {
+  content: "\e6de";
+}
+.ph.ph-wifi-high:before {
+  content: "\e4ea";
+}
+.ph.ph-x:before {
+  content: "\e4f6";
+}
+@font-face { font-family: "Phosphor-Fill"; src: url("fill/Phosphor-Fill.woff2") format("woff2"); font-weight: normal; font-style: normal; font-display: block; }
+.ph-fill {
+  
+  font-family: "Phosphor-Fill" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+
+  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ph-fill.ph-arrow-left:before {
+  content: "\e058";
+}
+.ph-fill.ph-arrow-up-right:before {
+  content: "\e092";
+}
+.ph-fill.ph-arrows-out:before {
+  content: "\e0a2";
+}
+.ph-fill.ph-bathtub:before {
+  content: "\e81e";
+}
+.ph-fill.ph-bed:before {
+  content: "\e0cc";
+}
+.ph-fill.ph-bicycle:before {
+  content: "\e0d6";
+}
+.ph-fill.ph-boat:before {
+  content: "\e786";
+}
+.ph-fill.ph-calendar-check:before {
+  content: "\e712";
+}
+.ph-fill.ph-car:before {
+  content: "\e112";
+}
+.ph-fill.ph-caret-left:before {
+  content: "\e138";
+}
+.ph-fill.ph-caret-right:before {
+  content: "\e13a";
+}
+.ph-fill.ph-chat-circle-dots:before {
+  content: "\e16c";
+}
+.ph-fill.ph-check:before {
+  content: "\e182";
+}
+.ph-fill.ph-coffee:before {
+  content: "\e1c2";
+}
+.ph-fill.ph-cooking-pot:before {
+  content: "\e764";
+}
+.ph-fill.ph-couch:before {
+  content: "\e7f6";
+}
+.ph-fill.ph-envelope-simple:before {
+  content: "\e218";
+}
+.ph-fill.ph-fork-knife:before {
+  content: "\e262";
+}
+.ph-fill.ph-images:before {
+  content: "\e836";
+}
+.ph-fill.ph-info:before {
+  content: "\e2ce";
+}
+.ph-fill.ph-lock-simple:before {
+  content: "\e308";
+}
+.ph-fill.ph-map-pin:before {
+  content: "\e316";
+}
+.ph-fill.ph-mask-happy:before {
+  content: "\e9f4";
+}
+.ph-fill.ph-minus:before {
+  content: "\e32a";
+}
+.ph-fill.ph-mountains:before {
+  content: "\e7ae";
+}
+.ph-fill.ph-pencil-simple:before {
+  content: "\e3b4";
+}
+.ph-fill.ph-plus:before {
+  content: "\e3d4";
+}
+.ph-fill.ph-ruler:before {
+  content: "\e6b8";
+}
+.ph-fill.ph-shield-check:before {
+  content: "\e40c";
+}
+.ph-fill.ph-star:before {
+  content: "\e46a";
+}
+.ph-fill.ph-sun:before {
+  content: "\e472";
+}
+.ph-fill.ph-tag:before {
+  content: "\e478";
+}
+.ph-fill.ph-television-simple:before {
+  content: "\eae6";
+}
+.ph-fill.ph-users:before {
+  content: "\e4d6";
+}
+.ph-fill.ph-washing-machine:before {
+  content: "\ede8";
+}
+.ph-fill.ph-waves:before {
+  content: "\e6de";
+}
+.ph-fill.ph-wifi-high:before {
+  content: "\e4ea";
+}
+.ph-fill.ph-x:before {
+  content: "\e4f6";
+}

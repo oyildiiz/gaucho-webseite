@@ -1,1 +1,3 @@
 dist
+dist-worker.js
+node_modules
