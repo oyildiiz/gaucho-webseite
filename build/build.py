@@ -46,7 +46,7 @@ MENU = [
     ("speisekarte.html", "Speisekarte"),
     ("reservieren.html", "Reservieren"),
     ("fleisch.html", "Fleisch-Shop"),
-    ("gastronomie.html", "Gastronomie"),
+    ("grosshandel.html", "Großhandel"),
     ("kontakt.html", "Kontakt"),
 ]
 
@@ -188,7 +188,7 @@ def layout(datei, titel, beschreibung, inhalt, aktiv="", body_klasse=""):
  </div>
  <div class="wrap fuss-unten">
   <span>© {e(FIRMA['name'])}</span>
-  <nav aria-label="Rechtliches"><a href="steak-kaufen.html">Steak kaufen in Vorarlberg</a><a href="gastronomie.html">Für Gastronomie &amp; Handel</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB Fleisch-Shop</a></nav>
+  <nav aria-label="Rechtliches"><a href="steak-kaufen.html">Steak kaufen in Vorarlberg</a><a href="grosshandel.html">Großhandel für Gastronomie</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB Fleisch-Shop</a></nav>
  </div>
 </footer>
 <script src="assets/site.js?v={version('site.js')}" defer></script>
@@ -407,7 +407,7 @@ def seite_fleisch(daten):
 </section>
 <section class="abschnitt produkte"><div class="wrap">{karten}
  <p class="hinweis">{e(daten['hinweis'])}</p>
- <p class="hinweis">Sie führen ein Restaurant, Hotel oder einen Handel? <a href="gastronomie.html">Hier geht's zu unserem Angebot für Gastronomie und Händler.</a></p>
+ <p class="hinweis">Sie führen ein Restaurant, Hotel oder einen Handel? <a href="grosshandel.html">Hier geht's zu unserem Großhandel für Gastronomie und Händler.</a></p>
 </div></section>
 
 <section class="abschnitt fragen"><div class="wrap schmal einblenden">
@@ -516,7 +516,7 @@ def seite_steak_kaufen(produkte):
 def seite_gastronomie(produkte):
     """Seite für Restaurants und Händler, die Fleisch beim GAUCHO beziehen möchten."""
     cuts = "".join(f"<li><strong>{e(x['name'])}</strong> ({e(x['untertitel'])})</li>" for x in produkte if x["verfuegbar"])
-    inhalt = seitenkopf("Mayorista · Gastronomie & Handel", "Rindfleisch für <em>Gastronomie</em>",
+    inhalt = seitenkopf("Mayorista · Gastronomie & Handel", "Fleisch im <em>Großhandel</em>",
                         "Argentinisches Rindfleisch für Restaurants, Hotels, Caterer und Händler in Vorarlberg und der Ostschweiz. Melden Sie sich, wir machen Ihnen ein Angebot.") + f"""
 <section class="abschnitt"><div class="wrap zwei">
  <div class="einblenden">
@@ -558,9 +558,9 @@ def seite_gastronomie(produkte):
   <p class="form-status" role="status" aria-live="polite"></p>
  </form>
 </div></section>"""
-    return layout("gastronomie.html", "Rindfleisch für Gastronomie in Vorarlberg | GAUCHO Fußach",
-                  "Argentinisches Rindfleisch für Restaurants, Hotels, Caterer und Händler in Vorarlberg: Filet, Entrecôte, Rumpsteak. Jetzt Angebot vom GAUCHO in Fußach anfragen.",
-                  inhalt, "gastronomie.html")
+    return layout("grosshandel.html", "Fleisch-Großhandel Vorarlberg | Rindfleisch | GAUCHO",
+                  "Fleisch-Großhandel in Vorarlberg: argentinisches Rindfleisch für Restaurants, Hotels, Caterer und Händler. Filet, Entrecôte, Rumpsteak. Jetzt Angebot anfragen.",
+                  inhalt, "grosshandel.html")
 
 
 def seite_kontakt():
@@ -656,7 +656,7 @@ def main():
         "speisekarte.html": seite_speisekarte(karte),
         "fleisch.html": seite_fleisch(produkte),
         "steak-kaufen.html": seite_steak_kaufen(produkte["produkte"]),
-        "gastronomie.html": seite_gastronomie(produkte["produkte"]),
+        "grosshandel.html": seite_gastronomie(produkte["produkte"]),
         "reservieren.html": seite_reservieren(),
         "kontakt.html": seite_kontakt(),
         "impressum.html": rechtsseite("impressum.html", "Impressum", (DATEN / "impressum.html.inhalt").read_text(encoding="utf-8"), "Impressum des Argentinischen Steakhauses GAUCHO."),
@@ -666,7 +666,7 @@ def main():
     for name, inhalt in seiten.items():
         (OUT / name).write_text(pfade(inhalt), encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SEITE}/sitemap.xml\n", encoding="utf-8")
-    urls = ["", "speisekarte", "reservieren", "fleisch", "steak-kaufen", "gastronomie", "kontakt"]
+    urls = ["", "speisekarte", "reservieren", "fleisch", "steak-kaufen", "grosshandel", "kontakt"]
     (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{SEITE}/{u}</loc><lastmod>{__import__('datetime').date.today().isoformat()}</lastmod></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
     # Kopfzeilen für Cloudflare Pages (bei Netlify steht dasselbe in netlify.toml)
     (OUT / "_headers").write_text("""/*

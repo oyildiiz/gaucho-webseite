@@ -29,6 +29,8 @@ export default {
     if (pfad === '/api/bestellung') return verarbeite(request, env, pruefeBestellung, true, ctx);
     if (pfad === '/api/anfrage') return verarbeite(request, env, pruefeAnfrage, false, ctx);
     if (pfad === '/api/reservierung') return verarbeite(request, env, pruefeReservierung, false, ctx);
+    // Alte Adresse der Großhandelsseite
+    if (pfad === '/gastronomie' || pfad === '/gastronomie.html') return Response.redirect(new URL('/grosshandel', request.url).toString(), 301);
     return env.ASSETS.fetch(request);
   }
 };
