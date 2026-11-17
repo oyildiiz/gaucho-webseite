@@ -128,9 +128,9 @@ window.SITE = {
       price: { night: 133, weekend: 133, cleaning: 0, compare: 152 },
       minNights: 1,
       photos: [
-        { src: P.schlafenBalkon, alt: "Schlafzimmer mit Balkontür" },
         { src: P.kueche, alt: "Küche mit grauen Fronten und Esstisch" },
         { src: P.essen, alt: "Essplatz mit schwarzen Stühlen" },
+        { src: P.schlafenBalkon, alt: "Schlafzimmer mit Balkontür" },
         { src: P.bett, alt: "Doppelbett mit hellem Kopfteil" },
         { src: P.bettTv, alt: "Schlafzimmer mit Fernseher an der Wand" },
         { src: P.bettAussicht, alt: "Bett mit Blick nach draußen" },
