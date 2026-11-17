@@ -46,7 +46,8 @@ MENU = [
     ("speisekarte.html", "Speisekarte"),
     ("reservieren.html", "Reservieren"),
     ("fleisch.html", "Fleisch-Shop"),
-    ("kontakt.html", "Kontakt & Anfahrt"),
+    ("gastronomie.html", "Gastronomie"),
+    ("kontakt.html", "Kontakt"),
 ]
 
 e = html.escape
@@ -559,7 +560,7 @@ def seite_gastronomie(produkte):
 </div></section>"""
     return layout("gastronomie.html", "Rindfleisch für Gastronomie in Vorarlberg | GAUCHO Fußach",
                   "Argentinisches Rindfleisch für Restaurants, Hotels, Caterer und Händler in Vorarlberg: Filet, Entrecôte, Rumpsteak. Jetzt Angebot vom GAUCHO in Fußach anfragen.",
-                  inhalt, "")
+                  inhalt, "gastronomie.html")
 
 
 def seite_kontakt():

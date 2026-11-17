@@ -436,3 +436,4 @@ body.shop{padding-bottom:90px}
 .anfahrt{list-style:none;padding:0;margin:0 0 20px}
 .anfahrt li{padding:8px 0;border-bottom:1px solid var(--linie);color:var(--grau)}
 .anfahrt strong{color:var(--creme);font-weight:500}
+.kopf-aktionen .btn{white-space:nowrap}
