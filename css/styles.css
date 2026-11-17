@@ -849,3 +849,78 @@ dialog.lightbox { color: #ffffff; }
 .faq-wrap .section-head { align-items: flex-start; }
 .nav .btn-ghost { background: rgba(241, 242, 238, 0.14); color: #f1f2ee; }
 .nav .btn-ghost:hover { background: rgba(241, 242, 238, 0.24); }
+
+/* =====================================================================
+   NACH DER DESIGN-KRITIK (17.11.2026)
+   ===================================================================== */
+
+/* Fehler: gewählter Tag wurde beim Darüberfahren/Antippen weiß auf hellgrau */
+.day:hover:not([disabled]) { background: transparent; }
+@media (hover: hover) { .day:hover:not([disabled]) { background: var(--s3); } }
+.day.is-start:not([disabled]), .day.is-end:not([disabled]),
+.day.is-start:hover:not([disabled]), .day.is-end:hover:not([disabled]) { background: var(--accent); color: var(--on-accent); }
+.day.is-range:not(.is-start):not(.is-end), .day.is-preview:not(.is-start):not(.is-end) { background: var(--accent-soft); }
+
+/* Überschrift oben: Buchstaben berühren sich nicht mehr */
+.heading-1 { font-size: clamp(42px, 6.1vw, 88px); line-height: 1; letter-spacing: -0.012em; }
+.heading-2 { letter-spacing: -0.014em; }
+.hero-bg::after { background:
+  linear-gradient(90deg, rgba(22, 33, 29, 0.72) 0%, rgba(22, 33, 29, 0.38) 55%, rgba(22, 33, 29, 0.1) 100%),
+  linear-gradient(180deg, rgba(22, 33, 29, 0.5) 0%, rgba(22, 33, 29, 0) 30%, rgba(22, 33, 29, 0.6) 100%); }
+.hero-bg img { object-position: 30% 60%; }
+
+/* Leiste oben: Logo und Menü auf derselben Breite wie der Inhalt */
+.nav { padding-inline: max(24px, calc((100vw - 1200px) / 2 + 24px)); }
+@media (max-width: 767px) { .nav { padding-inline: 16px; } }
+
+/* Leitsatz: ein Satz, ausgewogen umbrochen */
+.tagline { padding: clamp(64px, 7vw, 112px) 0 clamp(16px, 3vw, 40px); }
+.tagline-text { max-width: 17em; text-wrap: balance; }
+
+/* Abstände zwischen den Abschnitten gedeckelt */
+.section { padding: clamp(56px, 6.5vw, 104px) 0; }
+
+/* Vorteile: Symbole auf gleicher Höhe, Kontakt in der Karte */
+.card--wide { align-items: flex-start; }
+.card-contact { display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 16px; width: 100%; }
+.card-contact a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; background: var(--s2); border: 1px solid var(--line); font-weight: 600; transition: background-color 300ms var(--ease); }
+.card-contact a:hover { background: var(--s3); }
+.card-contact i { font-size: 20px; color: var(--accent); }
+
+/* Kleine Texte nicht unter 13 px */
+.caption-3, .caption-4, .caption-5 { font-size: 13px; line-height: 18px; }
+.sum-cta p, .apt-price .caption-2 { color: rgba(22, 33, 29, 0.76); }
+
+/* Fußbereich: Linie bündig mit dem Inhalt */
+.footer-base { border-top: 0; padding-top: 0; }
+.footer-base p { border-top: 1px solid var(--line); padding-top: 24px; }
+.footer-brand .brand { margin-left: -5px; }
+
+/* Schritte im Buchungsfenster in einer Zeile */
+.bk-steps li { white-space: nowrap; }
+
+@media (max-width: 899px) {
+  /* Buchungsfenster am Handy: mehr Platz für Kalender und Formular */
+  .bk-head { padding: 8px 12px 8px 16px; }
+  .bk-head .title-2 { font-size: 20px; line-height: 26px; }
+  .bk-main { padding-bottom: 32px; }
+  .bk-bar { gap: 8px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); }
+  .bk-bar .btn-lg { padding: 11px 20px; }
+  .bar-dates .caption-2 { display: none; }
+  .bar-price .heading-5 { font-size: 22px; line-height: 26px; }
+  .bar-price { flex-direction: row; align-items: baseline; gap: 8px; }
+  .bar-price .caption-2 s { display: none; }
+}
+@media (max-width: 767px) {
+  /* Einstieg am Handy: kürzerer Text, Suchleiste früher sichtbar */
+  .hero { padding-top: 104px; }
+  .hero-inner { gap: 18px; }
+  .hero-sub .more { display: none; }
+  .hero-bg img { object-position: 22% 50%; }
+}
+@media (max-width: 599px) {
+  /* Lage am Handy: kompakte Zeilen statt hoher Karten */
+  .place-item { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 14px; row-gap: 4px; padding: 16px; align-items: start; }
+  .place-item .icon-tile { grid-row: span 2; }
+  .place-item > p { grid-column: 2; }
+}

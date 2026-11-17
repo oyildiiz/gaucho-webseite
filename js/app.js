@@ -200,7 +200,7 @@
           ${a.amenities.map(([icon, label]) => `<li class="body-6"><i class="ph ph-${icon}" aria-hidden="true"></i> ${esc(label)}</li>`).join("")}
         </ul>
         <div class="apt-buy">
-          <div class="apt-price"><span class="heading-5">ab ${money.format(a.price.night)}${a.price.compare > a.price.night ? ` <s class="body-6 muted" aria-label="statt ${money.format(a.price.compare)} auf Booking.com">${money.format(a.price.compare)}</s>` : ""}</span><span class="caption-2 muted">pro Nacht für 2 Gäste, Endreinigung inklusive, buchbar ab ${nightsLabel(a.minNights)}</span>${a.price.compare > a.price.night ? `<span class="caption-1 save-text">Du sparst ${money.format(a.price.compare - a.price.night)} pro Nacht gegenüber dem regulären Preis auf Booking.com</span>` : ""}</div>
+          <div class="apt-price"><span class="heading-5">ab ${money.format(a.price.night)}${a.price.compare > a.price.night ? ` <s class="body-6 muted" aria-label="statt ${money.format(a.price.compare)} auf Booking.com">${money.format(a.price.compare)}</s>` : ""}</span><span class="caption-2 muted">für 1 Nacht und 2 Gäste, Endreinigung inklusive. Ab 2 Nächten wird jede Nacht günstiger.</span>${a.price.compare > a.price.night ? `<span class="caption-1 save-text">Du sparst ${money.format(a.price.compare - a.price.night)} gegenüber dem regulären Preis auf Booking.com</span>` : ""}</div>
           <button class="btn btn-primary btn-lg" type="button" data-book="${a.id}">Termine wählen</button>
         </div>
       </div>

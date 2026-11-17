@@ -138,6 +138,9 @@
 .ph.ph-x:before {
   content: "\e4f6";
 }
+.ph.ph-phone:before {
+  content: "\e3b8";
+}
 @font-face { font-family: "Phosphor-Fill"; src: url("fill/Phosphor-Fill.woff2") format("woff2"); font-weight: normal; font-style: normal; font-display: block; }
 .ph-fill {
   
