@@ -105,6 +105,8 @@ def schema_json():
             {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "17:00", "closes": "22:00"},
         ],
         "acceptsReservations": True, "hasMenu": SEITE + "/speisekarte",
+        "hasMap": FIRMA["maps"],
+        "areaServed": ["Fußach", "Höchst", "Gaißau", "Lustenau", "Hard", "Bregenz", "Dornbirn", "Vorarlberg"],
         "sameAs": ["https://www.instagram.com/steakhausgaucho", "https://www.facebook.com/ArgentinischesSteakhausGaucho"],
     }
     return '<script type="application/ld+json">' + _j.dumps(d, ensure_ascii=False) + "</script>"
@@ -223,7 +225,7 @@ def seite_start(produkte):
  <div class="hero-bild">{foto('lokal-abend', 'Der Gastraum des Gaucho am Abend: gedeckte Tische, warmes Licht und ein Panoramabild von Buenos Aires', '(min-width: 900px) 50vw, 100vw', lazy=False)}</div>
  <div class="wrap hero-in">
   <p class="eyebrow">Fußach am Bodensee · Vorarlberg</p>
-  <h1>Argentinische Steaks. <em>Direkt am Bodensee.</em></h1>
+  <h1>Argentinisches Steakhaus in Fußach. <em>Direkt am Bodensee.</em></h1>
   <p class="lead">Saftig vom Grill, genau so, wie Sie es mögen: original argentinische Küche in gemütlicher Atmosphäre, seit 2008 in Fußach.</p>
   <div class="aktionen">
    <a class="btn" href="reservieren.html">Tisch reservieren</a>
@@ -245,7 +247,7 @@ def seite_start(produkte):
    <p>In unserem gemütlichen Restaurant in Fußach grillen wir saftige Steaks, so wie Sie sie gern haben. Unsere Köche arbeiten mit guten Produkten und frischen Zutaten und kochen neben den Steaks auch andere argentinische Spezialitäten.</p>
    <p>Fußach liegt direkt am Bodensee, gleich neben Gaißau, Höchst und Lustenau. Bregenz, Hard, Dornbirn, die Schweiz und Deutschland sind nur ein paar Minuten entfernt.</p>
    <p>Das Argentinische Steakhaus Gaucho gibt es <strong>seit 2008</strong>. In Vorarlberg ist es über die Jahre zu einer beliebten Adresse für Steaks und argentinische Küche geworden. Wir sind ein <strong>Familienbetrieb</strong> und möchten, dass Sie sich bei uns wie zu Hause fühlen.</p>
-   <ul class="fakten"><li><b>2008</b><span>gegründet</span></li><li><b>Familie</b><span>geführter Betrieb</span></li><li><b>Fußach</b><span>am Bodensee</span></li></ul>
+   <ul class="fakten"><li><b>4,3 ★</b><span>bei Google</span></li><li><b>2008</b><span>gegründet</span></li><li><b>Familie</b><span>geführter Betrieb</span></li></ul>
    <p class="signatur">Wir freuen uns auf Sie! Ihr Team vom Gaucho</p>
   </div>
  </div>
@@ -302,7 +304,7 @@ def seite_start(produkte):
  </div>
 </section>"""
     return layout("index.html", "Argentinisches Steakhaus GAUCHO | Steakhaus in Fußach, Vorarlberg",
-                  "Argentinisches Steakhaus GAUCHO in Fußach, Vorarlberg: saftige Steaks vom Grill, original argentinische Küche und rohes Premium-Fleisch zum Mitnehmen. Online bestellen und abholen.",
+                  "Argentinisches Steakhaus GAUCHO in Fußach, Vorarlberg: Steaks vom Grill seit 2008, Tisch online reservieren und rohes Premium-Fleisch zum Abholen bestellen.",
                   inhalt, "index.html", "start")
 
 
@@ -348,7 +350,7 @@ def seite_speisekarte(karte):
 <section class="abschnitt karte dunkler" id="trinken"><div class="wrap"><h2 class="karte-titel">Bebidas <em>· Trinken</em></h2><div class="karte-raster">{trinken}</div></div></section>
 {allergene_block()}
 <section class="abschnitt"><div class="wrap mitte"><p class="hinweis">Aktuelle Preise erhalten Sie im Restaurant. Die Portionen und die Preise sind immer pro Person gerechnet. Fragen zu Allergenen beantwortet Ihnen gerne unser Service.</p><div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="fleisch.html">Fleisch zum Mitnehmen</a></div></div></section>""" + unten
-    return layout("speisekarte.html", "Speisekarte – Argentinisches Steakhaus GAUCHO",
+    return layout("speisekarte.html", "Speisekarte – Steakhaus GAUCHO in Fußach, Vorarlberg",
                   "Speisekarte des Argentinischen Steakhauses GAUCHO in Fußach: Steaks vom Grill, Grill- und Lammspezialitäten, argentinische Weine.",
                   inhalt, "speisekarte.html")
 
@@ -386,7 +388,7 @@ def seite_fleisch(daten):
         if not v:
             continue
         schema_produkte.append({"@type": "Product", "name": f"{p['name']} ({p['untertitel']})", "description": p["text"],
-            "image": f"{SEITE}/assets/vorschau.jpg", "brand": {"@type": "Brand", "name": "GAUCHO"}, "countryOfOrigin": p["herkunft"],
+            "image": f"{SEITE}/assets/bilder/{p['bild']}-900.webp" if p["bild"] else f"{SEITE}/assets/vorschau.jpg", "brand": {"@type": "Brand", "name": "GAUCHO"}, "countryOfOrigin": p["herkunft"],
             "offers": {"@type": "Offer", "url": f"{SEITE}/fleisch#{p['id']}", "price": f"{v['preis_kg']:.2f}", "priceCurrency": "EUR",
                        "availability": "https://schema.org/InStock" if p["verfuegbar"] else "https://schema.org/OutOfStock",
                        "priceSpecification": {"@type": "UnitPriceSpecification", "price": f"{v['preis_kg']:.2f}", "priceCurrency": "EUR", "unitCode": "KGM",
@@ -405,6 +407,12 @@ def seite_fleisch(daten):
 <section class="abschnitt produkte"><div class="wrap">{karten}
  <p class="hinweis">{e(daten['hinweis'])}</p>
 </div></section>
+
+<section class="abschnitt fragen"><div class="wrap schmal einblenden">
+ <h2>Häufige <em>Fragen</em></h2>
+ <details class="frage"><summary>Wie viel Fleisch brauche ich pro Person?</summary><p>Als Richtwert rechnen viele mit 200 bis 250 g pro Person, bei großem Hunger oder wenn das Steak im Mittelpunkt steht mit 300 g oder mehr. Das Gewicht pro Steak wählen Sie im Shop frei in 100-g-Schritten.</p></details><details class="frage"><summary>Woher kommt das Fleisch?</summary><p>Unser Rindfleisch kommt aus Argentinien, aus natürlicher Weidehaltung. Es ist dasselbe Fleisch, das wir im Restaurant für Sie grillen.</p></details><details class="frage"><summary>Wann kann ich abholen?</summary><p>Dienstag bis Freitag von 15 bis 21 Uhr, am Wochenende von 12 bis 14 Uhr und von 16 bis 21 Uhr. Montag ist Ruhetag. Schon 15 Minuten nach der Bestellung ist alles abholbereit.</p></details><details class="frage"><summary>Wie bezahle ich?</summary><p>Bei der Abholung im Gaucho, bar oder mit Karte. Abgerechnet wird nach dem tatsächlichen Gewicht beim Zuschnitt.</p></details><details class="frage"><summary>Wie lagere ich das Fleisch?</summary><p>Bitte transportieren Sie es gekühlt und lagern Sie es bei 0 bis 2 °C im Kühlschrank. Rohes Fleisch sollte rasch verbraucht werden. Nehmen Sie es etwa 30 Minuten vor dem Grillen aus dem Kühlschrank.</p></details><details class="frage"><summary>Kann ich meine Bestellung ändern oder stornieren?</summary><p>Ja, bis wir mit dem Zuschnitt beginnen, kostenlos per Telefon unter +43 676 9181402 oder per E-Mail an info@gaucho.at.</p></details>
+</div></section>
+<script type="application/ld+json">{{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{{"@type": "Question", "name": "Wie viel Fleisch brauche ich pro Person?", "acceptedAnswer": {{"@type": "Answer", "text": "Als Richtwert rechnen viele mit 200 bis 250 g pro Person, bei großem Hunger oder wenn das Steak im Mittelpunkt steht mit 300 g oder mehr. Das Gewicht pro Steak wählen Sie im Shop frei in 100-g-Schritten."}}}}, {{"@type": "Question", "name": "Woher kommt das Fleisch?", "acceptedAnswer": {{"@type": "Answer", "text": "Unser Rindfleisch kommt aus Argentinien, aus natürlicher Weidehaltung. Es ist dasselbe Fleisch, das wir im Restaurant für Sie grillen."}}}}, {{"@type": "Question", "name": "Wann kann ich abholen?", "acceptedAnswer": {{"@type": "Answer", "text": "Dienstag bis Freitag von 15 bis 21 Uhr, am Wochenende von 12 bis 14 Uhr und von 16 bis 21 Uhr. Montag ist Ruhetag. Schon 15 Minuten nach der Bestellung ist alles abholbereit."}}}}, {{"@type": "Question", "name": "Wie bezahle ich?", "acceptedAnswer": {{"@type": "Answer", "text": "Bei der Abholung im Gaucho, bar oder mit Karte. Abgerechnet wird nach dem tatsächlichen Gewicht beim Zuschnitt."}}}}, {{"@type": "Question", "name": "Wie lagere ich das Fleisch?", "acceptedAnswer": {{"@type": "Answer", "text": "Bitte transportieren Sie es gekühlt und lagern Sie es bei 0 bis 2 °C im Kühlschrank. Rohes Fleisch sollte rasch verbraucht werden. Nehmen Sie es etwa 30 Minuten vor dem Grillen aus dem Kühlschrank."}}}}, {{"@type": "Question", "name": "Kann ich meine Bestellung ändern oder stornieren?", "acceptedAnswer": {{"@type": "Answer", "text": "Ja, bis wir mit dem Zuschnitt beginnen, kostenlos per Telefon unter +43 676 9181402 oder per E-Mail an info@gaucho.at."}}}}]}}</script>
 
 <section class="abschnitt dunkler kasse" id="korb"><div class="wrap kasse-raster">
  <div class="korb">
@@ -434,8 +442,8 @@ def seite_fleisch(daten):
 <a class="korb-leiste" href="#korb" data-korb-leiste hidden><span>Warenkorb (<span data-kl-n>0</span>) · <strong data-kl-summe></strong></span><span class="kl-los">Zur Abholung →</span></a>
 <script id="produktdaten" type="application/json">{produkt_json}</script>
 {schema_shop}"""
-    return layout("fleisch.html", "Argentinisches Rindfleisch kaufen in Vorarlberg | Fleisch-Shop GAUCHO Fußach",
-                  "Argentinisches Rindfleisch in Vorarlberg kaufen: Lomo, Bife Ancho, Rumpsteak und Churrasco vom Steakhaus GAUCHO online bestellen, frisch zugeschnitten in Fußach abholen.",
+    return layout("fleisch.html", "Argentinisches Rindfleisch kaufen | GAUCHO Fußach, Vorarlberg",
+                  "Argentinisches Rindfleisch in Vorarlberg kaufen: Filet, Entrecôte und Rumpsteak online bestellen und frisch zugeschnitten beim GAUCHO in Fußach abholen.",
                   inhalt, "fleisch.html", "shop")
 
 
@@ -456,6 +464,14 @@ def seite_kontakt():
    <div><dt>E-Mail</dt><dd><a href="mailto:{FIRMA['mail']}">{e(FIRMA['mail'])}</a></dd></div>
   </dl>
   <p>Fußach liegt direkt am Bodensee und grenzt an Gaißau, Höchst und Lustenau. Bregenz, Hard, Dornbirn, die Schweiz und Deutschland sind nur wenige Minuten entfernt.</p>
+  <h3>Anfahrt</h3>
+  <ul class="anfahrt">
+   <li><strong>Aus Lustenau und Höchst:</strong> nur wenige Minuten mit dem Auto, Fußach grenzt direkt an.</li>
+   <li><strong>Aus Hard und Bregenz:</strong> über Hard Richtung Fußach, rund 10 bis 15 Minuten.</li>
+   <li><strong>Aus Dornbirn:</strong> über Lustenau nach Fußach, rund 15 Minuten.</li>
+   <li><strong>Aus der Schweiz:</strong> über den Grenzübergang Lustenau oder Höchst, rund 10 bis 15 Minuten aus St. Margrethen und Au.</li>
+  </ul>
+  <p>Für größere Gruppen, Geburtstage und Firmenfeiern rufen Sie uns am besten kurz an. Wir planen den Abend gerne mit Ihnen.</p>
   <a class="btn btn-hohl" href="{FIRMA['maps']}" target="_blank" rel="noopener">Route in Google Maps</a>
  </div>
  <div class="einblenden"><h2>Öffnungszeiten</h2>{zeiten_liste()}</div>
@@ -466,8 +482,8 @@ def seite_kontakt():
  <p class="lead" style="margin-inline:auto">Reservieren Sie bequem online oder rufen Sie uns an.</p>
  <div class="aktionen zentriert"><a class="btn" href="reservieren.html">Tisch reservieren</a><a class="btn btn-hohl" href="tel:{FIRMA['tel_link']}">{e(FIRMA['tel'])}</a></div>
 </div></section>"""
-    return layout("kontakt.html", "Kontakt & Anfahrt – Argentinisches Steakhaus GAUCHO",
-                  "Argentinisches Steakhaus GAUCHO, Rheinstraße 89, 6972 Fußach: Öffnungszeiten, Anfahrt und Telefon.",
+    return layout("kontakt.html", "Kontakt & Anfahrt – Steakhaus GAUCHO Fußach am Bodensee",
+                  "Argentinisches Steakhaus GAUCHO, Rheinstraße 89, 6972 Fußach: Öffnungszeiten, Telefon und Anfahrt aus Lustenau, Dornbirn, Bregenz und der Schweiz.",
                   inhalt, "kontakt.html")
 
 
@@ -533,7 +549,7 @@ def main():
         (OUT / name).write_text(pfade(inhalt), encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SEITE}/sitemap.xml\n", encoding="utf-8")
     urls = ["", "speisekarte", "reservieren", "fleisch", "kontakt"]
-    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{SEITE}/{u}</loc></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
+    (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{SEITE}/{u}</loc><lastmod>{__import__('datetime').date.today().isoformat()}</lastmod></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
     # Kopfzeilen für Cloudflare Pages (bei Netlify steht dasselbe in netlify.toml)
     (OUT / "_headers").write_text("""/*
   X-Content-Type-Options: nosniff

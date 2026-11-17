@@ -422,3 +422,17 @@ main>.seitenkopf{background:transparent!important;border-bottom:0}
 .korb-leiste .kl-los{white-space:nowrap;text-transform:uppercase;letter-spacing:.12em;font-size:.875rem}
 body.shop{padding-bottom:90px}
 .korb-leiste>span:first-child{font-size:.95rem}.korb-leiste strong{white-space:nowrap}
+/* Häufige Fragen im Shop */
+.wrap.schmal{max-width:52rem}
+.fragen h2{margin-bottom:24px}
+.frage{border-bottom:1px solid var(--linie);padding:4px 0}
+.frage summary{cursor:pointer;list-style:none;padding:16px 32px 16px 0;position:relative;font-family:var(--serif);font-size:1.3rem;line-height:1.3}
+.frage summary::-webkit-details-marker{display:none}
+.frage summary::after{content:"+";position:absolute;right:4px;top:12px;color:var(--gold);font-size:1.5rem}
+.frage[open] summary::after{content:"–"}
+.frage p{margin:0 0 18px;color:var(--grau)}
+/* Anfahrt */
+.kontakt h3{font-size:1.5rem;margin:32px 0 10px}
+.anfahrt{list-style:none;padding:0;margin:0 0 20px}
+.anfahrt li{padding:8px 0;border-bottom:1px solid var(--linie);color:var(--grau)}
+.anfahrt strong{color:var(--creme);font-weight:500}
