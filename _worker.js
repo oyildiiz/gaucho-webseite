@@ -392,7 +392,7 @@ async function smoobuBooking(env, m, paymentId) {
     for (const channelId of [70, 13, null]) {
       try {
         const r = await smoobu(env, "POST", "/api/reservations", [], channelId ? { ...base, channelId } : base);
-        return { ok: true, id: String(r.id || "ok") };
+        return { ok: true, id: String(r.id || "ok"), channel: channelId };
       } catch (e) {
         last = e;
         if (!/channel/i.test(JSON.stringify(e.body || ""))) break;
