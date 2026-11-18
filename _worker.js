@@ -450,6 +450,8 @@ async function sendMails(env, m, a, entry = {}) {
 export default {
   async fetch(req, env, ctx) {
     const url = new URL(req.url);
+    // Adresse ohne www leitet auf die Hauptadresse mit www weiter
+    if (url.hostname === "gaucho-home.at") { url.hostname = "www.gaucho-home.at"; return Response.redirect(url.toString(), 301); }
     if (!url.pathname.startsWith("/api/")) return env.ASSETS.fetch(req);
     try {
       if (url.pathname === "/api/availability" && req.method === "GET") return await availability(env, ctx);
