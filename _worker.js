@@ -15,11 +15,15 @@
   Ändern: GENIUS_FACTOR und DIRECT_FACTOR unten.
 
   Geheimnisse (Cloudflare → Pages → gauchohome → Einstellungen → Variablen):
-  STRIPE_SECRET_KEY, RESEND_API_KEY
-  ICAL_FUENF, ICAL_ZWEI: Kalenderlinks (Booking.com, Airbnb), mit Leerzeichen getrennt
-  Optional: MAIL_TO (Standard info@gaucho.at), MAIL_FROM
+  STRIPE_SECRET_KEY, RESEND_API_KEY, SMOOBU_API_KEY, SMOOBU_API_SECRET
+  Kalender und Preise kommen live aus Smoobu, bezahlte Buchungen werden dort eingetragen.
+  Nur falls Smoobu ausfällt: gespeicherte Preistabelle und Kalenderlinks ICAL_FUENF, ICAL_ZWEI.
+  Optional: MAIL_TO (Standard info@gaucho.at), MAIL_FROM, SMOOBU_ID_FUENF, SMOOBU_ID_ZWEI
 */
 
+// Smoobu-Grundpreis mal 1,163 = Preis pro Nacht, den Gäste auf Booking.com sehen
+// (Aufschlag für Booking.com in Smoobu plus Abgaben; geprüft: 122 € in Smoobu = 141,89 € auf Booking.com)
+const BOOKING_FACTOR = 1.163;
 const GENIUS_FACTOR = 0.9;   // Booking.com Genius-Rabatt: 10 %
 const DIRECT_FACTOR = 0.95;  // wir: 5 % unter dem Genius-Preis
 const HOLD_MINUTES = 30;
@@ -31,12 +35,12 @@ const APARTMENTS = {
   "apartment-fuenf": {
     name: "Die Maisonette", maxGuests: 5, bookingClean: 30, minNights: 1,
     occupancy: { 1: 299 / 314, 2: 1, 3: 342 / 314, 4: 356 / 314, 5: 386 / 314 },
-    ical: "ICAL_FUENF",
+    ical: "ICAL_FUENF", smoobuEnv: "SMOOBU_ID_FUENF", smoobuName: /2$/,
   },
   "apartment-zwei": {
     name: "Das Apartment", maxGuests: 2, bookingClean: 30, minNights: 1,
     occupancy: { 1: 262 / 274, 2: 1 },
-    ical: "ICAL_ZWEI",
+    ical: "ICAL_ZWEI", smoobuEnv: "SMOOBU_ID_ZWEI", smoobuName: /1$/,
   },
 };
 
@@ -82,7 +86,88 @@ async function icalDays(urls) {
   return { set, ok };
 }
 
+/* ---------- Smoobu (Kalender, Preise, Buchungen eintragen) ---------- */
+// Anmeldung nach Smoobu-Vorgabe seit 2026: jede Anfrage wird mit Schlüssel und Geheimnis signiert (HMAC-SHA256)
+const enc = (v) => encodeURIComponent(v).replace(/[!'()*]/g, (c) => "%" + c.charCodeAt(0).toString(16).toUpperCase());
+const hex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+async function smoobu(env, method, path, query = [], body = null) {
+  if (!env.SMOOBU_API_KEY || !env.SMOOBU_API_SECRET) throw new Error("Smoobu nicht eingerichtet");
+  const te = new TextEncoder();
+  const pairs = query.map(([k, v]) => [enc(k), enc(v)]).sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : a[1] < b[1] ? -1 : 1));
+  const qs = pairs.map(([k, v]) => `${k}=${v}`).join("&");
+  const payload = body ? JSON.stringify(body) : "";
+  const timestamp = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+  const nonce = crypto.randomUUID();
+  const bodyHash = hex(await crypto.subtle.digest("SHA-256", te.encode(payload)));
+  const canonical = [method, path, qs, timestamp, nonce, bodyHash, env.SMOOBU_API_KEY].join("\n");
+  const key = await crypto.subtle.importKey("raw", te.encode(env.SMOOBU_API_SECRET), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sig = new Uint8Array(await crypto.subtle.sign("HMAC", key, te.encode(canonical)));
+  const signature = btoa(String.fromCharCode(...sig));
+  const res = await fetch(`https://login.smoobu.com${path}${qs ? `?${qs}` : ""}`, {
+    method,
+    headers: { "X-API-Key": env.SMOOBU_API_KEY, "X-Timestamp": timestamp, "X-Nonce": nonce, "X-Signature": signature, "Content-Type": "application/json", "Cache-Control": "no-cache" },
+    body: body ? payload : undefined,
+  });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok) { const e = new Error(`Smoobu ${method} ${path} ${res.status} ${JSON.stringify(out).slice(0, 300)}`); e.status = res.status; e.body = out; throw e; }
+  return out;
+}
+
+// Smoobu-Nummern der Wohnungen: aus den Variablen SMOOBU_ID_FUENF / SMOOBU_ID_ZWEI oder über den Namen in Smoobu
+let idCache = null;
+async function smoobuIds(env) {
+  if (idCache) return idCache;
+  const ids = {};
+  for (const [k, a] of Object.entries(APARTMENTS)) if (env[a.smoobuEnv]) ids[k] = String(env[a.smoobuEnv]);
+  if (Object.keys(ids).length < Object.keys(APARTMENTS).length) {
+    const list = (await smoobu(env, "GET", "/api/apartments")).apartments || [];
+    for (const [k, a] of Object.entries(APARTMENTS)) {
+      if (ids[k]) continue;
+      const hits = list.filter((x) => a.smoobuName.test(String(x.name || "").trim()));
+      if (hits.length !== 1) throw new Error(`Smoobu-Wohnung für ${k} nicht eindeutig: ${JSON.stringify(list.map((x) => [x.id, x.name]))}`);
+      ids[k] = String(hits[0].id);
+    }
+  }
+  return (idCache = ids);
+}
+
+// Tagespreise und belegte Tage live aus Smoobu (enthält Booking.com und alle anderen Portale)
+async function smoobuCalendar(env) {
+  const ids = await smoobuIds(env);
+  const start = todayVienna(), end = addDays(start, DAYS_AHEAD);
+  const q = [...Object.values(ids).map((id) => ["apartments[]", id]), ["start_date", ymd(start)], ["end_date", ymd(end)]];
+  const rates = (await smoobu(env, "GET", "/api/rates", q)).data || {};
+  const out = {};
+  for (const [k, id] of Object.entries(ids)) {
+    const r = rates[id];
+    if (!r || !Object.keys(r).length) throw new Error(`Smoobu liefert keine Preise für ${k}`);
+    const days = {}, blocked = new Set();
+    for (let d = start; d <= end; d = addDays(d, 1)) {
+      const x = r[ymd(d)];
+      if (!x || x.price == null || !(Number(x.price) > 0)) { blocked.add(ymd(d)); continue; } // ohne Preis nicht buchbar
+      days[ymd(d)] = [Math.round(Number(x.price) * BOOKING_FACTOR * 100) / 100, Number(x.min_length_of_stay) || APARTMENTS[k].minNights];
+      if (Number(x.available) === 0) blocked.add(ymd(d));
+    }
+    out[k] = { days, blocked };
+  }
+  return out;
+}
+
+// Kalender: zuerst live aus Smoobu. Klappt das nicht, gilt die gespeicherte Preistabelle mit den Kalenderlinks.
 async function loadCalendar(env) {
+  try {
+    const cal = await smoobuCalendar(env);
+    cal.source = "smoobu";
+    return cal;
+  } catch (e) {
+    console.error("Smoobu nicht erreichbar, nutze Preistabelle:", e.message || e);
+    const cal = await tableCalendar(env);
+    cal.source = "tabelle";
+    return cal;
+  }
+}
+
+async function tableCalendar(env) {
   const start = todayVienna(), end = addDays(start, DAYS_AHEAD), out = {};
   for (const [k, a] of Object.entries(APARTMENTS)) {
     const p = PRICES[k] || { days: {}, min: {}, blocked: [] };
@@ -197,7 +282,7 @@ async function availability(env, ctx) {
       bookingClean: a.bookingClean, geniusFactor: GENIUS_FACTOR, directFactor: DIRECT_FACTOR,
     };
   }
-  return json({ today: ymd(today), apartments });
+  return json({ today: ymd(today), source: cal.source, apartments });
 }
 
 async function checkout(req, env) {
@@ -284,7 +369,40 @@ async function fulfill(env, s) {
   const pi = typeof s.payment_intent === "string" ? await stripe(env, `payment_intents/${s.payment_intent}`) : s.payment_intent;
   if (!pi || pi.metadata?.mail) return; // schon erledigt
   await stripe(env, `payment_intents/${pi.id}`, { metadata: { mail: "gesendet" } });
-  await sendMails(env, s.metadata, APARTMENTS[s.metadata.apt]).catch((e) => console.error(e));
+  const m = s.metadata;
+  const entry = await smoobuBooking(env, m, pi.id);
+  await stripe(env, `payment_intents/${pi.id}`, { metadata: { smoobu: entry.id || "fehler" } }).catch(() => null);
+  await sendMails(env, m, APARTMENTS[m.apt], entry).catch((e) => console.error(e));
+}
+
+// Bezahlte Buchung in Smoobu eintragen. Smoobu sperrt den Zeitraum dann auf Booking.com und den anderen Portalen.
+async function smoobuBooking(env, m, paymentId) {
+  try {
+    const ids = await smoobuIds(env);
+    const time = /^(\d{2}:\d{2})/.exec(m.arrival || "");
+    const base = {
+      arrivalDate: m.checkin, departureDate: m.checkout, apartmentId: Number(ids[m.apt]),
+      firstName: m.first, lastName: m.last, email: m.email, phone: m.phone, adults: Number(m.guests), children: 0,
+      price: Number(m.total), priceStatus: 1, language: "de",
+      notice: `Direktbuchung über die Website, Vorgang ${m.ref}. Bezahlt über Stripe (${paymentId}).${m.arrival ? ` Ankunft ca. ${m.arrival}.` : ""}${m.note ? ` Nachricht: ${m.note}` : ""}`,
+      ...(time ? { arrivalTime: time[1] } : {}),
+    };
+    let last;
+    // 70 = Homepage, 13 = Direktbuchung; je nach Smoobu-Konto ist einer davon vorhanden
+    for (const channelId of [70, 13, null]) {
+      try {
+        const r = await smoobu(env, "POST", "/api/reservations", [], channelId ? { ...base, channelId } : base);
+        return { ok: true, id: String(r.id || "ok") };
+      } catch (e) {
+        last = e;
+        if (!/channel/i.test(JSON.stringify(e.body || ""))) break;
+      }
+    }
+    throw last;
+  } catch (e) {
+    console.error(e);
+    return { ok: false, problem: String(e.message || e) };
+  }
 }
 
 async function mailFrom(env) {
@@ -294,7 +412,7 @@ async function mailFrom(env) {
   return d ? `Gaucho Home <buchung@${d.name}>` : "Gaucho Home <onboarding@resend.dev>";
 }
 
-async function sendMails(env, m, a) {
+async function sendMails(env, m, a, entry = {}) {
   const from = await mailFrom(env);
   const to = env.MAIL_TO || MAIL_TO_DEFAULT;
   const fmt = (s) => parse(s).toLocaleDateString("de-AT", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
@@ -317,9 +435,11 @@ async function sendMails(env, m, a) {
       <p>Bis bald<br>Gaucho Home</p></div>`,
   });
   await send({
-    to: [to], reply_to: m.email, subject: `Neue Direktbuchung ${a.name}, ${m.checkin} bis ${m.checkout}`,
+    to: [to], reply_to: m.email, subject: `${entry.ok ? "" : "BITTE SPERREN: "}Neue Direktbuchung ${a.name}, ${m.checkin} bis ${m.checkout}`,
     html: `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5">
-      <p>Die Buchung ist bezahlt. Auf unserer Website ist der Zeitraum gesperrt.<br><b style="color:#b00">Bitte den Zeitraum jetzt auch auf Booking.com und Airbnb sperren.</b></p>
+      ${entry.ok
+        ? `<p>Die Buchung ist bezahlt und in Smoobu eingetragen (Nummer ${esc(entry.id)}). Smoobu sperrt den Zeitraum automatisch auf Booking.com.</p>`
+        : `<p>Die Buchung ist bezahlt. Auf unserer Website ist der Zeitraum gesperrt.<br><b style="color:#b00">Der Eintrag in Smoobu hat nicht geklappt. Bitte den Zeitraum jetzt von Hand in Smoobu eintragen, damit Booking.com ihn sperrt.</b><br><small>${esc(entry.problem || "")}</small></p>`}
       ${table}
       <p>Gast: ${esc(m.first)} ${esc(m.last)}, ${esc(m.email)}, ${esc(m.phone || "keine Telefonnummer")}</p>
       ${m.note ? `<p>Nachricht: ${esc(m.note)}</p>` : ""}</div>`,
