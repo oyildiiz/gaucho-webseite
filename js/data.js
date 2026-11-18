@@ -179,8 +179,8 @@ window.SITE = {
         text: "Obwohl wir erst recht spät angereist sind, wurden wir herzlich empfangen. […] Unser Zimmer war sehr sauber und liebevoll vorbereitet. Besonders gefreut haben wir uns über das kostenlose Wasser sowie die kleinen Snacks. Am nächsten Morgen wurde uns außerdem ein kostenloser Kaffee im Restaurant angeboten […]." },
       { name: "Evgenia", country: "Deutschland", who: "Paar", stay: "1 Nacht im Mai 2026", score: "10",
         text: "Die Unterkunft ist sehr schön eingerichtet und ruhig, die Betten sind bequem. Die Gastgeber sind sehr nett und das Steakhaus direkt daneben ist sehr zu empfehlen." },
-      { name: "Kevin", country: "Großbritannien", who: "Alleinreisend", stay: "1 Nacht im Juni 2026", score: "8,0", translated: true,
-        text: "Ruhige Lage mit schönem Blick auf die Berge in der Ferne vom eigenen Balkon. Eigener kostenloser Parkplatz, der sich sicher anfühlte. Das Apartment ist modern und gut ausgestattet, mit Kaffee, Wasser und Kuchen aufs Haus. […] Es ist ein kleines Apartment, aber für ein Paar für ein oder zwei Nächte gut." },
+      { name: "Stefan", country: "Österreich", who: "Familie", stay: "9 Nächte im August 2026", score: "10",
+        text: "Gute Lage, genügend Parkplätze, die Gastgeber waren immer erreichbar und sehr hilfsbereit, die Küche war super ausgestattet." },
     ],
     categories: [
       ["Gastgeber", "9,7"],
