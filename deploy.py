@@ -39,7 +39,7 @@ inject = "\n// Eingebettete Dateien (neu oder geändert), siehe deploy.py\nconst
 serve = '''    const F = FILES[url.pathname];
     if (F && (req.method === "GET" || req.method === "HEAD")) {
       const body = F[2] ? Uint8Array.from(atob(F[0]), (c) => c.charCodeAt(0)) : F[0];
-      return new Response(body, { headers: { "content-type": F[1], "cache-control": F[2] ? "public, max-age=31536000, immutable" : "public, max-age=0, must-revalidate", "referrer-policy": "strict-origin-when-cross-origin", "x-content-type-options": "nosniff" } });
+      return new Response(body, { headers: { "content-type": F[1], "cache-control": F[1] === "font/woff2" ? "public, max-age=31536000, immutable" : F[2] ? "public, max-age=86400" : "public, max-age=0, must-revalidate", "referrer-policy": "strict-origin-when-cross-origin", "x-content-type-options": "nosniff" } });
     }
     if (!url.pathname.startsWith("/api/")) {
       const r = await env.ASSETS.fetch(req);
