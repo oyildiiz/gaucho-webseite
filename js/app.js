@@ -328,10 +328,18 @@
           ${r.categories.map(([label, score], i) => `<li class="card rating-tile" data-reveal style="--d:${i % 3}"><span class="heading-4">${esc(score)}</span><span class="caption-1 muted">${esc(label)}</span></li>`).join("")}
         </ul>
         <div class="card praise" data-reveal>
-          <p class="title-3">Das heben Gäste besonders hervor</p>
+          <p class="title-3">Das loben Gäste häufig <span class="caption-2 muted">(von uns zusammengefasst)</span></p>
           <ul>${r.highlights.map((h) => `<li class="chip caption-1"><i class="ph ph-check" aria-hidden="true"></i> ${esc(h)}</li>`).join("")}</ul>
         </div>
-      </div>`;
+      </div>
+      ${(r.quotes || []).length ? `<ul class="voices" aria-label="Stimmen von Gästen">
+        ${r.quotes.map((q) => `<li class="voice${q.big ? " voice--big" : ""}">
+          <blockquote class="${q.big ? "voice-text heading-5" : "voice-text body-3"}">${esc(q.text)}</blockquote>
+          <p class="voice-who"><span class="voice-score body-4" aria-label="Bewertet mit ${esc(q.score)} von 10">${esc(q.score)}</span>
+            <span><strong class="body-4">${esc(q.name)}, ${esc(q.country)}</strong><span class="caption-2 muted">${esc(q.who)}, ${esc(q.stay)}</span>${q.translated ? `<span class="caption-2 muted">Übersetzt aus dem Englischen</span>` : ""}</span></p>
+        </li>`).join("")}
+      </ul>
+      <p class="voices-note caption-2 muted">Originalbewertungen von ${esc(r.source)}, Stand ${esc(r.asOf)}. Kürzungen sind mit […] markiert, Übersetzungen als solche gekennzeichnet. <a href="${esc(r.url)}" target="_blank" rel="noopener">Alle ${r.count} Bewertungen auf ${esc(r.source)} lesen</a></p>` : ""}`;
     observe(box);
   }
 

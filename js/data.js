@@ -169,6 +169,19 @@ window.SITE = {
     source: "Booking.com",
     url: "https://www.booking.com/hotel/at/gaucho-home.de.html#tab-reviews",
     asOf: "November 2026",
+    // Echte Bewertungen von Booking.com. […] = gekürzt. translated = aus dem Englischen übersetzt.
+    quotes: [
+      { name: "Robert", country: "Deutschland", who: "Paar", stay: "4 Nächte im August 2025", score: "10", big: true,
+        text: "Super freundlich, komplett neu renoviertes Apartment, ideale Homebase um Ausflüge nach Deutschland, Schweiz, Österreich zu machen. Der Ausblick auf die Berge ist auch toll. Keine Parkplatzprobleme, jederzeit über WhatsApp erreichbar […]. Wir kommen definitiv sehr gerne wieder." },
+      { name: "Jake", country: "USA", who: "Familie", stay: "1 Nacht im Juni 2026", score: "10", translated: true,
+        text: "Schönes neues Apartment. Sehr sauber und einfacher Check-in. Waschmaschine mit Trockner war ein netter Bonus. Wir waren mit Fahrrädern unterwegs und der Gastgeber hat uns eine kleine Garage dafür gegeben. Gut zu erreichen, wenn man den EuroVelo\u00a015 fährt." },
+      { name: "Alina", country: "Deutschland", who: "Paar", stay: "1 Nacht im Juli 2026", score: "10",
+        text: "Obwohl wir erst recht spät angereist sind, wurden wir herzlich empfangen. […] Unser Zimmer war sehr sauber und liebevoll vorbereitet. Besonders gefreut haben wir uns über das kostenlose Wasser sowie die kleinen Snacks. Am nächsten Morgen wurde uns außerdem ein kostenloser Kaffee im Restaurant angeboten […]." },
+      { name: "Evgenia", country: "Deutschland", who: "Paar", stay: "1 Nacht im Mai 2026", score: "10",
+        text: "Die Unterkunft ist sehr schön eingerichtet und ruhig, die Betten sind bequem. Die Gastgeber sind sehr nett und das Steakhaus direkt daneben ist sehr zu empfehlen." },
+      { name: "Kevin", country: "Großbritannien", who: "Alleinreisend", stay: "1 Nacht im Juni 2026", score: "8,0", translated: true,
+        text: "Ruhige Lage mit schönem Blick auf die Berge in der Ferne vom eigenen Balkon. Eigener kostenloser Parkplatz, der sich sicher anfühlte. Das Apartment ist modern und gut ausgestattet, mit Kaffee, Wasser und Kuchen aufs Haus. […] Es ist ein kleines Apartment, aber für ein Paar für ein oder zwei Nächte gut." },
+    ],
     categories: [
       ["Gastgeber", "9,7"],
       ["Sauberkeit", "9,2"],
