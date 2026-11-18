@@ -18,7 +18,7 @@ os.chdir(root)
 subprocess.run([sys.executable, "build.py"], check=True, stdout=subprocess.DEVNULL)
 manifest = json.load(open("cloudflare-manifest.json"))
 TYPES = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "application/javascript; charset=utf-8",
-         ".svg": "image/svg+xml", ".woff2": "font/woff2", ".jpg": "image/jpeg", ".json": "application/json", ".txt": "text/plain; charset=utf-8", ".xml": "application/xml; charset=utf-8"}
+         ".svg": "image/svg+xml", ".woff2": "font/woff2", ".jpg": "image/jpeg", ".json": "application/json", ".txt": "text/plain; charset=utf-8", ".png": "image/png", ".ico": "image/x-icon", ".xml": "application/xml; charset=utf-8"}
 TEXT = {".html", ".css", ".js", ".svg", ".json", ".txt", ".xml"}
 # Diese Dateien haben sich seit dem letzten vollständigen Hochladen geändert oder sind neu
 CHANGED = {"/index.html", "/rechtliches.html", "/404.html", "/css/styles.css", "/js/app.js", "/js/data.js"}
