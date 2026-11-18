@@ -1,4 +1,4 @@
-# Gaucho Home – Ferienwohnungen (gauchohome.pages.dev)
+# Gaucho Home – Ferienwohnungen (www.gaucho-home.at, Cloudflare: gauchohome.pages.dev)
 
 Statische Seite + Server (`_worker.js`) auf Cloudflare Pages, Projekt `gauchohome`.
 
