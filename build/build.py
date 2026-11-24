@@ -394,7 +394,13 @@ def seite_fleisch(daten):
                        "availability": "https://schema.org/InStock" if p["verfuegbar"] else "https://schema.org/OutOfStock",
                        "priceSpecification": {"@type": "UnitPriceSpecification", "price": f"{v['preis_kg']:.2f}", "priceCurrency": "EUR", "unitCode": "KGM",
                                               "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "KGM"}},
-                       "availableDeliveryMethod": "https://schema.org/OnSitePickup"}})
+                       "availableDeliveryMethod": "https://schema.org/OnSitePickup",
+                       # Nur Abholung, kein Versand; frisches Fleisch ist vom Rücktritt ausgenommen (AGB Punkt 6)
+                       "shippingDetails": {"@type": "OfferShippingDetails", "doesNotShip": True,
+                                           "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "AT"}},
+                       "hasMerchantReturnPolicy": {"@type": "MerchantReturnPolicy", "applicableCountry": "AT",
+                                                   "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+                                                   "merchantReturnLink": f"{SEITE}/agb"}}})
     schema_shop = '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "ItemList", "name": "Fleisch-Shop GAUCHO",
         "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": x} for i, x in enumerate(schema_produkte)]}, ensure_ascii=False).replace("</", "<\\/") + "</script>"
     inhalt = seitenkopf("Carnicería · Rohes Fleisch zum Mitnehmen", "Argentinisches Rindfleisch <em>kaufen in Vorarlberg</em>",
