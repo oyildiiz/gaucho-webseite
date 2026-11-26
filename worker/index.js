@@ -27,6 +27,10 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url), pfad = url.pathname;
     // Nur eine Adresse für Google: www.gaucho.at leitet dauerhaft auf gaucho.at
+    // Adressen der alten Webseite (vor 2026) auf die passenden neuen Seiten
+    const alt = ziel => Response.redirect(new URL(ziel, 'https://gaucho.at').toString(), 301);
+    if (pfad.startsWith('/essen-im-steakhaus-gaucho') || pfad.startsWith('/trinken-im-steakhaus-gaucho') || pfad.startsWith('/das-steak-im-steakhaus-gaucho')) return alt('/speisekarte');
+    if (pfad === '/newsletter-anmeldung.html' || pfad === '/index.php') return alt('/');
     // Alte Adressen mit .html dauerhaft auf die Adresse ohne Endung (ausgenommen alte Webseite, siehe unten)
     const ohneHtml = /^\/(index|speisekarte|reservieren|fleisch|kontakt|impressum|datenschutz|agb|steak-kaufen|grosshandel)\.html$/.test(pfad)
       ? (pfad === '/index.html' ? '/' : pfad.slice(0, -5)) : null;
@@ -37,12 +41,8 @@ export default {
     if (pfad === '/api/bestellung') return verarbeite(request, env, pruefeBestellung, true, ctx);
     if (pfad === '/api/anfrage') return verarbeite(request, env, pruefeAnfrage, false, ctx);
     if (pfad === '/api/reservierung') return verarbeite(request, env, pruefeReservierung, false, ctx);
-    // Adressen der alten Webseite (vor 2026) auf die passenden neuen Seiten
-    const alt = ziel => Response.redirect(new URL(ziel, request.url).toString(), 301);
-    if (pfad.startsWith('/essen-im-steakhaus-gaucho') || pfad.startsWith('/trinken-im-steakhaus-gaucho') || pfad.startsWith('/das-steak-im-steakhaus-gaucho')) return alt('/speisekarte');
-    if (pfad === '/newsletter-anmeldung.html' || pfad === '/index.php') return alt('/');
     // Alte Adresse der Großhandelsseite
-    if (pfad === '/gastronomie' || pfad === '/gastronomie.html') return Response.redirect(new URL('/grosshandel', request.url).toString(), 301);
+    if (pfad === '/gastronomie' || pfad === '/gastronomie.html') return alt('/grosshandel');
     return env.ASSETS.fetch(request);
   }
 };
