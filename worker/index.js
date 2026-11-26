@@ -31,6 +31,10 @@ export default {
     if (pfad === '/api/bestellung') return verarbeite(request, env, pruefeBestellung, true, ctx);
     if (pfad === '/api/anfrage') return verarbeite(request, env, pruefeAnfrage, false, ctx);
     if (pfad === '/api/reservierung') return verarbeite(request, env, pruefeReservierung, false, ctx);
+    // Adressen der alten Webseite (vor 2026) auf die passenden neuen Seiten
+    const alt = ziel => Response.redirect(new URL(ziel, request.url).toString(), 301);
+    if (pfad.startsWith('/essen-im-steakhaus-gaucho') || pfad.startsWith('/trinken-im-steakhaus-gaucho') || pfad.startsWith('/das-steak-im-steakhaus-gaucho')) return alt('/speisekarte');
+    if (pfad === '/newsletter-anmeldung.html' || pfad === '/index.php') return alt('/');
     // Alte Adresse der Großhandelsseite
     if (pfad === '/gastronomie' || pfad === '/gastronomie.html') return Response.redirect(new URL('/grosshandel', request.url).toString(), 301);
     return env.ASSETS.fetch(request);
