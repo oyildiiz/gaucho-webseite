@@ -27,8 +27,12 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url), pfad = url.pathname;
     // Nur eine Adresse für Google: www.gaucho.at leitet dauerhaft auf gaucho.at
-    if (url.hostname === 'www.gaucho.at' || (url.protocol === 'http:' && url.hostname === 'gaucho.at')) {
-      url.hostname = 'gaucho.at'; url.protocol = 'https:'; return Response.redirect(url.toString(), 301);
+    // Alte Adressen mit .html dauerhaft auf die Adresse ohne Endung (ausgenommen alte Webseite, siehe unten)
+    const ohneHtml = /^\/(index|speisekarte|reservieren|fleisch|kontakt|impressum|datenschutz|agb|steak-kaufen|grosshandel)\.html$/.test(pfad)
+      ? (pfad === '/index.html' ? '/' : pfad.slice(0, -5)) : null;
+    if (url.hostname === 'www.gaucho.at' || (url.protocol === 'http:' && url.hostname === 'gaucho.at') || ohneHtml) {
+      url.hostname = 'gaucho.at'; url.protocol = 'https:'; if (ohneHtml) url.pathname = ohneHtml;
+      return Response.redirect(url.toString(), 301);
     }
     if (pfad === '/api/bestellung') return verarbeite(request, env, pruefeBestellung, true, ctx);
     if (pfad === '/api/anfrage') return verarbeite(request, env, pruefeAnfrage, false, ctx);
