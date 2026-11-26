@@ -25,7 +25,9 @@ async function verarbeite(request, env, pruefe, mitNr, ctx) {
 
 export default {
   async fetch(request, env, ctx) {
-    const pfad = new URL(request.url).pathname;
+    const url = new URL(request.url), pfad = url.pathname;
+    // Nur eine Adresse für Google: www.gaucho.at leitet dauerhaft auf gaucho.at
+    if (url.hostname === 'www.gaucho.at') { url.hostname = 'gaucho.at'; return Response.redirect(url.toString(), 301); }
     if (pfad === '/api/bestellung') return verarbeite(request, env, pruefeBestellung, true, ctx);
     if (pfad === '/api/anfrage') return verarbeite(request, env, pruefeAnfrage, false, ctx);
     if (pfad === '/api/reservierung') return verarbeite(request, env, pruefeReservierung, false, ctx);
